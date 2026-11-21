@@ -3,7 +3,7 @@
 //   nuova-app --id … --nome … --mascotte … --animale … --colore …   crea un'app nella cartella corrente
 //   app                                                              elenco delle app del catalogo
 //   mascotte                                                         animali già usati
-//   regole                                                           regole comuni (docs/CONVENZIONI.md)
+//   regole                                                           regole comuni R01–R20 (skill regole-app)
 //   controlla [cartella]                                             cosa manca a un'app esistente
 //   attiva-plugin [cartella]                                         attiva il plugin in un repo esistente
 //   revisione                                                        revisione in 2 giri con Claude Code (modello opus)
@@ -11,9 +11,10 @@
 //   catalogo | schermate                                             solo dentro il repo app-forge
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { spawnSync } from "node:child_process";
 
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const [cmd, ...rest] = process.argv.slice(2);
 const node = (file, args) => process.exit(spawnSync(process.execPath, [path.join(ROOT, file), ...args], { stdio: "inherit" }).status ?? 1);
 const catalog = () => JSON.parse(fs.readFileSync(path.join(ROOT, "catalog/apps.json"), "utf8"));

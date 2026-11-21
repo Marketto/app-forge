@@ -7,7 +7,7 @@ description: Disegnare o cambiare la mascotte kawaii (stile giapponese anni '90/
 > **Percorsi**: `catalog/apps.json` è nella radice di app-forge (`${CLAUDE_PLUGIN_ROOT}` se usi il plugin).
 
 ## Mascotte (R01–R02)
-- **Chiedi prima**: mostra 2–4 proposte affiancate (schermata a 390 px) e fai scegliere. Animale mai già usato (`catalog/apps.json`).
+- **Chiedi prima**: 3 proposte affiancate (schermata a 390 px) + «nessuna mascotte», e fai scegliere. Animale mai già usato (`catalog/apps.json`).
 - **Stile kawaii giapponese anni '90/2000**: testa grande e corpo piccolo, occhioni lucidi con due riflessi, guance rosa, contorno morbido scuro (non nero puro), pastello, un accessorio riconoscibile. Leggibile a 48 px.
 - **Fonte unica** `js/mascot.js`: `mascotSVG({ mood, size })`, funzione pura. Mantieni i gruppi `m-body` (respiro), `m-eyes` (ciglia) e `m-pupils` (occhi che seguono): `js/mascot-live.js` e il CSS li animano.
 - **Stati**: almeno `happy`, `think`, `wow`, `sleep`. Animazioni realistiche e leggere (respiro lento, battito di ciglia, salto con schiacciamento), ≤ 600 ms per le reazioni, spente da «riduci movimento».

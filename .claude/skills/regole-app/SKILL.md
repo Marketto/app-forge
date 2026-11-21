@@ -9,7 +9,7 @@ description: Regole comuni delle app di Marketto (R01–R20: mascotte, icone, in
 > **Chiedi** = domanda a scelta al proprietario prima di costruire (con AskUserQuestion se c'è). **Se serve** = solo quando l'app lo richiede.
 
 ## Mascotte e aspetto
-- **R01 Mascotte (chiedi)** — «Vuoi una mascotte?» con 3 proposte di animale non ancora usato (`catalog/apps.json`) + «nessuna». Stile kawaii giapponese anni '90/2000 (testa grande, occhioni lucidi con due riflessi, guance rosa, contorno morbido, colori pastello). Animazioni realistiche e leggere: respiro, battito di ciglia, occhi che seguono il dito/puntatore, salto di gioia, stati (`happy`, `think`, `wow`, `sleep`). Fonte unica `js/mascot.js`.
+- **R01 Mascotte (chiedi)** — «Vuoi una mascotte?» con 3 proposte di animale non ancora usato (`catalog/apps.json`; il coniglio doppio di Mochi Spesa e Hoppy è un'eccezione storica) + «nessuna». Stile kawaii giapponese anni '90/2000 (testa grande, occhioni lucidi con due riflessi, guance rosa, contorno morbido, colori pastello). Animazioni realistiche e leggere: respiro, battito di ciglia, occhi che seguono il dito/puntatore, salto di gioia, stati (`happy`, `think`, `wow`, `sleep`). Fonte unica `js/mascot.js`.
 - **R02 Mascotte interattiva** — al tocco reagisce; dispensa frasi brevi di incoraggiamento e motivazione (più varianti per evento, in tutte le lingue), mai giudicanti. Con «riduci movimento» resta ferma ma continua a parlare.
 - **R03 Icone in font** — icone dell'interfaccia in un font di icone (`fonts/*.woff2`, generato da SVG con `npm run font`), nello stile del tema e della mascotte (tratti tondi). Simboli standard e riconoscibili (condividi, impostazioni, chiudi, aiuto, installa…). Sempre `aria-hidden="true"` sull'icona e `aria-label` sul pulsante se non c'è testo.
 - **R04 Icona dell'app** — mascotte o simbolo su sfondo pieno di un colore che ne esalta i colori (contrasto soggetto/sfondo ≥ 3:1), versione maskable, leggibile a 48 px.
@@ -20,7 +20,7 @@ description: Regole comuni delle app di Marketto (R01–R20: mascotte, icone, in
 - **R07 Versione e Condividi sempre visibili** — numero di versione sempre a schermo; pulsante Condividi con icona standard (`navigator.share`, altrimenti copia il link).
 
 ## Lingue
-- **R08 Multilingua** — tutte le 42 lingue di `LINGUE` (lingue europee + russo, cinese, giapponese, coreano, arabo): `ar be bg bs ca cs da de el en es et eu fi fr ga gl hr hu is it ja ko lb lt lv mk mt nl no pl pt ro ru sk sl sq sr sv tr uk zh`. Arabo da destra a sinistra. Ogni testo passa da `t("chiave")`, anche `aria-label`. `tools/i18n-check.mjs --tutte` deve passare prima del rilascio.
+- **R08 Multilingua** — tutte le 42 lingue di `LINGUE` in `js/i18n.js` (lingue europee + russo, cinese, giapponese, coreano, arabo). Arabo da destra a sinistra. Ogni testo passa da `t("chiave")`, anche `aria-label`. `tools/i18n-check.mjs --tutte` deve passare prima del rilascio.
 
 ## Accessibilità, UX e layout
 - **R09 Accessibilità** — WCAG 2.2 AA e buone pratiche di UI/UX: contrasto, bersagli ≥ 44 px, focus visibile, tastiera, `<dialog>` con titolo ed Esc, `prefers-reduced-motion`.
@@ -42,5 +42,4 @@ description: Regole comuni delle app di Marketto (R01–R20: mascotte, icone, in
 - **R19 Codice strutturato e scalabile** — moduli piccoli con un compito ciascuno, logica pura in `js/logic/` con test `node --test`, UI separata. Se una funzione esiste già in un'altra app: **richiamala** dalla sua app pubblicata (stesso dominio `marketto.github.io`, come Kapibo con il motore di Schiaccia PDF) se è autonoma e stabile, altrimenti portala con `porta-funzione`.
 - **R20 Privacy del repo e consegna** — niente server nostri, nessun dato personale nel repo, autore commit `Marketto <Marketto@users.noreply.github.com>`, `tools/privacy-check.mjs` verde; consegna = commit + push su `main` e controllo della versione online.
 
-## Router
-Nuova app → `nuova-app` + agente `architetto`; app esistente → `migliora-app`; funzione da un'altra app → `porta-funzione`; stile → `mascotte-e-icone` + `ui-kawaii`; testi → `traduzioni` + `traduttore`; controlli → `verifica` + `collaudatore`; pubblicazione → `rilascio`.
+Quale skill e agente usare per ogni richiesta: tabella router in `AGENTS.md`.

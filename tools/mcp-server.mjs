@@ -3,12 +3,13 @@
 //   node tools/mcp-server.mjs        oppure   npx github:Marketto/app-forge mcp
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import readline from "node:readline";
 import { spawnSync } from "node:child_process";
 import { controlla } from "./controlla-app.mjs";
 import { attivaPlugin } from "./attiva-plugin.mjs";
 
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const read = f => fs.readFileSync(path.join(ROOT, f), "utf8");
 const catalog = () => JSON.parse(read("catalog/apps.json"));
 
@@ -59,7 +60,7 @@ const TOOLS = [
       if (a.categoria) args.push("--categoria", a.categoria);
       if (a.descrizione) args.push("--descrizione", a.descrizione);
       const r = spawnSync(process.execPath, [path.join(ROOT, "tools/nuova-app.mjs"), ...args], { encoding: "utf8", cwd: path.dirname(path.resolve(a.dest)) });
-      if (r.status !== 0) throw new Error(r.stderr || r.stdout);
+      if (r.error || r.status !== 0) throw new Error(r.error?.message || r.stderr || r.stdout || "nuova-app non riuscito");
       return r.stdout + "\nPer il catalogo: aggiungi l'app in app-forge con la skill `catalogo`.";
     },
   },
@@ -68,7 +69,7 @@ const TOOLS = [
 TOOLS.push(
   {
     name: "controlla_app",
-    description: "Controllo veloce di un'app esistente rispetto alle regole comuni: cosa c'è (ok), cosa manca (ko), cosa verificare a mano (null).",
+    description: "Controllo veloce di un'app rispetto alle regole R01–R20. Per ogni controllo ok: true (fatto), false (manca), null (da verificare a mano), \"na\" (non serve per quest'app).",
     inputSchema: { type: "object", required: ["cartella"], properties: { cartella: { type: "string", description: "percorso assoluto del repo dell'app" } } },
     run: a => JSON.stringify(controlla(a.cartella), null, 2),
   },
@@ -102,13 +103,14 @@ Aspetta la mia scelta, poi crea lo scheletro con «nuova_app».`,
   },
 ];
 
+const SUPPORTED = ["2025-06-18", "2025-03-26", "2024-11-05"];
 const send = msg => process.stdout.write(JSON.stringify({ jsonrpc: "2.0", ...msg }) + "\n");
 
 async function handle(req) {
   const { id, method, params = {} } = req;
   switch (method) {
     case "initialize":
-      return { protocolVersion: params.protocolVersion || "2025-06-18", capabilities: { tools: {}, prompts: {} },
+      return { protocolVersion: SUPPORTED.includes(params.protocolVersion) ? params.protocolVersion : SUPPORTED[0], capabilities: { tools: {}, prompts: {} },
         serverInfo: { name: "app-forge", version: JSON.parse(read(".claude-plugin/plugin.json")).version } };
     case "ping": return {};
     case "tools/list": return { tools: TOOLS.map(({ run, ...t }) => t) };

@@ -56,7 +56,6 @@ All'avvio un hook installa le dipendenze di sviluppo; il server MCP del repo (`.
 /plugin marketplace add Marketto/app-forge
 /plugin install app-forge@app-forge
 ```
-Da Claude Code 2.1.275 basta `/plugin install app-forge --marketplace Marketto/app-forge`.
 Ottieni, con il prefisso `app-forge:`, le skill `regole-app`, `nuova-app`, `migliora-app`, `porta-funzione`, `revisione`, `mascotte-e-icone`, `traduzioni`, `verifica`, `rilascio`, `catalogo`,
 gli agenti `architetto`, `revisore`, `ui-kawaii`, `traduttore`, `collaudatore`, `rilascio`, `router` e gli strumenti MCP (modalità 7).
 Esempi: «usa app-forge:nuova-app per un'app che…», «applica app-forge:regole-app a questo repo».

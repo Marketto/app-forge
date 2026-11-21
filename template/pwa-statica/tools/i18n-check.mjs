@@ -15,7 +15,6 @@ for (const code of present) {
   for (const k of Object.keys(ref)) {
     if (!(k in d)) say(`${code}.json: manca ${k}`);
     else if (ph(d[k]) !== ph(ref[k])) say(`${code}.json: segnaposto diversi in ${k}`);
-    else if (code !== "en" && code !== "it" && d[k] === ref[k] && /[a-z]{4,}/i.test(d[k]) && !/__\w+__|^\{/.test(d[k])) { /* uguale all'inglese: forse non tradotto (ammesso per nomi propri) */ }
   }
   for (const k of Object.keys(d)) if (!(k in ref)) say(`${code}.json: chiave in più ${k}`);
 }

@@ -1,5 +1,4 @@
 // Piccoli aiuti di interfaccia condivisi.
-import { t } from "./i18n.js";
 let timer;
 /** Avviso breve in basso. action = { label, run } facoltativa. */
 export function toast(text, action) {
@@ -12,4 +11,3 @@ export function toast(text, action) {
 }
 export const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 export const reducedMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
-export const closeLabel = () => t("ui.close");

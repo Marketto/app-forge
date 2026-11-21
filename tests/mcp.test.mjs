@@ -33,4 +33,5 @@ test("server MCP: inizializza, elenca e usa gli strumenti", async () => {
   const bad = await c.call("tools/call", { name: "nuova_app", arguments: { id: "x", nome: "X", mascotte: "Y", animale: "riccio", colore: "#ffffff", dest: dest + "-2" } });
   assert.ok(bad.result.isError);
   c.close();
+  fs.rmSync(path.dirname(dest), { recursive: true, force: true });
 });

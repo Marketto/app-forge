@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       app: { description: "id dell'app (vuoto = tutte)", required: false }
-permissions: { contents: write }
+permissions: { contents: write, actions: write }
 jobs:
   schermate:
     runs-on: ubuntu-latest
@@ -14,10 +14,14 @@ jobs:
         with: { node-version: 22 }
       - run: npm ci || npm install
       - run: npx playwright install --with-deps chromium
-      - run: node tools/screenshots.mjs ${{ inputs.app }}
-      - name: Commit se cambiate
+      - run: node tools/screenshots.mjs $APP
+        env: { APP: "${{ inputs.app }}" }
+      - name: Commit se cambiate e ripubblica il catalogo
+        if: always()
+        env: { GH_TOKEN: "${{ github.token }}" }
         run: |
           git config user.name "Marketto"
           git config user.email "Marketto@users.noreply.github.com"
           git add site/icons site/screenshots
-          git diff --cached --quiet || (git commit -m "Catalogo: icone e schermate aggiornate" && git push)
+          # Un push fatto con GITHUB_TOKEN non avvia altri workflow: la ripubblicazione va chiesta a mano.
+          git diff --cached --quiet || (git commit -m "Catalogo: icone e schermate aggiornate" && git push && gh workflow run pages.yml)

@@ -37,7 +37,13 @@ export function apply(root = document) {
   root.querySelectorAll("[data-i18n-placeholder]").forEach(el => { el.placeholder = t(el.dataset.i18nPlaceholder); });
   root.querySelectorAll("[data-i18n-aria]").forEach(el => { el.setAttribute("aria-label", t(el.dataset.i18nAria)); });
 }
+const ALIAS = { nb: "no", nn: "no" };
 export function preferred() {
   let saved = null; try { saved = localStorage.getItem(KEY); } catch {}
-  return saved || (navigator.language || "en").slice(0, 2).toLowerCase();
+  if (saved && LINGUE[saved]) return saved;
+  for (const l of navigator.languages?.length ? navigator.languages : [navigator.language || "en"]) {
+    const c = l.slice(0, 2).toLowerCase(), code = ALIAS[c] || c;
+    if (LINGUE[code]) return code;
+  }
+  return "en";
 }

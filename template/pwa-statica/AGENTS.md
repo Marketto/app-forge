@@ -32,7 +32,7 @@ css/style.css          token e temi (chiaro, scuro, alto contrasto, daltonici), 
 css/icons.css          GENERATO da npm run font (non toccare)
 js/app.js              avvio e collegamenti dell'interfaccia
 js/config.js           scelte dell'app (R01, R15, R16, R18)
-js/logic/              logica pura, testata
+js/logic/              logica pura, testata (items, backup = esporta/importa)
 js/i18n.js             t(), LINGUE (le 42 obbligatorie)
 js/mascot.js           mascotte: unica fonte (funzione pura)
 js/mascot-live.js      mascotte viva: occhi, tocco, frasi, sonno
@@ -43,6 +43,7 @@ js/music.js            musica facoltativa                    js/work.js     Work
 js/store.js            salvataggio locale                    js/version.js  versione
 sw.js                  cache offline
 locales/, locales/legal/   testi e testi legali (42 lingue)
+CHANGELOG.md           novità per versione
 tools/                 i18n-check, legal-check, privacy-check, ui-audit, icons, build-font, colors
 tests/                 node --test
 ```

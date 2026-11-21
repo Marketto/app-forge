@@ -17,12 +17,14 @@ test("attiva-plugin aggiunge il plugin senza toccare il resto", () => {
   assert.equal(s.enabledPlugins["app-forge@app-forge"], true);
   assert.equal(s.extraKnownMarketplaces["app-forge"].source.repo, "Marketto/app-forge");
   assert.match(attivaPlugin(dir), /già attivo/);
+  fs.rmSync(dir, { recursive: true, force: true });
 });
 
 test("controlla-app: il modello di app passa quasi tutto, una cartella vuota no", () => {
   const vuota = fs.mkdtempSync(path.join(os.tmpdir(), "af-vuota-"));
   const r0 = controlla(vuota);
   assert.ok(r0.controlli.filter(c => c.ok === false).length > 10);
+  fs.rmSync(vuota, { recursive: true, force: true });
   const r1 = controlla("template/pwa-statica");
   const ko = r1.controlli.filter(c => c.ok === false).map(c => c.cosa);
   // Il modello ha solo it/en (le altre 40 lingue si fanno per ogni app) e il plugin si attiva solo nelle app create.

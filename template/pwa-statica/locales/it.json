@@ -62,5 +62,10 @@
   "share.copied": "Link copiato!",
   "install.ios": "Su iPhone e iPad: tocca Condividi nel browser, poi «Aggiungi alla schermata Home».",
   "update.ready": "È pronta una nuova versione.",
-  "update.now": "Aggiorna"
+  "update.now": "Aggiorna",
+  "backup.title": "I tuoi dati",
+  "backup.export": "Esporta",
+  "backup.import": "Importa",
+  "backup.bad": "Questo file non è un backup valido di quest'app.",
+  "mascot.ev.imported": "Dati ripristinati, tutto al suo posto!"
 }

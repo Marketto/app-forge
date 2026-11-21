@@ -22,6 +22,22 @@ test("nuova-app: scelte senza mascotte, con musica e cloud finiscono in js/confi
   assert.match(fs.readFileSync(path.join(dest, "docs/TODO.md"), "utf8"), /Salvataggio cloud/);
   const bad = run(["tools/nuova-app.mjs", "--id", "x2", "--nome", "X", "--senza-mascotte", "--sync", "ftp", "--colore", "#cce5ff", "--prova", "--dest", dest + "2"]);
   assert.notEqual(bad.status, 0);
+  assert.ok(!fs.existsSync(dest + "2"), "con scelte sbagliate non deve creare file");
+  fs.rmSync(path.dirname(dest), { recursive: true, force: true });
+});
+
+test("privacy-check del modello è identico a quello di app-forge", () => {
+  assert.equal(fs.readFileSync("template/pwa-statica/tools/privacy-check.mjs", "utf8"), fs.readFileSync("tools/privacy-check.mjs", "utf8"));
+});
+
+test("le copie locali di skill e agenti nelle app non dipendono dal plugin", () => {
+  const dest = fs.mkdtempSync(path.join(os.tmpdir(), "af-copie-"));
+  const r = run(["tools/nuova-app.mjs", "--id", "copie-prova", "--nome", "C", "--mascotte", "M", "--animale", "copie-animale", "--colore", "#ffd6a5", "--prova", "--dest", dest]);
+  assert.equal(r.status, 0, r.stderr);
+  const left = spawnSync("grep", ["-rl", "CLAUDE_PLUGIN_ROOT", path.join(dest, ".claude")], { encoding: "utf8" }).stdout.trim();
+  assert.equal(left, "", "riferimenti al plugin rimasti: " + left);
+  assert.ok(!fs.existsSync(path.join(dest, ".claude/agents/revisore.md")));
+  fs.rmSync(dest, { recursive: true, force: true });
 });
 
 test("nuova-app rifiuta un animale già usato", () => {
@@ -36,7 +52,7 @@ test("nuova-app crea un'app che passa i suoi test", () => {
   const r = run(["tools/nuova-app.mjs", "--id", "volpe-prova", "--nome", "Volpe Prova", "--mascotte", "Kitsu", "--animale", "volpe-prova",
     "--colore", "#ffd6a5", "--descrizione", "App di prova.", "--prova", "--dest", dest]);
   assert.equal(r.status, 0, r.stderr);
-  const left = spawnSync("grep", ["-rlE", "__(ID|NOME|MASCOTTE|ANIMALE|COLORE|DESCRIZIONE|ANNO)__", dest], { encoding: "utf8" }).stdout.trim();
+  const left = spawnSync("grep", ["-rlE", "__(ID|NOME|MASCOTTE|ANIMALE|COLORE|DESCRIZIONE|ANNO|REPO)__", dest], { encoding: "utf8" }).stdout.trim();
   assert.equal(left, "", "segnaposto non sostituiti");
   const t = spawnSync("node", ["--test", ...fs.readdirSync(path.join(dest, "tests")).map(f => "tests/" + f)], { cwd: dest, encoding: "utf8" });
   assert.equal(t.status, 0, t.stdout + t.stderr);

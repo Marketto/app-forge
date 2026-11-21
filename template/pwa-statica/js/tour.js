@@ -35,7 +35,7 @@ export function runTour(steps, { mascotSvg = "", onEnd } = {}) {
 
   async function show(dir = 1) {
     const s = steps[i], el = s.sel && document.querySelector(s.sel);
-    if (s.sel && (!el || !el.getClientRects().length)) { i += dir; if (i < 0) i = 0; return i >= steps.length ? end() : show(dir); }
+    if (s.sel && (!el || !el.getClientRects().length)) { const d = dir || 1; i += d; if (i < 0) { i = 0; return show(1); } return i >= steps.length ? end() : show(d); }
     $("#tourT").textContent = t(`tour.${s.id}.t`);
     $("#tourP").textContent = t(`tour.${s.id}.p`);
     $("#tourN").textContent = t("tour.step", { i: i + 1, n: steps.length });

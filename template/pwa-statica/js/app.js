@@ -15,6 +15,7 @@ import * as usage from "./usage.js";
 import { setMusic, wanted, playing } from "./music.js";
 import { load, save } from "./store.js";
 import { addItem, removeItem } from "./logic/items.js";
+import { makeBackup, readBackup } from "./logic/backup.js";
 
 const $ = s => document.querySelector(s);
 let state = load();
@@ -46,6 +47,20 @@ function setupSettings() {
   $("#stats").onchange = e => usage.setConsent(e.target.checked);
   $("#settingsBtn").onclick = () => dlg.showModal();
   $("#tourAgain").onclick = () => { dlg.close(); tour(STEPS); };
+  // R18: esporta/importa da file
+  $("#exportBtn").onclick = () => {
+    const url = URL.createObjectURL(new Blob([makeBackup(CONFIG.id, APP_VERSION, state)], { type: "application/json" }));
+    Object.assign(document.createElement("a"), { href: url, download: `${CONFIG.id}-${new Date().toISOString().slice(0, 10)}.json` }).click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+    usage.track("export");
+  };
+  $("#importBtn").onclick = () => $("#importFile").click();
+  $("#importFile").onchange = async e => {
+    const f = e.target.files[0]; e.target.value = "";
+    if (!f) return;
+    try { state = readBackup(await f.text(), CONFIG.id); save(state); render(); dlg.close(); mascot.say("imported", "wow"); usage.track("import"); }
+    catch { toast(t("backup.bad")); }
+  };
 }
 
 const tour = steps => runTour(steps, { mascotSvg: CONFIG.mascot ? mascotSVG({ size: 64 }) : "", onEnd: () => markSeen(APP_VERSION) });
@@ -73,7 +88,8 @@ async function start() {
     const btn = $("#music");
     const paint = () => { btn.setAttribute("aria-pressed", String(playing())); btn.firstElementChild.className = `ic ic-${playing() ? "music" : "music-off"}`; };
     btn.hidden = false; btn.onclick = () => { setMusic(!playing()); paint(); }; paint();
-    if (wanted()) addEventListener("pointerdown", () => { setMusic(true); paint(); }, { once: true }); // i browser chiedono un tocco prima dell'audio
+    // I browser chiedono un tocco prima dell'audio: riaccende la musica al primo tocco, tranne sul suo pulsante.
+    if (wanted()) addEventListener("pointerdown", e => { if (!btn.contains(e.target) && !playing()) { setMusic(true); paint(); } }, { once: true });
   }
 
   $("#add").onsubmit = e => {

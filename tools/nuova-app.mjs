@@ -5,8 +5,9 @@
 // Scelte (R01, R16, R18, R15): --senza-mascotte  --musica  --sync dropbox,gdrive,webdav  --goatcounter <codice>
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const argv = process.argv.slice(2);
 const opt = {};
 for (let i = 0; i < argv.length; i++) {
@@ -30,8 +31,14 @@ const used = !noMascot && cat.apps.find(a => a.mascotte && norm(a.mascotte.anima
 if (used) { console.error(`L'animale «${opt.animale}» è già usato da ${used.nome}. Scegline un altro.`); process.exit(1); }
 if (cat.apps.some(a => a.id.toLowerCase() === opt.id.toLowerCase())) { console.error(`Esiste già un'app con id «${opt.id}».`); process.exit(1); }
 
-const inForge = path.resolve(process.cwd()).startsWith(ROOT) && fs.existsSync(path.join(ROOT, ".git"));
+const rel = path.relative(ROOT, path.resolve(process.cwd()));
+const inForge = !rel.startsWith("..") && !path.isAbsolute(rel) && fs.existsSync(path.join(ROOT, ".git"));
 if (!inForge && !opt.catalogo) opt.prova = true; // copia del plugin o di npx: il catalogo si aggiorna solo da app-forge
+// Scelte fatte con il proprietario (controllate prima di creare qualsiasi file)
+const sync = typeof opt.sync === "string" ? opt.sync.split(",").map(x => x.trim()).filter(Boolean) : [];
+const bad = sync.filter(x => !["dropbox", "gdrive", "webdav"].includes(x));
+if (bad.length) { console.error(`--sync: valori ammessi dropbox, gdrive, webdav (non ${bad.join(", ")})`); process.exit(1); }
+if (opt.goatcounter !== undefined && !/^[a-z0-9-]+$/.test(String(opt.goatcounter))) { console.error("--goatcounter: solo minuscole, numeri e trattini (il codice del sito GoatCounter)"); process.exit(1); }
 const dest = path.resolve(opt.dest || (inForge ? path.join(ROOT, "..", opt.id) : opt.id));
 if (fs.existsSync(dest) && fs.readdirSync(dest).filter(f => f !== ".git").length) { console.error(`${dest} non è vuota.`); process.exit(1); }
 
@@ -53,10 +60,7 @@ function copy(src, dst) {
 fs.mkdirSync(dest, { recursive: true });
 copy(path.join(ROOT, "template/pwa-statica"), dest);
 
-// Scelte fatte con il proprietario → js/config.js
-const sync = typeof opt.sync === "string" ? opt.sync.split(",").map(x => x.trim()).filter(Boolean) : [];
-const bad = sync.filter(x => !["dropbox", "gdrive", "webdav"].includes(x));
-if (bad.length) { console.error(`--sync: valori ammessi dropbox, gdrive, webdav (non ${bad.join(", ")})`); process.exit(1); }
+// Scelte → js/config.js
 fs.writeFileSync(path.join(dest, "js/config.js"), `// Scelte fatte alla creazione dell'app (tools/nuova-app.mjs). Cambiale qui, non sparse nel codice.
 export const CONFIG = ${JSON.stringify({ id: opt.id, mascot: !noMascot, music: !!opt.musica, goatcounter: typeof opt.goatcounter === "string" ? opt.goatcounter : "", sync, repo: vars.__REPO__ }, null, 2)};
 `);
@@ -66,10 +70,16 @@ if (noMascot) fs.appendFileSync(path.join(dest, "docs/TODO.md"), "- [ ] Senza ma
 // Agenti e skill comuni (non quelli che servono solo ad app-forge).
 const claudeSrc = path.join(ROOT, ".claude");
 for (const sub of ["agents", "skills"]) fs.mkdirSync(path.join(dest, ".claude", sub), { recursive: true });
-for (const f of fs.readdirSync(path.join(claudeSrc, "agents"))) fs.copyFileSync(path.join(claudeSrc, "agents", f), path.join(dest, ".claude/agents", f));
-for (const s of ["mascotte-e-icone", "traduzioni", "verifica", "rilascio", "regole-app"]) {
+// Copie locali (servono anche agli agenti diversi da Claude): i rimandi ad app-forge diventano comandi npx e link.
+const local = t => t
+  .replace(/node \$\{CLAUDE_PLUGIN_ROOT\}\/tools\/controlla-app\.mjs \.?/g, "npx -y github:Marketto/app-forge controlla")
+  .replace(/^> \*\*Percorsi\*\*.*$/gm, "> Fa parte delle regole comuni di [app-forge](https://github.com/Marketto/app-forge): `catalog/` e `docs/` citati qui sono in quel repo.")
+  .replace(/\$\{CLAUDE_PLUGIN_ROOT\}\/?/g, "app-forge/");
+for (const f of fs.readdirSync(path.join(claudeSrc, "agents")).filter(f => f !== "revisore.md")) // il revisore arriva dal plugin
+  fs.writeFileSync(path.join(dest, ".claude/agents", f), local(fs.readFileSync(path.join(claudeSrc, "agents", f), "utf8")));
+for (const s of ["regole-app", "mascotte-e-icone", "traduzioni", "verifica", "rilascio"]) {
   fs.mkdirSync(path.join(dest, ".claude/skills", s), { recursive: true });
-  fs.copyFileSync(path.join(claudeSrc, "skills", s, "SKILL.md"), path.join(dest, ".claude/skills", s, "SKILL.md"));
+  fs.writeFileSync(path.join(dest, ".claude/skills", s, "SKILL.md"), local(fs.readFileSync(path.join(claudeSrc, "skills", s, "SKILL.md"), "utf8")));
 }
 fs.writeFileSync(path.join(dest, ".claude/settings.json"), JSON.stringify({
   model: "sonnet",

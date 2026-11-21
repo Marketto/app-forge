@@ -62,5 +62,10 @@
   "share.copied": "Link copied!",
   "install.ios": "On iPhone and iPad: tap Share in the browser, then “Add to Home Screen”.",
   "update.ready": "A new version is ready.",
-  "update.now": "Update"
+  "update.now": "Update",
+  "backup.title": "Your data",
+  "backup.export": "Export",
+  "backup.import": "Import",
+  "backup.bad": "This file is not a valid backup of this app.",
+  "mascot.ev.imported": "Data restored, everything in its place!"
 }

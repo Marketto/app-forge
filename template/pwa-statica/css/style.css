@@ -1,7 +1,6 @@
 /* Token di design: colori SOLO da variabili. Temi: chiaro, scuro, alto contrasto, daltonici (Okabe-Ito).
    «auto» segue il sistema: prefers-color-scheme e prefers-contrast. */
 :root {
-  --main: __COLORE__;
   --bg: #fff8fb; --surface: #ffffff; --ink: #3a2e4a; --muted: #6a5d7a; --line: #f0dce6;
   --accent: #c2416b; --accent-ink: #ffffff; --soft: #fde7ef; --soft-ink: #6b2440;
   --ok: #2f7d4f; --warn: #9a5b00; --danger: #b3261e; --focus: #c2416b;
@@ -45,7 +44,8 @@
   :root:not([data-theme]) {
     --bg: #000000; --surface: #000000; --ink: #ffffff; --muted: #ffffff; --line: #ffffff;
     --accent: #ffe500; --accent-ink: #000000; --soft: #000000; --soft-ink: #ffe500;
-    --focus: #ffe500; --shadow: none; --border: 3px; color-scheme: dark;
+    --ok: #7dff9b; --warn: #ffe500; --danger: #ff8a80; --focus: #ffe500;
+    --shadow: none; --veil: rgb(0 0 0 / .85); --border: 3px; color-scheme: dark;
   }
 }
 
@@ -97,6 +97,7 @@ main:focus { outline: none; }
 .btn:disabled { opacity: .55; cursor: not-allowed; }
 .btn .ic { font-size: 1.15em; }
 .btns { display: flex; flex-wrap: wrap; gap: var(--s2); justify-content: flex-end; }
+.btns.start { justify-content: flex-start; }
 .list { list-style: none; padding: 0; margin: var(--s3) 0 0; display: grid; gap: var(--s2); }
 .list li { display: flex; align-items: center; gap: var(--s2); padding: var(--s1) var(--s1) var(--s1) var(--s3); border-radius: var(--radius-s); background: var(--bg); border: 1px solid var(--line); }
 .list li span { flex: 1; min-width: 0; overflow-wrap: anywhere; }

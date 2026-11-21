@@ -6,9 +6,10 @@
 // oppure CHROMIUM_PATH=/percorso/di/chrome.
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
 
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const { apps } = JSON.parse(fs.readFileSync(path.join(ROOT, "catalog/apps.json"), "utf8"));
 const args = process.argv.slice(2);
 const only = args.filter(a => !a.startsWith("--"));
@@ -64,6 +65,7 @@ async function icon(browser, app) {
 
 async function shot(browser, app) {
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 800 }, locale: "it-IT", colorScheme: "light" });
+  await ctx.route(/goatcounter|plausible|umami/, r => r.abort()); // il bot non deve finire nelle statistiche delle app
   const pg = await ctx.newPage();
   try { await pg.goto(app.url, { waitUntil: "networkidle", timeout: 45000 }); } catch {}
   await pg.waitForTimeout(2000);

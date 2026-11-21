@@ -9,6 +9,7 @@ export const wanted = () => { try { return localStorage.getItem(KEY) === "on"; }
 export const playing = () => on;
 
 function startSynth() {
+  clearInterval(timer);
   ctx ||= new (window.AudioContext || window.webkitAudioContext)();
   ctx.resume();
   const gain = ctx.createGain(); gain.gain.value = 0.05; gain.connect(ctx.destination);

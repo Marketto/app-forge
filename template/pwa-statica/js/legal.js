@@ -12,6 +12,7 @@ async function texts() {
   return (await get(lang())) || (await get("en"));
 }
 export const accepted = () => { try { return JSON.parse(localStorage.getItem(KEY))?.v === POLICY_VERSION; } catch { return false; } };
+const updated = L => esc(String(L.updated).replace("{v}", POLICY_VERSION));
 const body = (L, part) => L[part].map(([k, s]) => (k === "h" ? `<h3>${esc(s)}</h3>` : `<p>${esc(s)}</p>`)).join("");
 function sheet(id) {
   let d = document.getElementById(id);
@@ -30,17 +31,20 @@ export async function gate({ mascotSvg = "", askStats = false } = {}) {
     <div class="disclaimer" role="note"><strong>${esc(L.disclaimerTitle)}</strong><p>${esc(L.disclaimer)}</p></div>
     <details><summary>${esc(t("legal.privacy"))}</summary><div class="legal-body">${body(L, "privacy")}</div></details>
     <details><summary>${esc(t("legal.terms"))}</summary><div class="legal-body">${body(L, "terms")}</div></details>
-    <p class="muted">${esc(L.updated)}</p>
+    <p class="muted">${updated(L)}</p>
     <label class="check"><input type="checkbox" id="gateOk" required><span>${esc(t("gate.accept"))}</span></label>
     <label class="check"><input type="checkbox" id="gateDisc" required><span>${esc(L.approve)}</span></label>
     ${askStats ? `<label class="check"><input type="checkbox" id="gateStats"><span>${esc(t("usage.ask"))}</span></label>` : ""}
     <div class="btns"><button class="btn" id="gateGo" disabled>${esc(t("gate.go"))}</button></div></form>`;
   const ok = d.querySelector("#gateOk"), disc = d.querySelector("#gateDisc"), go = d.querySelector("#gateGo");
   ok.onchange = disc.onchange = () => { go.disabled = !(ok.checked && disc.checked); };
+  let done = false;
   d.addEventListener("cancel", e => e.preventDefault()); // serve il consenso: Esc non chiude
+  d.addEventListener("close", () => { if (!done) d.showModal(); }); // Chrome lascia chiudere al secondo Esc: si riapre
   d.showModal();
   const title = d.querySelector("#gateT"); title.tabIndex = -1; title.focus(); // il lettore di schermo parte dal titolo
   await new Promise(res => { d.querySelector("form").onsubmit = e => { if (!ok.checked || !disc.checked) { e.preventDefault(); return; } res(); }; });
+  done = true;
   const stats = !!d.querySelector("#gateStats")?.checked;
   try { localStorage.setItem(KEY, JSON.stringify({ v: POLICY_VERSION, at: new Date().toISOString(), lang: lang() })); } catch {}
   d.close();
@@ -54,6 +58,6 @@ export async function showLegal() {
     <button class="icon-btn" aria-label="${esc(t("ui.close"))}"><i class="ic ic-close" aria-hidden="true"></i></button></div>
     <div class="disclaimer" role="note"><strong>${esc(L.disclaimerTitle)}</strong><p>${esc(L.disclaimer)}</p></div>
     <div class="legal-body"><h3>${esc(t("legal.privacy"))}</h3>${body(L, "privacy")}<h3>${esc(t("legal.terms"))}</h3>${body(L, "terms")}</div>
-    <p class="muted">${esc(L.updated)}</p></form>`;
+    <p class="muted">${updated(L)}</p></form>`;
   d.showModal();
 }

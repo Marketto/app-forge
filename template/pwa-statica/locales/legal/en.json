@@ -1,6 +1,6 @@
 {
   "title": "__NOME__ privacy notice and terms of use",
-  "updated": "Version 0.1.0 — update at every change (POLICY_VERSION in js/legal.js)",
+  "updated": "Version {v}",
   "summary": [
     "The data you enter stays on this device: the developer does not receive or see it.",
     "No account needed and no ads.",

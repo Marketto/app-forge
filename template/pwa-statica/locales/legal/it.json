@@ -1,6 +1,6 @@
 {
   "title": "Informativa privacy e condizioni d'uso di __NOME__",
-  "updated": "Versione 0.1.0 — da aggiornare a ogni modifica (POLICY_VERSION in js/legal.js)",
+  "updated": "Versione {v}",
   "summary": [
     "I dati che inserisci restano su questo dispositivo: lo sviluppatore non li riceve e non li vede.",
     "Non servono account e non ci sono pubblicità.",

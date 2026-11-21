@@ -4,7 +4,7 @@ import fs from "node:fs";
 import { execSync } from "node:child_process";
 
 let files;
-try { files = execSync("git ls-files -co --exclude-standard", { encoding: "utf8" }).split("\n"); }
+try { files = execSync("git ls-files -co --exclude-standard", { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).split("\n"); }
 catch { files = execSync("find . -type f -not -path './node_modules/*' -not -path './.git/*' -not -path './_site/*'", { encoding: "utf8" }).split("\n").map(f => f.replace(/^\.\//, "")); }
 files = files.filter(f => f && !f.startsWith("vendor/") && !f.startsWith("node_modules/") && !/package-lock\.json$/.test(f)
   && !/\.(png|jpe?g|webp|gif|ico|woff2?|ttf|pdf|mp[34]|zip)$/i.test(f) && !f.endsWith("privacy-check.mjs"));

@@ -4,6 +4,7 @@ import { t } from "./i18n.js";
 import { toast } from "./ui.js";
 export async function setupUpdates() {
   if (!("serviceWorker" in navigator)) return;
+  const had = !!navigator.serviceWorker.controller; // al primo avvio clients.claim() non deve ricaricare
   let reg;
   try { reg = await navigator.serviceWorker.register("sw.js"); } catch { return; }
   const check = () => reg.update().catch(() => {});
@@ -16,5 +17,5 @@ export async function setupUpdates() {
     w?.addEventListener("statechange", () => { if (w.state === "installed" && navigator.serviceWorker.controller) offer(w); });
   });
   let reloading = false;
-  navigator.serviceWorker.addEventListener("controllerchange", () => { if (!reloading) { reloading = true; location.reload(); } });
+  navigator.serviceWorker.addEventListener("controllerchange", () => { if (had && !reloading) { reloading = true; location.reload(); } });
 }

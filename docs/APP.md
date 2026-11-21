@@ -24,6 +24,4 @@ Quando serve una soluzione già fatta, prendila da qui invece di riscriverla. Mo
 | Statistiche anonime con consenso | Hari Hari Puzzle | `src/core/usage.js` (GoatCounter) |
 
 ## Mascotte già usate
-riccio (Hari), capibara (Kapi), coniglio (Mochi, Hoppy), lontra (Otto di Ottoteca), gufo (Otto di Turnotto),
-polpo (Takotta), suricata (Suri), luna (Lunibù), pallina schiacciata (Schiaccia PDF).
-L'elenco aggiornato è sempre `catalog/apps.json`.
+Sempre da `catalog/apps.json` (campo `mascotte.animale`), oppure `npx github:Marketto/app-forge mascotte`.

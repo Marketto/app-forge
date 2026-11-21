@@ -1,7 +1,7 @@
 # Convenzioni: come applicare le regole R01–R20
 
 Le regole sono **solo** in `.claude/skills/regole-app/SKILL.md`. Qui trovi, per ogni regola, dove è già fatta bene:
-nel modello `template/pwa-statica` (punto di partenza di ogni app nuova) o in una delle 10 app esistenti.
+nel modello `template/pwa-statica` (punto di partenza di ogni app nuova) o in una delle app del catalogo.
 
 | Regola | Nel modello | Esempio in un'app |
 |---|---|---|
@@ -22,7 +22,7 @@ nel modello `template/pwa-statica` (punto di partenza di ogni app nuova) o in un
 | R15 Statistiche anonime | `js/usage.js` (GoatCounter con consenso) | Hari Hari Puzzle `src/core/usage.js` |
 | R16 Musica | `js/music.js` (WebAudio, interruttore) | Hari Hari Puzzle `src/core/fx.js`, Lunibù `src/lib/audio/` |
 | R17 Background | `js/work.js` (Worker con avanzamento) | Schiaccia PDF (worker) |
-| R18 Cloud | — (da portare) | Kapibo `js/sync/` (Dropbox, Google Drive), Mochi Spesa `js/dropbox.js` |
+| R18 Dati e cloud | esporta/importa: `js/logic/backup.js`; cloud da portare | Kapibo `js/sync/` (Dropbox, Google Drive), Mochi Spesa `js/dropbox.js` |
 | R19 Codice | `js/logic/` + `tests/` | Hari `*-logic.js`, Printopus `src/core` |
 | R20 Repo e consegna | `tools/privacy-check.mjs`, `pages.yml` | tutte |
 

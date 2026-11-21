@@ -5,10 +5,12 @@
 // È il punto di partenza delle skill migliora-app, verifica e revisione: ogni ⚠️ va confermato leggendo il codice.
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SKIP = new Set(["node_modules", "vendor", "dist", "build", ".git", "_site", "coverage", ".next", "target", "Pods", "DerivedData"]);
-export const LINGUE = "ar be bg bs ca cs da de el en es et eu fi fr ga gl hr hu is it ja ko lb lt lv mk mt nl no pl pt ro ru sk sl sq sr sv tr uk zh".split(" ");
+import { LINGUE as LINGUE_MAP } from "../template/pwa-statica/js/i18n.js";
+export const LINGUE = Object.keys(LINGUE_MAP); // fonte unica: LINGUE del modello (R08)
 const catalogo = () => { try { return JSON.parse(fs.readFileSync(path.join(ROOT, "catalog/apps.json"), "utf8")).apps; } catch { return []; } };
 const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
