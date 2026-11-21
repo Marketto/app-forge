@@ -1,18 +1,15 @@
-# __NOME__ — guida per agenti
+# __NOME__ — guida per agenti (Claude, Codex, Cursor, Copilot, Gemini…)
 
 PWA statica, senza build e senza server, pubblicata su GitHub Pages da `main`. Mascotte: **__MASCOTTE__** (__ANIMALE__).
-Lingua di lavoro: italiano semplice. Tono conciso. Creata con [app-forge](https://github.com/Marketto/app-forge): le regole comuni sono in `docs/CONVENZIONI.md` di quel repo.
+Lingua di lavoro: italiano semplice. Tono conciso. Identificatori del codice in inglese.
+Creata con [app-forge](https://github.com/Marketto/app-forge).
 
-## Regole d'oro
-1. **Dati solo sul dispositivo.** Nessuna chiamata di rete con dati dell'utente. Nessun dato personale nel repo; autore commit `Marketto <Marketto@users.noreply.github.com>`.
-2. **Senza build.** Moduli ES in `js/`, librerie in `vendor/` (mai modificate). Niente npm nel sito: solo strumenti in `tools/`.
-3. **Logica pura** in `js/logic/` con test in `tests/`; `js/app.js` fa solo interfaccia.
-4. **Ogni testo** passa da `t("chiave")`, in tutte le lingue di `locales/`. `node tools/i18n-check.mjs` deve passare.
-5. **Colori solo da variabili** in `css/style.css`, tema chiaro e scuro. AA, bersagli ≥ 44 px, `aria-label`, `prefers-reduced-motion`, prova a 390 px.
-6. **Mascotte da una fonte**: `js/mascot.js` → `npm run icons`. Mai ritoccare a mano le icone.
-7. **Prima i requisiti** (`docs/REQUISITI.md`), poi il codice. Lavoro in sospeso in `docs/TODO.md`.
-8. **Versione** solo in `js/version.js`; `pages.yml` la copia nella cache del service worker.
-9. **Consegna = commit + push su `main`**, poi controlla che `sw.js` online abbia la nuova versione.
+## Regole
+**Regole comuni R01–R20: `.claude/skills/regole-app/SKILL.md` — leggile prima di ogni modifica.** Le regole scritte qui sotto vincono su quelle comuni.
+Specifiche di quest'app:
+1. Scelte fatte alla creazione (mascotte, musica, cloud, statistiche) in `js/config.js`: cambiale lì.
+2. Prima i requisiti (`docs/REQUISITI.md`), poi il codice. Lavoro in sospeso in `docs/TODO.md`.
+3. Consegna = `npm test` + `npm run check` verdi, commit e push su `main` (skill `rilascio`).
 
 ## Router
 | Se la richiesta parla di… | Skill | Agente | Modello · effort |
@@ -22,6 +19,7 @@ Lingua di lavoro: italiano semplice. Tono conciso. Creata con [app-forge](https:
 | testi, lingue | `traduzioni` | `traduttore` | sonnet · low |
 | «funziona?», prima del commit | `verifica` | `collaudatore` | haiku · low |
 | versione, pubblicazione | `rilascio` | `rilascio` | haiku · low |
+| revisione completa | `revisione` (plugin app-forge) | `revisore` | opus · high |
 | richiesta ambigua | — | `router` | haiku · low |
 
 Skill in `.claude/skills/<nome>/SKILL.md`, agenti in `.claude/agents/<nome>.md`. Agenti diversi da Claude Code: leggi quei file e seguili (ignora `model`/`effort`).
@@ -29,23 +27,30 @@ Una riga o un controllo noto: fallo direttamente.
 
 ## Mappa
 ```
-index.html             shell
-css/style.css          token di design e componenti
-js/app.js              interfaccia
-js/logic/              logica pura (testata)
-js/i18n.js             t(), lingue (LANGS)
-js/mascot.js           mascotte: unica fonte
-js/store.js            salvataggio locale
-js/version.js          versione
+index.html             shell: barra (Installa, Condividi, Musica, ?, Impostazioni), contenuto, piè con versione
+css/style.css          token e temi (chiaro, scuro, alto contrasto, daltonici), componenti, animazioni
+css/icons.css          GENERATO da npm run font (non toccare)
+js/app.js              avvio e collegamenti dell'interfaccia
+js/config.js           scelte dell'app (R01, R15, R16, R18)
+js/logic/              logica pura, testata
+js/i18n.js             t(), LINGUE (le 42 obbligatorie)
+js/mascot.js           mascotte: unica fonte (funzione pura)
+js/mascot-live.js      mascotte viva: occhi, tocco, frasi, sonno
+js/theme.js            temi        js/share.js   Condividi       js/install.js  Installa
+js/update.js           aggiornamenti automatici             js/tour.js     wizard (passi con versione)
+js/legal.js            consenso + scarico di responsabilità js/usage.js    statistiche anonime
+js/music.js            musica facoltativa                    js/work.js     Worker per lavori lunghi
+js/store.js            salvataggio locale                    js/version.js  versione
 sw.js                  cache offline
-locales/               testi
-tools/                 i18n-check, privacy-check, icons
+locales/, locales/legal/   testi e testi legali (42 lingue)
+tools/                 i18n-check, legal-check, privacy-check, ui-audit, icons, build-font, colors
 tests/                 node --test
 ```
 
 ## Comandi
 ```bash
-npm test          # logica + traduzioni + privacy
+npm test          # logica, lingue, legali, privacy
+npm run check     # 42 lingue, legali adattati, UI in 5 larghezze × 4 temi (axe)
 npm run serve     # http://localhost:8000
-npm run icons     # icone dalla mascotte
+npm run icons     # icone dalla mascotte          npm run font   # font di icone
 ```

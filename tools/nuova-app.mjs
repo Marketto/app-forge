@@ -2,6 +2,7 @@
 // npm run nuova-app -- --id volpe-note --nome "Volpe Note" --mascotte Kitsu --animale volpe \
 //   --colore "#ffd6a5" --categoria Casa --descrizione "Note veloci offline." [--dest ../volpe-note] [--prova]
 // --prova: crea i file ma non tocca catalog/apps.json (automatico fuori dal repo app-forge).
+// Scelte (R01, R16, R18, R15): --senza-mascotte  --musica  --sync dropbox,gdrive,webdav  --goatcounter <codice>
 import fs from "node:fs";
 import path from "node:path";
 
@@ -14,6 +15,8 @@ for (let i = 0; i < argv.length; i++) {
   opt[k] = argv[i + 1] && !argv[i + 1].startsWith("--") ? argv[++i] : true;
 }
 
+const noMascot = !!opt["senza-mascotte"];
+if (noMascot) { opt.mascotte ||= opt.nome; opt.animale ||= "—"; }
 const need = ["id", "nome", "mascotte", "animale", "colore"];
 const missing = need.filter(k => !opt[k]);
 if (missing.length) { console.error(`Mancano: ${missing.map(k => "--" + k).join(", ")}`); process.exit(1); }
@@ -23,7 +26,7 @@ if (!/^#[0-9a-f]{6}$/i.test(opt.colore)) { console.error("--colore: formato #rrg
 const catPath = path.join(ROOT, "catalog/apps.json");
 const cat = JSON.parse(fs.readFileSync(catPath, "utf8"));
 const norm = s => s.toLowerCase().normalize("NFD").replace(/\p{M}/gu, "").trim();
-const used = cat.apps.find(a => a.mascotte && norm(a.mascotte.animale) === norm(opt.animale));
+const used = !noMascot && cat.apps.find(a => a.mascotte && norm(a.mascotte.animale) === norm(opt.animale));
 if (used) { console.error(`L'animale «${opt.animale}» è già usato da ${used.nome}. Scegline un altro.`); process.exit(1); }
 if (cat.apps.some(a => a.id.toLowerCase() === opt.id.toLowerCase())) { console.error(`Esiste già un'app con id «${opt.id}».`); process.exit(1); }
 
@@ -35,9 +38,9 @@ if (fs.existsSync(dest) && fs.readdirSync(dest).filter(f => f !== ".git").length
 const desc = opt.descrizione || `${opt.nome}, con ${opt.mascotte}.`;
 const vars = {
   __ID__: opt.id, __NOME__: opt.nome, __MASCOTTE__: opt.mascotte, __ANIMALE__: opt.animale,
-  __COLORE__: opt.colore, __DESCRIZIONE__: desc, __ANNO__: String(new Date().getFullYear()),
+  __COLORE__: opt.colore, __DESCRIZIONE__: desc, __ANNO__: String(new Date().getFullYear()), __REPO__: `${cat.autore}/${opt.id}`,
 };
-const fill = s => s.replace(/__(ID|NOME|MASCOTTE|ANIMALE|COLORE|DESCRIZIONE|ANNO)__/g, m => vars[m]);
+const fill = s => s.replace(/__(ID|NOME|MASCOTTE|ANIMALE|COLORE|DESCRIZIONE|ANNO|REPO)__/g, m => vars[m]);
 
 function copy(src, dst) {
   for (const e of fs.readdirSync(src, { withFileTypes: true })) {
@@ -50,11 +53,21 @@ function copy(src, dst) {
 fs.mkdirSync(dest, { recursive: true });
 copy(path.join(ROOT, "template/pwa-statica"), dest);
 
+// Scelte fatte con il proprietario → js/config.js
+const sync = typeof opt.sync === "string" ? opt.sync.split(",").map(x => x.trim()).filter(Boolean) : [];
+const bad = sync.filter(x => !["dropbox", "gdrive", "webdav"].includes(x));
+if (bad.length) { console.error(`--sync: valori ammessi dropbox, gdrive, webdav (non ${bad.join(", ")})`); process.exit(1); }
+fs.writeFileSync(path.join(dest, "js/config.js"), `// Scelte fatte alla creazione dell'app (tools/nuova-app.mjs). Cambiale qui, non sparse nel codice.
+export const CONFIG = ${JSON.stringify({ id: opt.id, mascot: !noMascot, music: !!opt.musica, goatcounter: typeof opt.goatcounter === "string" ? opt.goatcounter : "", sync, repo: vars.__REPO__ }, null, 2)};
+`);
+if (sync.length) fs.appendFileSync(path.join(dest, "docs/TODO.md"), `- [ ] Salvataggio cloud (${sync.join(", ")}): porta la sync da Kapibo (\`js/sync/\`) con la skill porta-funzione e citala nella privacy (R18, R14).\n`);
+if (noMascot) fs.appendFileSync(path.join(dest, "docs/TODO.md"), "- [ ] Senza mascotte: disegna in `js/mascot.js` il simbolo dell'app (usato per le icone) e togli i passi del wizard sulla mascotte.\n");
+
 // Agenti e skill comuni (non quelli che servono solo ad app-forge).
 const claudeSrc = path.join(ROOT, ".claude");
 for (const sub of ["agents", "skills"]) fs.mkdirSync(path.join(dest, ".claude", sub), { recursive: true });
 for (const f of fs.readdirSync(path.join(claudeSrc, "agents"))) fs.copyFileSync(path.join(claudeSrc, "agents", f), path.join(dest, ".claude/agents", f));
-for (const s of ["mascotte-e-icone", "traduzioni", "verifica", "rilascio"]) {
+for (const s of ["mascotte-e-icone", "traduzioni", "verifica", "rilascio", "regole-app"]) {
   fs.mkdirSync(path.join(dest, ".claude/skills", s), { recursive: true });
   fs.copyFileSync(path.join(claudeSrc, "skills", s, "SKILL.md"), path.join(dest, ".claude/skills", s, "SKILL.md"));
 }
@@ -73,7 +86,7 @@ if (!opt.prova) {
   cat.apps.push({
     id: opt.id, nome: opt.nome, repo: `${cat.autore}/${opt.id}`, url: `https://${cat.autore.toLowerCase()}.github.io/${opt.id}/`,
     descrizione: desc, categoria: opt.categoria || "Strumenti",
-    mascotte: { nome: opt.mascotte, animale: opt.animale },
+    mascotte: noMascot ? { nome: "—", animale: "nessuna" } : { nome: opt.mascotte, animale: opt.animale },
     piattaforme: ["Web"], stack: "PWA, JavaScript senza build", colore: opt.colore, stato: "in sviluppo",
   });
   fs.writeFileSync(catPath, JSON.stringify(cat, null, 2) + "\n");

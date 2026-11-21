@@ -1,0 +1,23 @@
+/* Generato da tools/build-font.mjs: non modificare a mano. Uso: <i class="ic ic-share" aria-hidden="true"></i> */
+@font-face { font-family: "app-icons"; src: url("../fonts/app-icons.woff2") format("woff2"); font-display: block; }
+.ic { display: inline-block; font-family: "app-icons" !important; font-style: normal; font-weight: normal; line-height: 1; vertical-align: -0.14em; speak: never; -webkit-font-smoothing: antialiased; }
+.ic-share::before { content: "\e001"; }
+.ic-install::before { content: "\e002"; }
+.ic-help::before { content: "\e003"; }
+.ic-settings::before { content: "\e004"; }
+.ic-close::before { content: "\e005"; }
+.ic-plus::before { content: "\e006"; }
+.ic-trash::before { content: "\e007"; }
+.ic-check::before { content: "\e008"; }
+.ic-sun::before { content: "\e009"; }
+.ic-moon::before { content: "\e00a"; }
+.ic-contrast::before { content: "\e00b"; }
+.ic-eye::before { content: "\e00c"; }
+.ic-auto::before { content: "\e00d"; }
+.ic-globe::before { content: "\e00e"; }
+.ic-music::before { content: "\e00f"; }
+.ic-music-off::before { content: "\e010"; }
+.ic-refresh::before { content: "\e011"; }
+.ic-info::before { content: "\e012"; }
+.ic-upload::before { content: "\e013"; }
+.ic-cloud::before { content: "\e014"; }

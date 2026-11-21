@@ -1,0 +1,81 @@
+{
+  "title": "__NOME__ privacy notice and terms of use",
+  "updated": "Version 0.1.0 — update at every change (POLICY_VERSION in js/legal.js)",
+  "summary": [
+    "The data you enter stays on this device: the developer does not receive or see it.",
+    "No account needed and no ads.",
+    "Anonymous usage statistics are optional and you can turn them off at any time in Settings.",
+    "You use the app at your own risk: read the disclaimer below."
+  ],
+  "disclaimerTitle": "Disclaimer",
+  "disclaimer": "The app is provided free of charge “as is”, without warranties of any kind. By installing and using it on your device you accept that the developer is not liable for direct or indirect damage, data loss, device malfunctions or decisions taken based on what the app shows. Back up important data with the export feature.",
+  "approve": "I specifically approve the disclaimer (Articles 1341 and 1342 of the Italian Civil Code).",
+  "privacy": [
+    [
+      "h",
+      "1. Who is responsible"
+    ],
+    [
+      "p",
+      "__NOME__ is a free, open source app developed by Marketto on a non-professional basis. The developer does not receive or store the data you enter: processing takes place on your device for personal or household purposes (Art. 2(2)(c) of EU Regulation 2016/679). Questions: github.com/__REPO__/issues."
+    ],
+    [
+      "h",
+      "2. What data and where"
+    ],
+    [
+      "p",
+      "The data you enter and your settings (language, theme, consents) are saved only in the browser storage on this device. You delete them by clearing the site data in your browser or uninstalling the app."
+    ],
+    [
+      "h",
+      "3. External services"
+    ],
+    [
+      "p",
+      "The app is published on GitHub Pages (GitHub Inc.), which, like any website, receives the technical data of each request (IP address, browser, date and time). If you consent to statistics, the app sends GoatCounter only the name of anonymous events (e.g. “open”), with no cookies and no identifiers. [Add here every other service the app uses, for example the cloud chosen for saving.]"
+    ],
+    [
+      "h",
+      "4. Your rights"
+    ],
+    [
+      "p",
+      "You can withdraw consent to statistics at any time in Settings. For technical data processed by external services, their own privacy notices apply."
+    ]
+  ],
+  "terms": [
+    [
+      "h",
+      "1. Using the app"
+    ],
+    [
+      "p",
+      "You may use __NOME__ freely for personal purposes. The code is available under the MIT licence."
+    ],
+    [
+      "h",
+      "2. No warranty"
+    ],
+    [
+      "p",
+      "The app is provided “as is”. The developer does not guarantee that it is error-free, always available or fit for a particular purpose."
+    ],
+    [
+      "h",
+      "3. Limitation of liability"
+    ],
+    [
+      "p",
+      "To the extent permitted by law, the developer is not liable for damage arising from the use of, or inability to use, the app on your device, including data loss."
+    ],
+    [
+      "h",
+      "4. Changes"
+    ],
+    [
+      "p",
+      "These terms may change with new versions of the app: if so, we will ask you to accept them again."
+    ]
+  ]
+}

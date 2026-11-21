@@ -1,0 +1,81 @@
+{
+  "title": "Informativa privacy e condizioni d'uso di __NOME__",
+  "updated": "Versione 0.1.0 — da aggiornare a ogni modifica (POLICY_VERSION in js/legal.js)",
+  "summary": [
+    "I dati che inserisci restano su questo dispositivo: lo sviluppatore non li riceve e non li vede.",
+    "Non servono account e non ci sono pubblicità.",
+    "Le statistiche anonime d'uso sono facoltative e puoi spegnerle quando vuoi dalle Impostazioni.",
+    "Usi l'app sotto la tua responsabilità: leggi lo scarico di responsabilità qui sotto."
+  ],
+  "disclaimerTitle": "Scarico di responsabilità",
+  "disclaimer": "L'app è fornita gratuitamente «così com'è», senza garanzie di alcun tipo. Installandola e usandola sul tuo dispositivo accetti che lo sviluppatore non risponde di danni diretti o indiretti, perdita di dati, malfunzionamenti del dispositivo o decisioni prese in base a quanto mostrato dall'app. Fai copie dei dati importanti con la funzione di esportazione.",
+  "approve": "Approvo in modo specifico lo scarico di responsabilità (artt. 1341 e 1342 del Codice civile).",
+  "privacy": [
+    [
+      "h",
+      "1. Chi è responsabile"
+    ],
+    [
+      "p",
+      "__NOME__ è un'app gratuita e open source sviluppata da Marketto a titolo non professionale. Lo sviluppatore non riceve e non conserva i dati che inserisci: il trattamento avviene sul tuo dispositivo per finalità personali o domestiche (art. 2, par. 2, lett. c del Regolamento UE 2016/679). Per domande: github.com/__REPO__/issues."
+    ],
+    [
+      "h",
+      "2. Quali dati e dove"
+    ],
+    [
+      "p",
+      "I dati che inserisci e le impostazioni (lingua, tema, consensi) sono salvati solo nella memoria del browser su questo dispositivo. Li cancelli eliminando i dati del sito dal browser o disinstallando l'app."
+    ],
+    [
+      "h",
+      "3. Servizi esterni"
+    ],
+    [
+      "p",
+      "L'app è pubblicata su GitHub Pages (GitHub Inc.), che riceve come ogni sito i dati tecnici della richiesta (indirizzo IP, browser, data e ora). Se acconsenti alle statistiche, l'app invia a GoatCounter solo il nome di eventi anonimi (es. «apertura»), senza cookie e senza identificativi. [Aggiungi qui ogni altro servizio usato dall'app, ad esempio il cloud scelto per il salvataggio.]"
+    ],
+    [
+      "h",
+      "4. I tuoi diritti"
+    ],
+    [
+      "p",
+      "Puoi revocare il consenso alle statistiche in qualsiasi momento dalle Impostazioni. Per i dati tecnici trattati dai servizi esterni valgono le loro informative."
+    ]
+  ],
+  "terms": [
+    [
+      "h",
+      "1. Uso dell'app"
+    ],
+    [
+      "p",
+      "Puoi usare __NOME__ liberamente per scopi personali. Il codice è disponibile con licenza MIT."
+    ],
+    [
+      "h",
+      "2. Nessuna garanzia"
+    ],
+    [
+      "p",
+      "L'app è fornita «così com'è». Lo sviluppatore non garantisce che sia priva di errori, sempre disponibile o adatta a uno scopo particolare."
+    ],
+    [
+      "h",
+      "3. Limitazione di responsabilità"
+    ],
+    [
+      "p",
+      "Nei limiti consentiti dalla legge, lo sviluppatore non è responsabile di danni derivanti dall'uso o dall'impossibilità di usare l'app sul tuo dispositivo, inclusa la perdita di dati."
+    ],
+    [
+      "h",
+      "4. Modifiche"
+    ],
+    [
+      "p",
+      "Queste condizioni possono cambiare con nuove versioni dell'app: in quel caso te le chiederemo di nuovo."
+    ]
+  ]
+}

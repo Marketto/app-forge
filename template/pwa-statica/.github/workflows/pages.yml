@@ -13,11 +13,14 @@ jobs:
         with: { node-version: 22 }
       - run: node --test tests/*.test.mjs
       - run: node tools/privacy-check.mjs
+      # R08 e R14: tutte le lingue e testi legali adattati all'app, altrimenti non si pubblica.
+      - run: node tools/i18n-check.mjs --tutte
+      - run: node tools/legal-check.mjs --tutte
       - name: Prepara il sito
         run: |
           V=$(grep -oP 'APP_VERSION = "\K[^"]+' js/version.js)
-          mkdir _site && cp -r index.html manifest.webmanifest sw.js css js locales icons _site/
-          [ -d vendor ] && cp -r vendor _site/ || true
+          mkdir _site && cp -r index.html manifest.webmanifest sw.js css js fonts locales icons _site/
+          for d in vendor assets; do [ -d $d ] && cp -r $d _site/ || true; done
           sed -i "s/const VERSION = \"dev\"/const VERSION = \"$V\"/" _site/sw.js
           touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@v3

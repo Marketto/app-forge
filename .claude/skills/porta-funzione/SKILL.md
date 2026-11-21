@@ -6,7 +6,8 @@ description: Copiare una funzione già fatta da un'app di Marketto a un'altra (e
 
 > **Percorsi**: `docs/APP.md` e `catalog/apps.json` sono nella radice di app-forge (`${CLAUDE_PLUGIN_ROOT}` se usi il plugin).
 
-1. **Trova l'origine** in `docs/APP.md` (tabella «Serve… / Copia da / File»). Se non c'è, chiedi da quale app prenderla.
+1. **Trova l'origine** in `docs/APP.md` (tabella «Serve… / Copia da / File») o nel modello `template/pwa-statica` (temi, wizard, legale, statistiche, musica, Worker, font di icone, audit UI). Se non c'è, chiedi da quale app prenderla.
+   **Richiamare o copiare? (R19)** Se il modulo è autonomo e stabile e l'app d'origine è su `marketto.github.io`, puoi importarlo dal suo indirizzo pubblicato (stesso dominio, nessun problema CORS; aggiungilo alla cache del service worker). Se va adattato, copialo.
 2. **Leggi solo i file utili** dell'app di origine: clona con `git clone --depth 1 https://github.com/Marketto/<repo> /tmp/<repo>` e usa `grep -n` per trovare punti d'ingresso, dipendenze e testi (`t("…")`). Non leggere tutto il repo.
 3. **Piano breve** (aspetta l'ok): file da copiare, cosa cambia (nomi, chiavi di storage, testi, mascotte, colori), dipendenze in `vendor/`, impatto sul service worker.
 4. **Copia e adatta** nell'app di destinazione:

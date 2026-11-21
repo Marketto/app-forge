@@ -1,25 +1,21 @@
 # app-forge — guida per agenti (Claude, Codex, Cursor, Copilot, Gemini…)
 
-Fabbrica delle app di Marketto. Serve a tre cose:
+Fabbrica delle app di Marketto. Serve a quattro cose:
 1. **Creare una nuova app** con le stesse regole delle app già fatte (skill `nuova-app`).
 2. **Migliorare le app esistenti** con le stesse regole (skill `migliora-app`, `porta-funzione`).
-3. **Tenere aggiornato il catalogo** su GitHub Pages: https://marketto.github.io/app-forge/ (skill `catalogo`).
+3. **Revisionare un progetto** in 2 giri con un revisore indipendente (skill `revisione`).
+4. **Tenere aggiornato il catalogo** su GitHub Pages: https://marketto.github.io/app-forge/ (skill `catalogo`).
 
 Lingua di lavoro: italiano semplice. Tono conciso. Identificatori del codice in inglese.
 
-## Regole d'oro (valgono per ogni app creata da qui)
-Ricavate dalle app esistenti: dettagli e motivazioni in `docs/CONVENZIONI.md`.
-
-1. **Niente server, dati sul dispositivo.** PWA statica su GitHub Pages, offline first (service worker). Nessuna chiamata di rete con dati dell'utente. Unica telemetria ammessa: GoatCounter anonimo, facoltativo, con consenso.
-2. **Senza build quando si può.** Vanilla JS, librerie copiate in `vendor/`. React + Vite solo se l'app lo richiede davvero (decide `architetto`).
-3. **Una mascotte kawaii, animale nuovo.** Mai un animale già usato (elenco in `catalog/apps.json`, campo `mascotte.animale`). Una sola fonte SVG (`js/mascot.js`), icone generate da lì.
-4. **Ogni testo passa da `t("chiave")`.** Fonte `locales/it.json` + `en.json`, poi tutte le lingue (39 come Turnotto/Schiaccia PDF). `tools/i18n-check.mjs` deve passare.
-5. **Token di design**: colori solo da variabili CSS, tema chiaro + scuro. Accessibilità AA, bersagli ≥ 44 px, `aria-label` sui pulsanti a icona, `prefers-reduced-motion`, layout provato a 390 px.
-6. **Logica separata dalla UI** e testata con `node --test` (senza browser).
-7. **Nessun dato personale nel repo** (repo pubblici): niente email, chiavi, token, IBAN, file d'esempio del proprietario. Autore commit `Marketto <Marketto@users.noreply.github.com>`. `tools/privacy-check.mjs` blocca.
-8. **Versione in un posto solo** (`js/version.js`), copiata nel nome della cache del service worker al deploy: così i telefoni si aggiornano.
-9. **Funzione nuova = passo nel tour/novità** per chi aggiorna.
-10. **Consegna = commit + push su `main`**, poi attendi il deploy e controlla la versione online. Non mandare file in chat.
+## Regole (R01–R20)
+**Fonte unica: `.claude/skills/regole-app/SKILL.md`. Leggila sempre prima di creare, modificare o verificare un'app.** Dettagli ed esempi in `docs/CONVENZIONI.md`.
+In breve:
+- **Chiedi prima di costruire** (domande a scelta): mascotte sì/no e quale (R01), musica sì/no (R16), salvataggio cloud se ha senso (R18).
+- **Aspetto**: mascotte kawaii anni '90/2000 animata e interattiva con frasi motivazionali (R01–R02), icone in font con simboli standard (R03), icona app su sfondo che esalta la mascotte (R04).
+- **Sempre**: installabile (R05), offline con aggiornamenti automatici (R06), versione e Condividi visibili (R07), 42 lingue (R08), WCAG AA (R09), temi chiaro/scuro/alto contrasto/daltonici (R10), responsive e allineata (R11), semplice (R12), wizard con focus (R13), privacy e condizioni con scarico di responsabilità (R14), statistiche anonime con consenso (R15).
+- **Se serve**: lavoro in background (R17).
+- **Codice e lavoro**: moduli piccoli e testati, riuso delle funzioni di altre app (R19); niente server né dati personali nel repo, consegna con push (R20).
 
 ## Router — da richiesta a skill/agente
 
@@ -33,6 +29,7 @@ Ricavate dalle app esistenti: dettagli e motivazioni in `docs/CONVENZIONI.md`.
 | test, «funziona?», controllo prima del push | `verifica` | `collaudatore` | haiku · low |
 | versione, pubblicazione, deploy | `rilascio` | `rilascio` | haiku · low |
 | aggiungere/aggiornare un'app nel catalogo, schermate | `catalogo` | — | haiku · low |
+| revisione del progetto, «controlla che sia tutto coerente» | `revisione` | `revisore` (2 giri) | opus · high |
 | richiesta ambigua o su più aree | — | `router` | haiku · low |
 
 Skill in `.claude/skills/<nome>/SKILL.md`, agenti in `.claude/agents/<nome>.md`.
@@ -47,11 +44,11 @@ tools/build-catalog.mjs  genera _site/ (pagina del catalogo), nessuna dipendenza
 tools/screenshots.mjs    aggiorna icone e schermate aprendo le app online (Playwright)
 tools/nuova-app.mjs      crea una nuova app dal modello in template/pwa-statica
 tools/privacy-check.mjs  blocca dati sensibili
-tools/controlla-app.mjs  controllo veloce di un'app esistente (cosa manca)
+tools/controlla-app.mjs  controllo veloce di un'app rispetto a R01–R20
 tools/attiva-plugin.mjs  attiva il plugin in un repo esistente
 tools/cli.mjs            riga di comando (npx github:Marketto/app-forge …)
 tools/mcp-server.mjs     server MCP (strumenti per qualsiasi client)
-template/pwa-statica/    modello di app: PWA senza build con mascotte, i18n, tema, test, deploy
+template/pwa-statica/    modello di app che rispetta R01–R20 (temi, wizard, legale, statistiche, font di icone, audit UI)
 docs/                    CONVENZIONI (regole comuni), APP (da dove copiare), MODALITA (tutti i modi d'uso)
 .github/workflows/       pages.yml (catalogo), schermate.yml (ogni lunedì)
 .claude-plugin/          plugin e marketplace di Claude Code

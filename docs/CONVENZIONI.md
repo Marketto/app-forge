@@ -1,53 +1,42 @@
-# Convenzioni comuni
+# Convenzioni: come applicare le regole R01–R20
 
-Regole ricavate da 10 app: Hari Hari Puzzle, Kapibo, Mochi Spesa, Ottoteca, Schiaccia PDF, Turnotto, Lunibù, Printopus, SuriClean, Hoppy.
-Per ogni regola: cosa fare e dove trovare un esempio vero.
+Le regole sono **solo** in `.claude/skills/regole-app/SKILL.md`. Qui trovi, per ogni regola, dove è già fatta bene:
+nel modello `template/pwa-statica` (punto di partenza di ogni app nuova) o in una delle 10 app esistenti.
 
-## 1. Architettura
-- **PWA statica su GitHub Pages**, servita da `main` con `.github/workflows/pages.yml`. Percorsi sempre relativi (l'app vive sotto `/<repo>/`).
-- **Senza build** (Kapibo, Turnotto, Schiaccia PDF, Ottoteca, Hari): `index.html` + `js/` + `css/`, librerie copiate in `vendor/` e mai modificate.
-- **Con build** solo se serve (Printopus: three.js + TypeScript; Lunibù: React + contenuti generati). Vite + `vite-plugin-pwa`, `base: './'`.
-- **App native** (SuriClean, Hoppy): il sito su Pages è la pagina di download; le app escono da `release.yml` con i tag.
-- **Offline first**: service worker con cache che cambia nome a ogni versione; «rete prima» per l'app, «cache prima» per librerie pesanti (esempio: `Kapibo/sw.js`).
-- **Lazy load**: moduli grandi caricati solo quando servono (Hari: `src/games/catalog.js`; Schiaccia: `compila.js`, `modifica.js`).
-- **Logica pura separata dalla UI**, testabile con `node --test` (Hari: `*-logic.js`; Printopus: `src/core`).
-- **Dati**: `localStorage` per poco, IndexedDB per tanto (Ottoteca). Sincronizzazione facoltativa con il cloud dell'utente (Dropbox / Google Drive), mai un server nostro. Chiavi pubbliche dei servizi solo nel sito pubblicato, iniettate da `pages.yml` con `vars.*` (Kapibo).
+| Regola | Nel modello | Esempio in un'app |
+|---|---|---|
+| R01 Mascotte kawaii animata | `js/mascot.js` (fonte unica), animazioni in `css/style.css` | Ottoteca `app/js/otto.js` (occhi che seguono), Schiaccia PDF `tools/mascot.mjs` |
+| R02 Mascotte interattiva | `js/mascot-live.js`, frasi `mascot.ev.*` | Kapibo `cheer.js` |
+| R03 Icone in font | `tools/icons/icons.mjs` → `npm run font` | Kapibo `tools/build-font.mjs`, Turnotto `tools/build-icons.py` |
+| R04 Icona dell'app | `tools/icons.mjs` (sfondo calcolato) | Printopus `tools/mascot/takotta.py` |
+| R05 Installabile | `js/install.js`, `manifest.webmanifest` | Kapibo (scheda «Installa») |
+| R06 Offline e aggiornamenti | `sw.js`, `js/update.js`, `pages.yml` (versione nella cache) | Kapibo `sw.js` |
+| R07 Versione e Condividi | piè di pagina, `js/share.js` | Kapibo (riga in alto) |
+| R08 42 lingue | `js/i18n.js` (`LINGUE`), `tools/i18n-check.mjs --tutte` | Kapibo `locales/` (42), Turnotto e Schiaccia PDF (39) |
+| R09 Accessibilità | `tools/ui-audit.mjs` (axe, WCAG 2.2 AA) | Turnotto `tools/ui-audit.mjs` |
+| R10 Temi | `css/style.css`, `js/theme.js` (auto, chiaro, scuro, contrasto, daltonici) | — (nuovo) |
+| R11 Responsive | `tools/ui-audit.mjs` (320–1920 px) | Turnotto |
+| R12 Semplice | una scheda, un'azione principale | Hari Hari Puzzle |
+| R13 Wizard | `js/tour.js` (focus + mascotte, novità per versione) | Kapibo `js/tour.js`, Lunibù `src/data/tour.js` |
+| R14 Privacy e condizioni | `js/legal.js`, `locales/legal/`, `tools/legal-check.mjs` | Kapibo `js/legal.js` |
+| R15 Statistiche anonime | `js/usage.js` (GoatCounter con consenso) | Hari Hari Puzzle `src/core/usage.js` |
+| R16 Musica | `js/music.js` (WebAudio, interruttore) | Hari Hari Puzzle `src/core/fx.js`, Lunibù `src/lib/audio/` |
+| R17 Background | `js/work.js` (Worker con avanzamento) | Schiaccia PDF (worker) |
+| R18 Cloud | — (da portare) | Kapibo `js/sync/` (Dropbox, Google Drive), Mochi Spesa `js/dropbox.js` |
+| R19 Codice | `js/logic/` + `tests/` | Hari `*-logic.js`, Printopus `src/core` |
+| R20 Repo e consegna | `tools/privacy-check.mjs`, `pages.yml` | tutte |
 
-## 2. Mascotte e stile
-- Ogni app ha **una mascotte animale kawaii** con nome, che commenta le azioni con frasi brevi, gentili, mai giudicanti (Kapibo `cheer.js`).
-- **Animale mai già usato**: controlla `catalog/apps.json` (`mascotte.animale`).
-- **Una sola fonte** per la mascotte (`tools/mascot.mjs` o `.py`): da lì escono SVG in pagina, icone 192/512/maskable, favicon. Mai ritoccare a mano i file generati.
-- Mascotte interattiva quando ha senso (Ottoteca: occhi che seguono il puntatore, tocco = reazione) e con stati (`happy`, `think`, `sleep`, `wow`).
-- Stile: forme tonde (raggio 20–28 px), ombre morbide, pastello, tema chiaro + scuro (`[data-theme]` o `prefers-color-scheme`). Colori **solo da variabili CSS**.
-- Icone UI: font di icone generato da SVG (Kapibo, Turnotto, Ottoteca) o SVG inline; emoji solo nei testi.
-- **Scelte estetiche: prima le proposte.** Per mascotte, colori o stile nuovi mostra 2–4 proposte (schermate a 390 px) e implementa solo quella scelta (Schiaccia PDF).
+## Note pratiche
+- **Percorsi relativi**: l'app vive sotto `/<repo>/` su GitHub Pages.
+- **Senza build** (predefinito): moduli ES, librerie copiate in `vendor/` e mai modificate. **Con build** solo se serve (Printopus: three.js + TypeScript; Lunibù: React): Vite + `vite-plugin-pwa`, `base: './'`.
+- **App native** (SuriClean, Hoppy): il sito su Pages è la pagina di download; molte regole web (R05, R06, R11) si applicano solo al sito.
+- **Dati**: `localStorage` per poco, IndexedDB per tanto (Ottoteca). Chiavi con prefisso `<id>:` per non mescolare le app sullo stesso dominio.
+- **Richiamare una funzione da un'altra app** (R19): stesso dominio `marketto.github.io`, quindi un modulo pubblicato si può importare senza CORS (Kapibo usa il motore di Schiaccia PDF). Solo per moduli autonomi e stabili; altrimenti `porta-funzione`.
+- **Scelte estetiche**: prima 2–4 proposte (schermate a 390 px), poi si implementa quella scelta.
 
-## 3. Testi e lingue
-- Ogni testo visibile passa da `t("chiave")`. Fonte di verità `en.json` (o `it.json`), tutte le altre lingue allineate, stessi segnaposto `{nome}`.
-- 39–43 lingue, RTL per `ar`. Controllo automatico `tools/i18n-check.mjs` nel workflow.
-- Frasi intere con segnaposto, niente stringhe composte a pezzi (Printopus).
-
-## 4. Accessibilità
-- Contrasto AA (testo ≥ 4.5:1), bersagli ≥ 44 px, `aria-label` sui pulsanti a icona, `<dialog>` con `aria-labelledby` ed Esc.
-- `prefers-reduced-motion` spegne le animazioni. Animazioni di feedback ≤ 600 ms.
-- Layout provato a 390 px di larghezza. Controllo axe con Playwright dove c'è (Ottoteca, Turnotto).
-
-## 5. Privacy e legale
-- Repo pubblici: **nessun dato personale** (email, nomi, importi, IBAN, chiavi, file d'esempio). Esempi e test con dati inventati, creati al volo.
-- `tools/privacy-check.mjs` nel workflow e prima del commit.
-- Primo avvio: consenso a condizioni d'uso e privacy, con versione (`POLICY_VERSION`): se cambia, si riaccetta (Kapibo).
-- Disclaimer chiaro dove serve (Lunibù: non è un dispositivo medico).
-
-## 6. Versioni e rilascio
-- Semver a tre cifre, in un posto solo, mostrata nell'app.
-- Versione copiata nel nome cache del service worker al deploy, così i telefoni si aggiornano da soli.
-- Funzione nuova → passo nel tour di benvenuto/novità con la versione (`tour.js`, `news`).
-- Commit e push su `main`, autore `Marketto <Marketto@users.noreply.github.com>`. Poi attendi il deploy e controlla che `sw.js` online abbia la nuova versione.
-
-## 7. Lavoro con gli agenti
-- `AGENTS.md` (letto da tutti gli agenti; `CLAUDE.md` lo importa con `@AGENTS.md`) corto con **regole d'oro + tabella router** (richiesta → skill → agente → modello/effort).
-- Agenti economici per lavori ripetitivi (haiku: test, rilascio), costosi solo per architettura e logica difficile (opus).
-- **Risparmio token**: mappa del codice in `docs/` (file → funzioni), `grep -n` e lettura di sole righe utili; mai leggere `vendor/`, lingue diverse da it/en, file generati.
-- **Chi scrive non verifica se stesso** (Lunibù: `evidence-verifier`). Ogni task si chiude con la skill `verifica`.
-- Prima la documentazione, poi il codice: requisito in `docs/REQUISITI.md`, poi implementazione (Schiaccia PDF).
-- Lavoro in sospeso in `docs/TODO.md`.
+## Lavoro con gli agenti
+- `AGENTS.md` (letto da tutti gli agenti; `CLAUDE.md` lo importa con `@AGENTS.md`): breve, con router richiesta → skill → agente → modello/effort.
+- Modelli economici per i lavori ripetitivi (haiku: test, rilascio), opus solo per architettura, revisione e logica difficile.
+- **Risparmio token**: `grep -n` e lettura di sole righe utili; mai leggere `vendor/`, lingue diverse da it/en, file generati.
+- **Chi scrive non verifica se stesso**: `collaudatore` e `revisore` lavorano con contesto nuovo.
+- Prima i requisiti (`docs/REQUISITI.md`), poi il codice; lavoro in sospeso in `docs/TODO.md`.

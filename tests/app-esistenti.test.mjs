@@ -25,6 +25,6 @@ test("controlla-app: il modello di app passa quasi tutto, una cartella vuota no"
   assert.ok(r0.controlli.filter(c => c.ok === false).length > 10);
   const r1 = controlla("template/pwa-statica");
   const ko = r1.controlli.filter(c => c.ok === false).map(c => c.cosa);
-  // Il modello ha 2 lingue (obiettivo 39), non ha ancora il tour e il plugin si attiva solo nelle app create.
-  assert.deepEqual(ko.sort(), ["Lingue", "Plugin app-forge attivo", "Tour o novità per chi aggiorna"].sort(), ko.join(", "));
+  // Il modello ha solo it/en (le altre 40 lingue si fanno per ogni app) e il plugin si attiva solo nelle app create.
+  assert.deepEqual(ko.sort(), ["Plugin app-forge attivo", "Tutte le 42 lingue"].sort(), ko.join(", "));
 });

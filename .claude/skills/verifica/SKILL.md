@@ -1,18 +1,28 @@
 ---
 name: verifica
-description: Controlli da fare prima di ogni commit o per rispondere a «funziona ancora?».
+description: Verifica che un'app rispetti tutte le regole R01–R20 (test, lingue, legali, accessibilità, temi, layout, privacy) prima di ogni commit o per «funziona ancora?».
 ---
 # Verifica
 
-In una app creata dal modello:
+> **Percorsi**: `tools/controlla-app.mjs` è in app-forge (`${CLAUDE_PLUGIN_ROOT}` se usi il plugin).
+
+## 1. Controlli automatici
+In un'app creata dal modello:
 ```bash
-node --test tests/*.test.mjs          # logica
-node tools/i18n-check.mjs   # traduzioni
-node tools/privacy-check.mjs # dati sensibili
+npm test          # logica, struttura lingue e legali, privacy
+npm run check     # 42 lingue, legali adattati, UI: 5 larghezze × 4 temi con axe (R08–R11, R14)
+node ${CLAUDE_PLUGIN_ROOT}/tools/controlla-app.mjs .   # regole R01–R20 sui file
 ```
-Poi prova a mano: `python3 -m http.server 8000` e apri a 390 px e a 1280 px, tema chiaro e scuro.
-Controlla: nessun errore in console, pulsanti ≥ 44 px, funziona offline dopo il primo caricamento.
+In app-forge: `npm test`. In un'app più vecchia usa i suoi comandi (vedi il suo CLAUDE.md) più `controlla-app`.
 
-In app-forge: `npm test` (test strumenti + build catalogo + privacy).
+## 2. Controlli a mano (quelli che lo script segna ❔)
+Apri l'app (`npm run serve`) a 390 px e 1280 px:
+- **R12** un'azione principale per schermata, testi brevi, si capisce senza spiegazioni;
+- **R01–R02** la mascotte respira, sbatte le ciglia, segue il dito, al tocco salta e incoraggia;
+- **R13** il wizard parte al primo avvio, mette a fuoco le parti giuste, si riapre con «?»;
+- **R14** il consenso si vede al primo avvio e lo scarico di responsabilità è evidenziato;
+- **R05–R06** si installa; dopo un nuovo deploy l'app si aggiorna da sola;
+- **R16–R18** se scelte: musica con interruttore, Worker per i lavori lunghi, export/import.
 
-Riporta solo cosa fallisce. Se un controllo non si può eseguire, dillo.
+## 3. Risultato
+Riporta solo cosa fallisce, con il codice della regola e file:riga. Se un controllo non si può eseguire (manca il browser, manca una dipendenza), dillo invece di dire che è tutto ok.

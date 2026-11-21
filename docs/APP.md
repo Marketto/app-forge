@@ -1,6 +1,6 @@
 # App esistenti: da dove copiare
 
-Quando serve una soluzione già fatta, prendila da qui invece di riscriverla.
+Quando serve una soluzione già fatta, prendila da qui invece di riscriverla. Molte sono già nel modello `template/pwa-statica` (vedi la tabella per regola in `docs/CONVENZIONI.md`): partire da lì è la scelta più semplice.
 
 | Serve… | Copia da | File |
 |---|---|---|

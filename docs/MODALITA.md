@@ -30,6 +30,13 @@ Nel repo dell'app (Kapibo, Turnotto…):
 
 Per prendere una funzione da un'altra app: «usa app-forge:porta-funzione: il tour di Kapibo qui».
 Solo il controllo, senza AI: `npx github:Marketto/app-forge controlla`.
+
+## Revisione di un progetto (qualsiasi repo)
+Nella cartella del progetto:
+```bash
+npx -y github:Marketto/app-forge revisione
+```
+Apre Claude Code con il modello opus e il plugin caricato al volo, e lancia la skill `revisione`: 2 giri di un revisore indipendente, correzioni sicure applicate e testate, decisioni lasciate a te. Con il plugin già installato basta `claude --model opus "/app-forge:revisione"`.
 Le regole scritte nel `CLAUDE.md`/`AGENTS.md` dell'app vincono sempre su quelle comuni.
 
 Il catalogo si aggiorna solo dal repo app-forge, perché è l'unico posto con `catalog/apps.json` vero: plugin, `npx` e MCP lavorano su una copia.
@@ -50,8 +57,8 @@ All'avvio un hook installa le dipendenze di sviluppo; il server MCP del repo (`.
 /plugin install app-forge@app-forge
 ```
 Da Claude Code 2.1.275 basta `/plugin install app-forge --marketplace Marketto/app-forge`.
-Ottieni, con il prefisso `app-forge:`, le skill `regole-app`, `nuova-app`, `migliora-app`, `porta-funzione`, `mascotte-e-icone`, `traduzioni`, `verifica`, `rilascio`, `catalogo`,
-gli agenti `architetto`, `ui-kawaii`, `traduttore`, `collaudatore`, `rilascio`, `router` e gli strumenti MCP (modalità 7).
+Ottieni, con il prefisso `app-forge:`, le skill `regole-app`, `nuova-app`, `migliora-app`, `porta-funzione`, `revisione`, `mascotte-e-icone`, `traduzioni`, `verifica`, `rilascio`, `catalogo`,
+gli agenti `architetto`, `revisore`, `ui-kawaii`, `traduttore`, `collaudatore`, `rilascio`, `router` e gli strumenti MCP (modalità 7).
 Esempi: «usa app-forge:nuova-app per un'app che…», «applica app-forge:regole-app a questo repo».
 Aggiornare: `/plugin marketplace update app-forge`.
 
@@ -81,6 +88,7 @@ npx github:Marketto/app-forge app        # app del catalogo
 npx github:Marketto/app-forge regole     # regole comuni
 npx github:Marketto/app-forge controlla  # cosa manca all'app nella cartella corrente
 npx github:Marketto/app-forge attiva-plugin  # attiva il plugin nel repo corrente
+npx github:Marketto/app-forge revisione  # revisione in 2 giri con Claude Code (opus)
 ```
 L'app viene creata nella cartella corrente. Dentro app-forge: `npm run nuova-app -- …` (aggiunge anche al catalogo), `npm run catalogo`, `npm run schermate`.
 

@@ -12,7 +12,13 @@
     "mcp": "node tools/mcp-server.mjs"
   },
   "devDependencies": {
-    "playwright": "^1.49.0"
+    "axe-core": "^4.14.1",
+    "playwright": "^1.49.0",
+    "potrace": "^2.1.8",
+    "sharp": "^0.35.5",
+    "svg2ttf": "^6.1.0",
+    "svgicons2svgfont": "^15.0.1",
+    "ttf2woff2": "^8.0.1"
   },
   "license": "MIT",
   "bin": {
