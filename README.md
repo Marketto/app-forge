@@ -30,11 +30,26 @@ Claude controlla cosa manca, propone al massimo 7 miglioramenti e li fa uno alla
 Per prendere una funzione da un'altra app: «usa app-forge:porta-funzione: il tour di Kapibo qui». Dettagli in [`docs/MODALITA.md`](docs/MODALITA.md#migliorare-unapp-esistente).
 
 ## Revisionare un progetto
-In qualsiasi repo, una riga:
+**Prompt** (funziona ovunque, anche dal telefono o dal web, senza installare niente):
+```
+Revisiona questo progetto seguendo https://raw.githubusercontent.com/Marketto/app-forge/main/.claude/skills/revisione/SKILL.md
+```
+**Comando** (sul computer, con Claude Code installato):
 ```bash
 npx -y github:Marketto/app-forge revisione
 ```
-Claude Code (opus) fa 2 giri di revisione indipendente: coerenza, struttura, ottimizzazione, errori e regole R01–R20; applica le correzioni sicure e ti lascia le decisioni.
+**Con il plugin attivo**: «revisiona il progetto» oppure `/app-forge:revisione`.
+
+Claude fa 2 giri con un revisore indipendente (opus): coerenza, struttura, ottimizzazione, errori e, per le app, regole R01–R20. Applica e testa le correzioni sicure, fa un commit per giro (senza push) e ti lascia le decisioni.
+
+## Attivare il plugin
+| Dove | Come |
+|---|---|
+| **Per te, in tutti i progetti** (Claude Code sul computer: terminale, app desktop, editor) | `/plugin marketplace add Marketto/app-forge` e poi `/plugin install app-forge@app-forge`. Aggiornare: `/plugin marketplace update app-forge` |
+| **In un repo** (vale per chi lo apre) | `npx -y github:Marketto/app-forge attiva-plugin` nella cartella del repo, poi commit e push di `.claude/settings.json` |
+| **App create da app-forge** | già attivo |
+
+`/plugin` **non esiste nell'app Claude sul telefono né nelle sessioni cloud** (risponde «isn't available in this environment»). Lì usa i prompt di questo README. Controllo: in Claude Code sul computer `/plugin` deve elencare `app-forge`.
 
 ## Creare una nuova app
 Con Claude Code in questa cartella: «fammi un'app che…». Parte la skill `nuova-app`.

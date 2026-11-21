@@ -56,6 +56,7 @@ Chiedi «fammi un'app che…» (skill `nuova-app`) o «aggiungi Volpe Note al ca
 All'avvio un hook installa le dipendenze di sviluppo; il server MCP del repo (`.mcp.json`) è già attivo.
 
 ## 2. Plugin da un altro repo
+Solo in Claude Code sul computer (terminale, app desktop, editor): nell'app sul telefono e nel cloud `/plugin` non esiste, lì usa il prompt della sezione «Revisione».
 ```
 /plugin marketplace add Marketto/app-forge
 /plugin install app-forge@app-forge
@@ -78,7 +79,8 @@ Chi apre il repo con Claude Code si vede proporre il plugin. Per un'app già esi
 ## 4. Claude Code sul web (cloud)
 Da https://claude.ai/code (anche dal telefono):
 - **Lavoro su app-forge**: scegli il repo app-forge. Il file `.claude/settings.json` del repo vale anche nel cloud (hook, MCP, permessi).
-- **Lavoro su un'app**: scegli il repo dell'app; il blocco della modalità 3 propone il plugin. In alternativa aggiungi app-forge alla stessa sessione: Claude legge le sue skill e può anche aggiornare il catalogo.
+- **Niente `/plugin` qui**: il comando non esiste sul web e nell'app del telefono. Per la revisione usa il prompt di una riga (sezione «Revisione»).
+- **Lavoro su un'app**: scegli il repo dell'app; il blocco della modalità 3 propone il plugin (verificato solo in Claude Code sul computer). In alternativa aggiungi app-forge alla stessa sessione: Claude legge le sue skill e può anche aggiornare il catalogo.
 - **Nuova app**: crea prima su GitHub il repo vuoto, poi aggiungi alla sessione app-forge e il nuovo repo.
 
 ## 5. Riga di comando
