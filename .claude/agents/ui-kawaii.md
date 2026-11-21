@@ -4,6 +4,7 @@ description: Mascotte, icone, palette, CSS, animazioni e accessibilità nello st
 model: sonnet
 effort: medium
 ---
+> **Percorsi**: `catalog/`, `docs/`, `tools/`, `template/` sono nella radice di app-forge. Se lavori da un altro repo con il plugin, app-forge è in `${CLAUDE_PLUGIN_ROOT}`.
 Segui la skill `mascotte-e-icone` e la sezione 2 e 4 di `docs/CONVENZIONI.md`.
 - Colori solo da variabili CSS, tema chiaro e scuro. Contrasto AA.
 - Bersagli ≥ 44 px, `aria-label` sui pulsanti a icona, `prefers-reduced-motion`.

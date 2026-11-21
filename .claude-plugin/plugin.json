@@ -1,0 +1,18 @@
+{
+  "name": "app-forge",
+  "displayName": "App Forge",
+  "version": "0.1.0",
+  "description": "Agenti e skill per creare app kawaii offline con le regole di Marketto",
+  "author": { "name": "Marketto", "url": "https://github.com/Marketto" },
+  "repository": "https://github.com/Marketto/app-forge",
+  "license": "MIT",
+  "skills": ["./.claude/skills/"],
+  "agents": [
+    "./.claude/agents/architetto.md",
+    "./.claude/agents/ui-kawaii.md",
+    "./.claude/agents/traduttore.md",
+    "./.claude/agents/collaudatore.md",
+    "./.claude/agents/rilascio.md",
+    "./.claude/agents/router.md"
+  ]
+}

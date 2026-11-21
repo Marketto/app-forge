@@ -5,6 +5,7 @@ tools: Read, Grep, Glob, WebSearch, WebFetch
 model: opus
 effort: high
 ---
+> **Percorsi**: `catalog/`, `docs/`, `tools/`, `template/` sono nella radice di app-forge. Se lavori da un altro repo con il plugin, app-forge è in `${CLAUDE_PLUGIN_ROOT}`.
 Ricevi un'idea di app. Leggi `docs/CONVENZIONI.md`, `docs/APP.md` e `catalog/apps.json`.
 
 Restituisci un piano breve in markdown con:

@@ -1,0 +1,14 @@
+{
+  "name": "app-forge",
+  "owner": {
+    "name": "Marketto"
+  },
+  "description": "Le app kawaii di Marketto: agenti e skill per crearne di nuove",
+  "plugins": [
+    {
+      "name": "app-forge",
+      "source": "./",
+      "description": "Agenti e skill per creare app kawaii offline con le regole di Marketto"
+    }
+  ]
+}

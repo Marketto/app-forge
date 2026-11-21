@@ -2,6 +2,8 @@
 name: catalogo
 description: Aggiungere, aggiornare o nascondere un'app nel catalogo GitHub Pages di app-forge e rigenerare icone e schermate.
 ---
+
+> **Percorsi**: `catalog/`, `docs/`, `tools/`, `template/` sono nella radice di app-forge. Se lavori da un altro repo con il plugin, app-forge è in `${CLAUDE_PLUGIN_ROOT}`.
 # Catalogo
 
 Fonte unica: `catalog/apps.json`. Campi:

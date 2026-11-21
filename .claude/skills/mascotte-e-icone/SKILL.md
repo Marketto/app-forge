@@ -2,6 +2,8 @@
 name: mascotte-e-icone
 description: Disegnare o cambiare la mascotte kawaii di un'app e rigenerare icone, favicon e immagini da una fonte unica.
 ---
+
+> **Percorsi**: `catalog/`, `docs/`, `tools/`, `template/` sono nella radice di app-forge. Se lavori da un altro repo con il plugin, app-forge è in `${CLAUDE_PLUGIN_ROOT}`.
 # Mascotte e icone
 
 - **Animale nuovo**: controlla `catalog/apps.json` di app-forge; mai un animale già usato.

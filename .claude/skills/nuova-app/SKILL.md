@@ -2,7 +2,11 @@
 name: nuova-app
 description: Crea una nuova app di Marketto dall'idea al primo deploy su GitHub Pages, con mascotte, i18n, tema, test e catalogo. Usala per «fammi un'app che…».
 ---
+
+> **Percorsi**: `catalog/`, `docs/`, `tools/`, `template/` sono nella radice di app-forge. Se lavori da un altro repo con il plugin, app-forge è in `${CLAUDE_PLUGIN_ROOT}`.
 # Nuova app
+
+Prima carica la skill `regole-app`.
 
 ## 1. Piano (agente `architetto`, opus/high)
 Passa l'idea all'agente `architetto`. Mostra il piano al proprietario e chiedi di scegliere **una** delle 3 mascotte.
@@ -17,6 +21,8 @@ Abilita Pages con «GitHub Actions» come sorgente (Settings → Pages).
 npm run nuova-app -- --id <id> --nome "<Nome>" --mascotte <NomeMascotte> --animale <animale> \
   --colore "#rrggbb" --categoria <Categoria> --descrizione "<una riga>" --dest ../<id>
 ```
+Da un altro repo (plugin): `node ${CLAUDE_PLUGIN_ROOT}/tools/nuova-app.mjs … --prova --dest .` (con `--prova` non tocca il catalogo, che va aggiornato da app-forge con la skill `catalogo`).
+
 Lo script copia `template/pwa-statica`, sostituisce i segnaposto, rifiuta animali già usati e aggiunge l'app a `catalog/apps.json` con `stato: "in sviluppo"`.
 
 ## 4. Requisiti prima del codice
