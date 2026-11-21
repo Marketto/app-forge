@@ -22,7 +22,7 @@ test("server MCP: inizializza, elenca e usa gli strumenti", async () => {
   const init = await c.call("initialize", { protocolVersion: "2025-06-18", capabilities: {}, clientInfo: { name: "test", version: "0" } });
   assert.equal(init.result.serverInfo.name, "app-forge");
   const { result } = await c.call("tools/list", {});
-  assert.deepEqual(result.tools.map(t => t.name).sort(), ["da_dove_copiare", "elenco_app", "mascotte_usate", "nuova_app", "regole"]);
+  assert.deepEqual(result.tools.map(t => t.name).sort(), ["attiva_plugin", "controlla_app", "da_dove_copiare", "elenco_app", "mascotte_usate", "nuova_app", "regole"]);
   const m = await c.call("tools/call", { name: "mascotte_usate", arguments: {} });
   assert.match(m.result.content[0].text, /capibara/);
 

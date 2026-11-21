@@ -1,8 +1,9 @@
 # app-forge — guida per agenti (Claude, Codex, Cursor, Copilot, Gemini…)
 
-Fabbrica delle app di Marketto. Serve a due cose:
+Fabbrica delle app di Marketto. Serve a tre cose:
 1. **Creare una nuova app** con le stesse regole delle app già fatte (skill `nuova-app`).
-2. **Tenere aggiornato il catalogo** su GitHub Pages: https://marketto.github.io/app-forge/ (skill `catalogo`).
+2. **Migliorare le app esistenti** con le stesse regole (skill `migliora-app`, `porta-funzione`).
+3. **Tenere aggiornato il catalogo** su GitHub Pages: https://marketto.github.io/app-forge/ (skill `catalogo`).
 
 Lingua di lavoro: italiano semplice. Tono conciso. Identificatori del codice in inglese.
 
@@ -25,6 +26,8 @@ Ricavate dalle app esistenti: dettagli e motivazioni in `docs/CONVENZIONI.md`.
 | Se la richiesta parla di… | Skill | Agente | Modello · effort |
 |---|---|---|---|
 | nuova app, idea, «fammi un'app che…» | `nuova-app` | `architetto` (piano) → poi gli altri | opus · high |
+| migliorare un'app esistente, «cosa manca a…», allinearla alle regole | `migliora-app` | `architetto` solo per cambi grossi | sonnet · medium |
+| portare una funzione da un'app a un'altra | `porta-funzione` | — | sonnet · medium |
 | mascotte, icone, palette, stile kawaii | `mascotte-e-icone` | `ui-kawaii` | sonnet · medium |
 | testi, traduzioni, nuova lingua | `traduzioni` | `traduttore` | sonnet · low |
 | test, «funziona?», controllo prima del push | `verifica` | `collaudatore` | haiku · low |
@@ -44,6 +47,8 @@ tools/build-catalog.mjs  genera _site/ (pagina del catalogo), nessuna dipendenza
 tools/screenshots.mjs    aggiorna icone e schermate aprendo le app online (Playwright)
 tools/nuova-app.mjs      crea una nuova app dal modello in template/pwa-statica
 tools/privacy-check.mjs  blocca dati sensibili
+tools/controlla-app.mjs  controllo veloce di un'app esistente (cosa manca)
+tools/attiva-plugin.mjs  attiva il plugin in un repo esistente
 tools/cli.mjs            riga di comando (npx github:Marketto/app-forge …)
 tools/mcp-server.mjs     server MCP (strumenti per qualsiasi client)
 template/pwa-statica/    modello di app: PWA senza build con mascotte, i18n, tema, test, deploy
@@ -58,5 +63,7 @@ npm test                                   # test degli strumenti + build catalo
 npm run catalogo                           # rigenera _site/
 npm run serve                              # catalogo su http://localhost:8080
 npm run schermate [-- <id>]                # icone e schermate dalle app online
+node tools/controlla-app.mjs ../<app>      # cosa manca a un'app esistente
+node tools/attiva-plugin.mjs ../<app>      # attiva il plugin in quel repo
 npm run nuova-app -- --id x --nome "X" --mascotte Nome --animale volpe --colore "#ffd6a5" --categoria Casa
 ```

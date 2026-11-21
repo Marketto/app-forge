@@ -12,14 +12,25 @@
 
 Cosa può fare ogni modalità:
 
-| | Nuova app | Regole e agenti | Aggiorna catalogo |
-|---|---|---|---|
-| 1 Claude Code in app-forge | ✅ | ✅ | ✅ |
-| 2–3 Plugin | ✅ (nella cartella corrente) | ✅ | ❌ |
-| 4 Cloud | ✅ | ✅ | ✅ se la sessione ha app-forge |
-| 5 Riga di comando | ✅ | solo `regole` | ❌ (solo dentro app-forge) |
-| 6 Altri agenti | ✅ | ✅ (leggendo i file) | ✅ |
-| 7 MCP | ✅ (`nuova_app`) | regole e tabelle | ❌ |
+| | Nuova app | Migliora app esistente | Regole e agenti | Aggiorna catalogo |
+|---|---|---|---|---|
+| 1 Claude Code in app-forge | ✅ | ✅ (`../<app>`) | ✅ | ✅ |
+| 2–3 Plugin | ✅ (nella cartella corrente) | ✅ | ✅ | ❌ |
+| 4 Cloud | ✅ | ✅ (aggiungi il repo dell'app) | ✅ | ✅ se la sessione ha app-forge |
+| 5 Riga di comando | ✅ | solo il controllo | solo `regole` | ❌ (solo dentro app-forge) |
+| 6 Altri agenti | ✅ | ✅ | ✅ (leggendo i file) | ✅ |
+| 7 MCP | ✅ (`nuova_app`) | ✅ (`controlla_app`, prompt `migliora_app`) | regole e tabelle | ❌ |
+
+## Migliorare un'app esistente
+Nel repo dell'app (Kapibo, Turnotto…):
+1. una volta: `npx github:Marketto/app-forge attiva-plugin` e fai commit di `.claude/settings.json`;
+2. apri Claude Code e chiedi «usa app-forge:migliora-app» oppure «cosa manca a quest'app?»;
+3. Claude lancia il controllo, ti propone al massimo 7 miglioramenti in ordine di importanza e aspetta che scegli;
+4. poi ne fa uno alla volta, con test e un commit ciascuno.
+
+Per prendere una funzione da un'altra app: «usa app-forge:porta-funzione: il tour di Kapibo qui».
+Solo il controllo, senza AI: `npx github:Marketto/app-forge controlla`.
+Le regole scritte nel `CLAUDE.md`/`AGENTS.md` dell'app vincono sempre su quelle comuni.
 
 Il catalogo si aggiorna solo dal repo app-forge, perché è l'unico posto con `catalog/apps.json` vero: plugin, `npx` e MCP lavorano su una copia.
 
@@ -39,7 +50,7 @@ All'avvio un hook installa le dipendenze di sviluppo; il server MCP del repo (`.
 /plugin install app-forge@app-forge
 ```
 Da Claude Code 2.1.275 basta `/plugin install app-forge --marketplace Marketto/app-forge`.
-Ottieni, con il prefisso `app-forge:`, le skill `regole-app`, `nuova-app`, `mascotte-e-icone`, `traduzioni`, `verifica`, `rilascio`, `catalogo`,
+Ottieni, con il prefisso `app-forge:`, le skill `regole-app`, `nuova-app`, `migliora-app`, `porta-funzione`, `mascotte-e-icone`, `traduzioni`, `verifica`, `rilascio`, `catalogo`,
 gli agenti `architetto`, `ui-kawaii`, `traduttore`, `collaudatore`, `rilascio`, `router` e gli strumenti MCP (modalità 7).
 Esempi: «usa app-forge:nuova-app per un'app che…», «applica app-forge:regole-app a questo repo».
 Aggiornare: `/plugin marketplace update app-forge`.
@@ -52,7 +63,7 @@ Ogni app creata da `nuova-app` ha già in `.claude/settings.json`:
   "enabledPlugins": { "app-forge@app-forge": true }
 }
 ```
-Chi apre il repo con Claude Code si vede proporre il plugin. Per un'app già esistente, copia questo blocco nel suo `.claude/settings.json`.
+Chi apre il repo con Claude Code si vede proporre il plugin. Per un'app già esistente: `npx github:Marketto/app-forge attiva-plugin` nel suo repo (aggiunge questo blocco senza toccare il resto).
 
 ## 4. Claude Code sul web (cloud)
 Da https://claude.ai/code (anche dal telefono):
@@ -68,6 +79,8 @@ npx github:Marketto/app-forge nuova-app --id volpe-note --nome "Volpe Note" \
 npx github:Marketto/app-forge mascotte   # animali già usati
 npx github:Marketto/app-forge app        # app del catalogo
 npx github:Marketto/app-forge regole     # regole comuni
+npx github:Marketto/app-forge controlla  # cosa manca all'app nella cartella corrente
+npx github:Marketto/app-forge attiva-plugin  # attiva il plugin nel repo corrente
 ```
 L'app viene creata nella cartella corrente. Dentro app-forge: `npm run nuova-app -- …` (aggiunge anche al catalogo), `npm run catalogo`, `npm run schermate`.
 
@@ -88,7 +101,7 @@ Skill e agenti sono file Markdown in `.claude/`: gli altri agenti li leggono e l
 Per gli strumenti (nuova app, mascotte usate) collegali al server MCP (modalità 7).
 
 ## 7. Server MCP
-Strumenti: `elenco_app`, `mascotte_usate`, `regole`, `da_dove_copiare`, `nuova_app`. Prompt: `crea_app` (idea → piano → scheletro).
+Strumenti: `elenco_app`, `mascotte_usate`, `regole`, `da_dove_copiare`, `nuova_app`, `controlla_app`, `attiva_plugin`. Prompt: `crea_app` (idea → piano → scheletro), `migliora_app` (controllo → proposte → modifiche).
 Comando del server: `npx -y github:Marketto/app-forge mcp`.
 
 **Claude Code**

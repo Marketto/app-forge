@@ -1,6 +1,6 @@
 ---
 name: regole-app
-description: Regole comuni delle app di Marketto (PWA offline, mascotte kawaii, i18n, accessibilità, privacy, rilascio). Caricala prima di creare o modificare un'app.
+description: Regole comuni delle app di Marketto (PWA offline, mascotte kawaii, i18n, accessibilità, privacy, rilascio). Caricala prima di creare o modificare un'app. Nelle app esistenti le regole del loro CLAUDE.md/AGENTS.md vincono.
 ---
 # Regole comuni delle app di Marketto
 
@@ -17,4 +17,4 @@ description: Regole comuni delle app di Marketto (PWA offline, mascotte kawaii, 
 9. **Funzione nuova = passo nel tour/novità.**
 10. **Consegna = commit + push su `main`**, poi controlla la versione online.
 
-Router: nuova app → `nuova-app` + agente `architetto`; stile → `mascotte-e-icone` + `ui-kawaii`; testi → `traduzioni` + `traduttore`; controlli → `verifica` + `collaudatore`; pubblicazione → `rilascio`.
+Router: nuova app → `nuova-app` + agente `architetto`; app esistente → `migliora-app`; funzione da un'altra app → `porta-funzione`; stile → `mascotte-e-icone` + `ui-kawaii`; testi → `traduzioni` + `traduttore`; controlli → `verifica` + `collaudatore`; pubblicazione → `rilascio`.

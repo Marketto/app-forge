@@ -5,6 +5,8 @@ import fs from "node:fs";
 import path from "node:path";
 import readline from "node:readline";
 import { spawnSync } from "node:child_process";
+import { controlla } from "./controlla-app.mjs";
+import { attivaPlugin } from "./attiva-plugin.mjs";
 
 const ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
 const read = f => fs.readFileSync(path.join(ROOT, f), "utf8");
@@ -63,6 +65,21 @@ const TOOLS = [
   },
 ];
 
+TOOLS.push(
+  {
+    name: "controlla_app",
+    description: "Controllo veloce di un'app esistente rispetto alle regole comuni: cosa c'è (ok), cosa manca (ko), cosa verificare a mano (null).",
+    inputSchema: { type: "object", required: ["cartella"], properties: { cartella: { type: "string", description: "percorso assoluto del repo dell'app" } } },
+    run: a => JSON.stringify(controlla(a.cartella), null, 2),
+  },
+  {
+    name: "attiva_plugin",
+    description: "Attiva il plugin app-forge di Claude Code in un repo esistente (.claude/settings.json), senza toccare le altre impostazioni.",
+    inputSchema: { type: "object", required: ["cartella"], properties: { cartella: { type: "string", description: "percorso assoluto del repo" } } },
+    run: a => attivaPlugin(a.cartella),
+  },
+);
+
 const PROMPTS = [
   {
     name: "crea_app",
@@ -72,6 +89,16 @@ const PROMPTS = [
 Usa gli strumenti di app-forge: leggi «regole», «da_dove_copiare» e «mascotte_usate».
 Proponimi un piano breve (cosa fa, dati, schermate, stack) e 3 mascotte con animali non usati.
 Aspetta la mia scelta, poi crea lo scheletro con «nuova_app».`,
+  },
+  {
+    name: "migliora_app",
+    description: "Propone e applica miglioramenti a un'app esistente secondo le regole di app-forge.",
+    arguments: [{ name: "cartella", description: "percorso del repo dell'app", required: true }],
+    text: ({ cartella }) => `Migliora l'app in ${cartella} con app-forge.
+1. Leggi CLAUDE.md/AGENTS.md dell'app: le sue regole vincono su quelle comuni.
+2. Usa «controlla_app» e «regole»; conferma ogni punto nel codice.
+3. Proponimi al massimo 7 miglioramenti in ordine di importanza (privacy, offline, accessibilità, lingue, test, stile, tour), con lavoro stimato e da dove copiarli («da_dove_copiare»).
+4. Aspetta la mia scelta, poi un miglioramento alla volta, con test e un commit ciascuno.`,
   },
 ];
 
