@@ -48,7 +48,7 @@ tools/cli.mjs            riga di comando (npx github:Marketto/app-forge …)
 tools/mcp-server.mjs     server MCP (strumenti per qualsiasi client)
 template/pwa-statica/    modello di app: PWA senza build con mascotte, i18n, tema, test, deploy
 docs/                    CONVENZIONI (regole comuni), APP (da dove copiare), MODALITA (tutti i modi d'uso)
-.github/workflows/       pages.yml (catalogo), schermate.yml (ogni lunedì), claude.yml (@claude nelle issue)
+.github/workflows/       pages.yml (catalogo), schermate.yml (ogni lunedì)
 .claude-plugin/          plugin e marketplace di Claude Code
 ```
 

@@ -18,7 +18,6 @@ Guida completa: [`docs/MODALITA.md`](docs/MODALITA.md).
 | Plugin da un altro repo | `/plugin marketplace add Marketto/app-forge` e `/plugin install app-forge@app-forge` |
 | Plugin automatico nelle app | già attivo in `.claude/settings.json` di ogni app creata |
 | Claude Code sul web | su claude.ai/code scegli app-forge (e il repo dell'app) |
-| GitHub Actions | scrivi «@claude …» in una issue (serve un secret) |
 | Riga di comando | `npx github:Marketto/app-forge nuova-app …` |
 | Altri agenti AI | `AGENTS.md` per Codex, Cursor, Copilot, Gemini |
 | Server MCP | `npx -y github:Marketto/app-forge mcp` in qualsiasi client MCP |

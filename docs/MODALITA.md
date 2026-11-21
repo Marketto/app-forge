@@ -6,10 +6,9 @@
 | 2 | [Plugin da un altro repo](#2-plugin-da-un-altro-repo) | lavorare su un'app con le regole comuni | Claude Code |
 | 3 | [Plugin automatico nelle app](#3-plugin-automatico-nelle-app) | chi apre un repo di un'app | niente: è già configurato |
 | 4 | [Claude Code sul web (cloud)](#4-claude-code-sul-web-cloud) | lavorare dal browser o dal telefono | claude.ai/code |
-| 5 | [GitHub Actions: «@claude»](#5-github-actions-claude) | chiedere lavoro da una issue | un secret nel repo |
-| 6 | [Riga di comando](#6-riga-di-comando) | creare un'app senza clonare, script | Node 20+ |
-| 7 | [Altri agenti AI](#7-altri-agenti-ai) | Codex, Cursor, Copilot, Gemini | niente |
-| 8 | [Server MCP](#8-server-mcp) | qualsiasi client MCP (Claude Desktop, Cursor, VS Code, Codex) | Node 20+ |
+| 5 | [Riga di comando](#5-riga-di-comando) | creare un'app senza clonare, script | Node 20+ |
+| 6 | [Altri agenti AI](#6-altri-agenti-ai) | Codex, Cursor, Copilot, Gemini | niente |
+| 7 | [Server MCP](#7-server-mcp) | qualsiasi client MCP (Claude Desktop, Cursor, VS Code, Codex) | Node 20+ |
 
 Cosa può fare ogni modalità:
 
@@ -18,10 +17,9 @@ Cosa può fare ogni modalità:
 | 1 Claude Code in app-forge | ✅ | ✅ | ✅ |
 | 2–3 Plugin | ✅ (nella cartella corrente) | ✅ | ❌ |
 | 4 Cloud | ✅ | ✅ | ✅ se la sessione ha app-forge |
-| 5 GitHub Actions | ✅ (apre una PR) | ✅ | ✅ nel repo app-forge |
-| 6 Riga di comando | ✅ | solo `regole` | ❌ (solo dentro app-forge) |
-| 7 Altri agenti | ✅ | ✅ (leggendo i file) | ✅ |
-| 8 MCP | ✅ (`nuova_app`) | regole e tabelle | ❌ |
+| 5 Riga di comando | ✅ | solo `regole` | ❌ (solo dentro app-forge) |
+| 6 Altri agenti | ✅ | ✅ (leggendo i file) | ✅ |
+| 7 MCP | ✅ (`nuova_app`) | regole e tabelle | ❌ |
 
 Il catalogo si aggiorna solo dal repo app-forge, perché è l'unico posto con `catalog/apps.json` vero: plugin, `npx` e MCP lavorano su una copia.
 
@@ -42,7 +40,7 @@ All'avvio un hook installa le dipendenze di sviluppo; il server MCP del repo (`.
 ```
 Da Claude Code 2.1.275 basta `/plugin install app-forge --marketplace Marketto/app-forge`.
 Ottieni, con il prefisso `app-forge:`, le skill `regole-app`, `nuova-app`, `mascotte-e-icone`, `traduzioni`, `verifica`, `rilascio`, `catalogo`,
-gli agenti `architetto`, `ui-kawaii`, `traduttore`, `collaudatore`, `rilascio`, `router` e gli strumenti MCP (modalità 8).
+gli agenti `architetto`, `ui-kawaii`, `traduttore`, `collaudatore`, `rilascio`, `router` e gli strumenti MCP (modalità 7).
 Esempi: «usa app-forge:nuova-app per un'app che…», «applica app-forge:regole-app a questo repo».
 Aggiornare: `/plugin marketplace update app-forge`.
 
@@ -62,13 +60,7 @@ Da https://claude.ai/code (anche dal telefono):
 - **Lavoro su un'app**: scegli il repo dell'app; il blocco della modalità 3 propone il plugin. In alternativa aggiungi app-forge alla stessa sessione: Claude legge le sue skill e può anche aggiornare il catalogo.
 - **Nuova app**: crea prima su GitHub il repo vuoto, poi aggiungi alla sessione app-forge e il nuovo repo.
 
-## 5. GitHub Actions: «@claude»
-In app-forge e in ogni app creata c'è `.github/workflows/claude.yml`.
-1. Una volta: nel repo, Settings → Secrets → Actions, aggiungi `CLAUDE_CODE_OAUTH_TOKEN` (generalo con `claude setup-token`) oppure `ANTHROPIC_API_KEY`. Serve anche l'app GitHub di Claude: `/install-github-app` da Claude Code.
-2. Scrivi in una issue o in un commento: «@claude aggiungi la lingua giapponese», «@claude fammi un'app che…».
-Claude lavora con gli agenti e le skill del repo e apre una PR.
-
-## 6. Riga di comando
+## 5. Riga di comando
 Senza clonare (Node 20+):
 ```bash
 npx github:Marketto/app-forge nuova-app --id volpe-note --nome "Volpe Note" \
@@ -85,7 +77,7 @@ claude -p "usa app-forge:nuova-app per un'app che tiene il diario delle piante" 
 claude -p --plugin-dir /percorso/app-forge "…"                                       # senza installarlo
 ```
 
-## 7. Altri agenti AI
+## 6. Altri agenti AI
 Le regole e la tabella router stanno in `AGENTS.md` (anche nelle app create). Lo leggono:
 - **Codex, Cursor, Copilot (agente), Jules, Aider e altri**: `AGENTS.md` direttamente;
 - **Gemini CLI**: `GEMINI.md`, che importa `AGENTS.md`;
@@ -93,9 +85,9 @@ Le regole e la tabella router stanno in `AGENTS.md` (anche nelle app create). Lo
 - **Claude Code**: `CLAUDE.md`, che importa `AGENTS.md` e aggiunge le cose solo sue.
 
 Skill e agenti sono file Markdown in `.claude/`: gli altri agenti li leggono e li seguono quando la tabella li indica.
-Per gli strumenti (nuova app, mascotte usate) collegali al server MCP (modalità 8).
+Per gli strumenti (nuova app, mascotte usate) collegali al server MCP (modalità 7).
 
-## 8. Server MCP
+## 7. Server MCP
 Strumenti: `elenco_app`, `mascotte_usate`, `regole`, `da_dove_copiare`, `nuova_app`. Prompt: `crea_app` (idea → piano → scheletro).
 Comando del server: `npx -y github:Marketto/app-forge mcp`.
 
