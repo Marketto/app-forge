@@ -89,7 +89,7 @@ npx github:Marketto/app-forge controlla  # cosa manca all'app nella cartella cor
 npx github:Marketto/app-forge attiva-plugin  # attiva il plugin nel repo corrente
 npx github:Marketto/app-forge revisione  # revisione in 2 giri con Claude Code (opus)
 ```
-L'app viene creata nella cartella corrente. Dentro app-forge: `npm run nuova-app -- …` (aggiunge anche al catalogo), `npm run catalogo`, `npm run schermate`.
+L'app viene creata in `./<id>` (o dove dice `--dest`). Dentro app-forge: `npm run nuova-app -- …` (aggiunge anche al catalogo), `npm run catalogo`, `npm run schermate`.
 
 Con Claude senza interfaccia (script, CI):
 ```bash

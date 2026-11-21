@@ -1,5 +1,5 @@
 /* Token di design: colori SOLO da variabili. Temi: chiaro, scuro, alto contrasto, daltonici (Okabe-Ito).
-   «auto» segue il sistema: prefers-color-scheme e prefers-contrast. */
+   «auto» non ha CSS proprio: js/theme.js (e lo script in index.html) lo traduce nel tema del sistema. */
 :root {
   --bg: #fff8fb; --surface: #ffffff; --ink: #3a2e4a; --muted: #6a5d7a; --line: #f0dce6;
   --accent: #c2416b; --accent-ink: #ffffff; --soft: #fde7ef; --soft-ink: #6b2440;
@@ -31,24 +31,6 @@
   --ok: #007a58; --warn: #8a5a00; --danger: #b34700; --focus: #0072b2;
   color-scheme: light;
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --bg: #1d1a2b; --surface: #2b2540; --ink: #f6eefc; --muted: #c9bddc; --line: #3d3456;
-    --accent: #ff9cbd; --accent-ink: #2b1530; --soft: #3b2f52; --soft-ink: #ffd3e2;
-    --ok: #7ad3a0; --warn: #f3c46b; --danger: #ff9b8f; --focus: #ff9cbd;
-    --shadow: 0 6px 18px rgb(0 0 0 / .35); --veil: rgb(0 0 0 / .65);
-    color-scheme: dark;
-  }
-}
-@media (prefers-contrast: more) {
-  :root:not([data-theme]) {
-    --bg: #000000; --surface: #000000; --ink: #ffffff; --muted: #ffffff; --line: #ffffff;
-    --accent: #ffe500; --accent-ink: #000000; --soft: #000000; --soft-ink: #ffe500;
-    --ok: #7dff9b; --warn: #ffe500; --danger: #ff8a80; --focus: #ffe500;
-    --shadow: none; --veil: rgb(0 0 0 / .85); --border: 3px; color-scheme: dark;
-  }
-}
-
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; min-height: 100dvh; display: flex; flex-direction: column; background: var(--bg); color: var(--ink);

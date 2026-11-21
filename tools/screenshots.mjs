@@ -44,6 +44,7 @@ async function genericClear(pg) {
 
 async function icon(browser, app) {
   const ctx = await browser.newContext();
+  await ctx.route(/goatcounter|plausible|umami/, r => r.abort());
   const pg = await ctx.newPage();
   await pg.goto(app.url, { waitUntil: "domcontentloaded", timeout: 45000 });
   const href = await pg.evaluate(() => document.querySelector('link[rel="manifest"]')?.href);

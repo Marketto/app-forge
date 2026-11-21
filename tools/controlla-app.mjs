@@ -141,7 +141,7 @@ export function controlla(dir) {
   else add(NA, 17, "Lavoro in background", "nessuna elaborazione pesante trovata");
   const sync = any(code, /dropbox|googleapis|drive\.google|webdav|remoteStorage/i);
   add(sync ? true : null, 18, "Salvataggio/condivisione dati", sync ? "cloud presente" : "solo locale: chiedi se serve Dropbox, Google Drive o WebDAV");
-  if (sync) add(any(code, /export|esporta/i) && any(code, /import\b(?!\s*[{*\w"'])|importa|readAsText|showOpenFilePicker/i), 18, "Esporta e importa da file", "");
+  add(any(code, /export|esporta/i) && any(code, /import\b(?!\s*[{*\w"'])|importa|readAsText|showOpenFilePicker/i), 18, "Esporta e importa da file", "");
 
   // R19 Codice
   add(has(/(^|\/)(tests?|__tests__)\/|\.test\.|\.spec\./).length > 0, 19, "Test della logica", scripts.find(s => s.startsWith("test ")) || "");

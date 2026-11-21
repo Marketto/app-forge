@@ -23,9 +23,10 @@ export async function setLang(code) {
   fallback ||= dict;
   document.documentElement.lang = current;
   document.documentElement.dir = LINGUE[current]?.rtl ? "rtl" : "ltr";
-  try { localStorage.setItem(KEY, current); } catch {}
   apply();
 }
+/** Scelta esplicita dell'utente: solo questa viene ricordata (altrimenti si segue la lingua del sistema). */
+export async function chooseLang(code) { try { localStorage.setItem(KEY, code); } catch {} await setLang(code); }
 /** Traduzione con segnaposto {nome}. Più varianti separate da «|»: ne sceglie una a caso (frasi della mascotte). */
 export function t(key, vars = {}) {
   let s = dict[key] ?? fallback[key] ?? key;
@@ -42,7 +43,7 @@ export function preferred() {
   let saved = null; try { saved = localStorage.getItem(KEY); } catch {}
   if (saved && LINGUE[saved]) return saved;
   for (const l of navigator.languages?.length ? navigator.languages : [navigator.language || "en"]) {
-    const c = l.slice(0, 2).toLowerCase(), code = ALIAS[c] || c;
+    const c = l.toLowerCase().split("-")[0], code = ALIAS[c] || c;
     if (LINGUE[code]) return code;
   }
   return "en";

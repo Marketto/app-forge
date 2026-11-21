@@ -9,7 +9,7 @@ export async function share() {
     toast(t("share.copied"));
     return "copied";
   } catch (e) {
-    if (e?.name !== "AbortError") toast(t("share.copied") + " " + data.url);
+    if (e?.name !== "AbortError") toast(t("share.manual", { url: data.url }));
     return "none";
   }
 }

@@ -43,7 +43,7 @@ const TOOLS = [
     description: "Crea lo scheletro di una nuova app (PWA senza build con mascotte, lingue, tema, test, deploy, agenti) nella cartella indicata.",
     inputSchema: {
       type: "object",
-      required: ["id", "nome", "mascotte", "animale", "colore", "dest"],
+      required: ["id", "nome", "colore", "dest"],
       properties: {
         id: { type: "string", description: "nome del repo: minuscole, numeri, trattini" },
         nome: { type: "string" },
@@ -52,11 +52,21 @@ const TOOLS = [
         colore: { type: "string", description: "colore principale #rrggbb" },
         categoria: { type: "string" },
         descrizione: { type: "string", description: "una riga" },
-        dest: { type: "string", description: "cartella di destinazione (assoluta), vuota o inesistente" },
+        dest: { type: "string", description: "cartella di destinazione (assoluta), vuota o inesistente; la cartella che la contiene deve esistere" },
+        senza_mascotte: { type: "boolean", description: "R01: app senza mascotte (mascotte e animale allora non servono)" },
+        musica: { type: "boolean", description: "R16: musica di sottofondo con interruttore" },
+        sync: { type: "array", items: { enum: ["dropbox", "gdrive", "webdav"] }, description: "R18: salvataggio cloud facoltativo" },
+        goatcounter: { type: "string", description: "R15: codice del sito GoatCounter per le statistiche anonime" },
       },
     },
     run: a => {
-      const args = ["--id", a.id, "--nome", a.nome, "--mascotte", a.mascotte, "--animale", a.animale, "--colore", a.colore, "--dest", a.dest, "--prova"];
+      if (!fs.existsSync(path.dirname(path.resolve(a.dest)))) throw new Error(`La cartella ${path.dirname(path.resolve(a.dest))} non esiste.`);
+      if (!a.senza_mascotte && (!a.mascotte || !a.animale)) throw new Error("Servono mascotte e animale (oppure senza_mascotte: true).");
+      const args = ["--id", a.id, "--nome", a.nome, "--colore", a.colore, "--dest", a.dest, "--prova"];
+      if (a.senza_mascotte) args.push("--senza-mascotte"); else args.push("--mascotte", a.mascotte, "--animale", a.animale);
+      if (a.musica) args.push("--musica");
+      if (a.sync?.length) args.push("--sync", a.sync.join(","));
+      if (a.goatcounter) args.push("--goatcounter", a.goatcounter);
       if (a.categoria) args.push("--categoria", a.categoria);
       if (a.descrizione) args.push("--descrizione", a.descrizione);
       const r = spawnSync(process.execPath, [path.join(ROOT, "tools/nuova-app.mjs"), ...args], { encoding: "utf8", cwd: path.dirname(path.resolve(a.dest)) });
@@ -134,6 +144,7 @@ readline.createInterface({ input: process.stdin }).on("line", async line => {
   if (!line.trim()) return;
   let req;
   try { req = JSON.parse(line); } catch { return send({ id: null, error: { code: -32700, message: "JSON non valido" } }); }
+  if (Array.isArray(req)) return send({ id: null, error: { code: -32600, message: "Richieste in blocco non supportate" } });
   if (req.id === undefined) return; // notifiche (es. notifications/initialized)
   try { send({ id: req.id, result: await handle(req) }); }
   catch (e) { send({ id: req.id, error: { code: e.code || -32603, message: e.message } }); }

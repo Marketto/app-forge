@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Riga di comando di app-forge. Senza clonare:  npx github:Marketto/app-forge <comando>
-//   nuova-app --id … --nome … --mascotte … --animale … --colore …   crea un'app nella cartella corrente
+//   nuova-app --id … --nome … --mascotte … --animale … --colore …   crea un'app in ./<id> (o --dest)
 //   app                                                              elenco delle app del catalogo
 //   mascotte                                                         animali già usati
 //   regole                                                           regole comuni R01–R20 (skill regole-app)

@@ -67,5 +67,8 @@
   "backup.export": "Export",
   "backup.import": "Import",
   "backup.bad": "This file is not a valid backup of this app.",
-  "mascot.ev.imported": "Data restored, everything in its place!"
+  "mascot.ev.imported": "Data restored, everything in its place!",
+  "share.manual": "Copy this link: {url}",
+  "backup.done": "Data imported.",
+  "backup.undo": "Undo"
 }

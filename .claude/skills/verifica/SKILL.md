@@ -22,7 +22,7 @@ Apri l'app (`npm run serve`) a 390 px e 1280 px:
 - **R13** il wizard parte al primo avvio, mette a fuoco le parti giuste, si riapre con «?»;
 - **R14** il consenso si vede al primo avvio e lo scarico di responsabilità è evidenziato;
 - **R05–R06** si installa; dopo un nuovo deploy l'app si aggiorna da sola;
-- **R16–R18** se scelte: musica con interruttore, Worker per i lavori lunghi, export/import.
+- **R18** esporta/importa funzionano (e si annullano); **R16–R17** se scelte: musica con interruttore, Worker per i lavori lunghi.
 
 ## 3. Risultato
 Riporta solo cosa fallisce, con il codice della regola e file:riga. Se un controllo non si può eseguire (manca il browser, manca una dipendenza), dillo invece di dire che è tutto ok.

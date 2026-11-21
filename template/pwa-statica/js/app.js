@@ -1,7 +1,7 @@
 // Avvio dell'app: lingue, tema, mascotte, consenso, wizard, strumenti. La logica vive in js/logic/.
 import { APP_VERSION } from "./version.js";
 import { CONFIG } from "./config.js";
-import { t, setLang, preferred, LINGUE, lang } from "./i18n.js";
+import { t, setLang, chooseLang, preferred, LINGUE, lang } from "./i18n.js";
 import { getTheme, setTheme } from "./theme.js";
 import { mascotSVG } from "./mascot.js";
 import { mountMascot } from "./mascot-live.js";
@@ -33,13 +33,14 @@ function render() {
     return li;
   }));
   $("#count").textContent = t("home.count", { n: state.items.length });
+  $("#ver").textContent = t("ui.version", { v: APP_VERSION });
 }
 
 function setupSettings() {
   const dlg = $("#settings"), sel = $("#lang");
   for (const [code, v] of Object.entries(LINGUE)) sel.add(new Option(v.name, code));
   sel.value = lang();
-  sel.onchange = async () => { await setLang(sel.value); render(); mascot.say("hello"); };
+  sel.onchange = async () => { await chooseLang(sel.value); render(); mascot.say("hello"); };
   const current = getTheme();
   dlg.querySelectorAll('input[name="theme"]').forEach(r => { r.checked = r.value === current; r.onchange = () => setTheme(r.value); });
   $("#statsRow").hidden = !usage.available();
@@ -58,7 +59,11 @@ function setupSettings() {
   $("#importFile").onchange = async e => {
     const f = e.target.files[0]; e.target.value = "";
     if (!f) return;
-    try { state = readBackup(await f.text(), CONFIG.id); save(state); render(); dlg.close(); mascot.say("imported", "wow"); usage.track("import"); }
+    try {
+      const before = state;
+      state = readBackup(await f.text(), CONFIG.id); save(state); render(); dlg.close(); mascot.say("imported", "wow"); usage.track("import");
+      toast(t("backup.done"), { label: t("backup.undo"), run: () => { state = before; save(state); render(); } }); // si può annullare
+    }
     catch { toast(t("backup.bad")); }
   };
 }
@@ -68,8 +73,6 @@ const tour = steps => runTour(steps, { mascotSvg: CONFIG.mascot ? mascotSVG({ si
 async function start() {
   await setLang(preferred());
   setTheme(getTheme());
-  $("#ver").textContent = t("ui.version", { v: APP_VERSION });
-
   if (CONFIG.mascot) {
     $("#logo").innerHTML = mascotSVG({ size: 44 });
     mascot = mountMascot($("#mascot"), $("#bubble"));

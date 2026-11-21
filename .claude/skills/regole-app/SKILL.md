@@ -4,7 +4,7 @@ description: Regole comuni delle app di Marketto (R01–R20: mascotte, icone, in
 ---
 # Regole comuni delle app di Marketto
 
-> Dettagli ed esempi: `docs/CONVENZIONI.md` e `docs/APP.md` nella radice di app-forge (`${CLAUDE_PLUGIN_ROOT}` se usi il plugin).
+> Dettagli ed esempi in `docs/CONVENZIONI.md` e `docs/APP.md` (`${CLAUDE_PLUGIN_ROOT}` se usi il plugin).
 > Ogni regola ha un codice: `controlla-app.mjs` e la skill `verifica` usano gli stessi codici.
 > **Chiedi** = domanda a scelta al proprietario prima di costruire (con AskUserQuestion se c'è). **Se serve** = solo quando l'app lo richiede.
 

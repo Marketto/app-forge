@@ -18,6 +18,13 @@ for (let i = 0; i < argv.length; i++) {
 
 const noMascot = !!opt["senza-mascotte"];
 if (noMascot) { opt.mascotte ||= opt.nome; opt.animale ||= "—"; }
+for (const k of ["sync", "goatcounter", "nome", "mascotte", "animale", "colore", "descrizione", "categoria", "dest", "id"]) {
+  if (opt[k] === true) { console.error(`--${k}: manca il valore`); process.exit(1); }
+}
+// I testi finiscono in JSON, HTML e nelle frasi di t() (dove «|» separa le varianti): niente caratteri che li rompono.
+for (const k of ["nome", "mascotte", "animale", "descrizione", "categoria"]) {
+  if (opt[k] && /["\\<>|`]/.test(opt[k])) { console.error(`--${k}: non usare " \\ < > | \``); process.exit(1); }
+}
 const need = ["id", "nome", "mascotte", "animale", "colore"];
 const missing = need.filter(k => !opt[k]);
 if (missing.length) { console.error(`Mancano: ${missing.map(k => "--" + k).join(", ")}`); process.exit(1); }
@@ -74,7 +81,8 @@ for (const sub of ["agents", "skills"]) fs.mkdirSync(path.join(dest, ".claude", 
 const local = t => t
   .replace(/node \$\{CLAUDE_PLUGIN_ROOT\}\/tools\/controlla-app\.mjs \.?/g, "npx -y github:Marketto/app-forge controlla")
   .replace(/^> \*\*Percorsi\*\*.*$/gm, "> Fa parte delle regole comuni di [app-forge](https://github.com/Marketto/app-forge): `catalog/` e `docs/` citati qui sono in quel repo.")
-  .replace(/\$\{CLAUDE_PLUGIN_ROOT\}\/?/g, "app-forge/");
+  .replace(/ \(`?\$\{CLAUDE_PLUGIN_ROOT\}`? se usi il plugin\)/g, " di [app-forge](https://github.com/Marketto/app-forge)")
+  .replace(/\$\{CLAUDE_PLUGIN_ROOT\}\/?/g, "https://github.com/Marketto/app-forge/blob/main/");
 for (const f of fs.readdirSync(path.join(claudeSrc, "agents")).filter(f => f !== "revisore.md")) // il revisore arriva dal plugin
   fs.writeFileSync(path.join(dest, ".claude/agents", f), local(fs.readFileSync(path.join(claudeSrc, "agents", f), "utf8")));
 for (const s of ["regole-app", "mascotte-e-icone", "traduzioni", "verifica", "rilascio"]) {
