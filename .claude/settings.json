@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": ["Bash(npm test:*)", "Bash(node --test:*)", "Bash(node tools/:*)", "Bash(git status:*)", "Bash(git diff:*)"],
+    "deny": ["Read(./.env*)", "Read(node_modules/**)"]
+  },
+  "enableAllProjectMcpServers": true,
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          { "type": "command", "command": "[ -d node_modules ] || npm install --silent --no-audit --no-fund >/dev/null 2>&1 || true" }
+        ]
+      }
+    ]
+  }
+}

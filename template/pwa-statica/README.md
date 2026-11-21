@@ -13,4 +13,4 @@ npm test            # logica, traduzioni, privacy
 npm run serve       # http://localhost:8000
 npm run icons       # icone dalla mascotte (js/mascot.js)
 ```
-Guida per agenti: `CLAUDE.md`. Nato da [app-forge](https://github.com/Marketto/app-forge).
+Guida per agenti: `AGENTS.md` (Claude, Codex, Cursor, Copilot, Gemini). Nato da [app-forge](https://github.com/Marketto/app-forge).

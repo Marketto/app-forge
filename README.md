@@ -5,48 +5,28 @@ Fabbrica agentica delle app di Marketto e catalogo pubblico.
 👉 **Catalogo: https://marketto.github.io/app-forge/** — icone su telefono, schermate su desktop.
 
 ## Cosa c'è
-- **Agenti e skill** (`CLAUDE.md`, `.claude/`, anche come plugin di Claude Code) per creare nuove app con le regole delle app già fatte: PWA offline, senza server, mascotte kawaii, 39+ lingue, accessibili.
+- **Agenti e skill** (`AGENTS.md`, `.claude/`): anche come plugin di Claude Code, server MCP e riga di comando per creare nuove app con le regole delle app già fatte: PWA offline, senza server, mascotte kawaii, 39+ lingue, accessibili.
 - **Modello di app** (`template/pwa-statica`): PWA senza build con mascotte, i18n, tema chiaro/scuro, service worker, test e deploy su Pages.
 - **Catalogo** (`catalog/apps.json` → `_site/`): generato a ogni push; icone e schermate si aggiornano da sole ogni lunedì.
 
-## Usarlo da un altro repo (plugin di Claude Code)
-app-forge è anche un plugin: agenti e skill funzionano in qualsiasi repo.
+## Modi d'uso
+Guida completa: [`docs/MODALITA.md`](docs/MODALITA.md).
 
-**Installazione, una volta sola** (in Claude Code):
-```
-/plugin marketplace add Marketto/app-forge
-/plugin install app-forge@app-forge
-```
-Con Claude Code 2.1.275 o successivo basta un comando: `/plugin install app-forge --marketplace Marketto/app-forge`.
-
-**Per proporlo in automatico a chi apre un repo**, aggiungi a `.claude/settings.json` di quel repo:
-```json
-{
-  "extraKnownMarketplaces": {
-    "app-forge": { "source": { "source": "github", "repo": "Marketto/app-forge" } }
-  },
-  "enabledPlugins": { "app-forge@app-forge": true }
-}
-```
-
-**Cosa ottieni** (con il prefisso `app-forge:`):
-| Tipo | Nomi |
+| Modalità | In breve |
 |---|---|
-| Skill | `regole-app`, `nuova-app`, `mascotte-e-icone`, `traduzioni`, `verifica`, `rilascio`, `catalogo` |
-| Agenti | `architetto`, `ui-kawaii`, `traduttore`, `collaudatore`, `rilascio`, `router` |
+| Claude Code in app-forge | `git clone` + `claude`, poi «fammi un'app che…» |
+| Plugin da un altro repo | `/plugin marketplace add Marketto/app-forge` e `/plugin install app-forge@app-forge` |
+| Plugin automatico nelle app | già attivo in `.claude/settings.json` di ogni app creata |
+| Claude Code sul web | su claude.ai/code scegli app-forge (e il repo dell'app) |
+| GitHub Actions | scrivi «@claude …» in una issue (serve un secret) |
+| Riga di comando | `npx github:Marketto/app-forge nuova-app …` |
+| Altri agenti AI | `AGENTS.md` per Codex, Cursor, Copilot, Gemini |
+| Server MCP | `npx -y github:Marketto/app-forge mcp` in qualsiasi client MCP |
 
-Esempi di richieste: «usa app-forge e fammi un'app che…», «applica le regole di app-forge a questo repo», «controlla questa app con app-forge:verifica».
-
-**Aggiornare il plugin**: `/plugin marketplace update app-forge`. Quando cambi agenti o skill, alza `version` in `.claude-plugin/plugin.json`.
-
-**Limiti**
-- Il plugin è una copia: da un altro repo non può aggiungere app al catalogo. Per il catalogo apri una sessione su app-forge (skill `catalogo`).
-- Il `CLAUDE.md` di app-forge non viene caricato dal plugin: le regole sono nella skill `regole-app`.
-- Nelle sessioni cloud di Claude puoi anche, in alternativa, aggiungere app-forge alla sessione insieme al tuo repo.
+Il catalogo si aggiorna solo dal repo app-forge: plugin, `npx` e MCP lavorano su una copia.
 
 ## Creare una nuova app
 Con Claude Code in questa cartella: «fammi un'app che…». Parte la skill `nuova-app`.
-Da un altro repo con il plugin: «usa app-forge:nuova-app per un'app che…».
 A mano:
 ```bash
 npm run nuova-app -- --id volpe-note --nome "Volpe Note" --mascotte Kitsu --animale volpe \

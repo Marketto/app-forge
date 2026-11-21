@@ -8,10 +8,14 @@
     "schermate": "node tools/screenshots.mjs",
     "nuova-app": "node tools/nuova-app.mjs",
     "test": "node --test tests/*.test.mjs && node tools/build-catalog.mjs && node tools/privacy-check.mjs",
-    "serve": "node tools/build-catalog.mjs && python3 -m http.server 8080 -d _site"
+    "serve": "node tools/build-catalog.mjs && python3 -m http.server 8080 -d _site",
+    "mcp": "node tools/mcp-server.mjs"
   },
   "devDependencies": {
     "playwright": "^1.49.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "bin": {
+    "app-forge": "tools/cli.mjs"
+  }
 }

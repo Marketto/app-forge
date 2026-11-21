@@ -1,7 +1,7 @@
 // Crea una nuova app dal modello template/pwa-statica e la aggiunge al catalogo.
 // npm run nuova-app -- --id volpe-note --nome "Volpe Note" --mascotte Kitsu --animale volpe \
 //   --colore "#ffd6a5" --categoria Casa --descrizione "Note veloci offline." [--dest ../volpe-note] [--prova]
-// --prova: crea i file ma non tocca catalog/apps.json.
+// --prova: crea i file ma non tocca catalog/apps.json (automatico fuori dal repo app-forge).
 import fs from "node:fs";
 import path from "node:path";
 
@@ -27,7 +27,9 @@ const used = cat.apps.find(a => a.mascotte && norm(a.mascotte.animale) === norm(
 if (used) { console.error(`L'animale «${opt.animale}» è già usato da ${used.nome}. Scegline un altro.`); process.exit(1); }
 if (cat.apps.some(a => a.id.toLowerCase() === opt.id.toLowerCase())) { console.error(`Esiste già un'app con id «${opt.id}».`); process.exit(1); }
 
-const dest = path.resolve(opt.dest || path.join(ROOT, "..", opt.id));
+const inForge = path.resolve(process.cwd()).startsWith(ROOT) && fs.existsSync(path.join(ROOT, ".git"));
+if (!inForge && !opt.catalogo) opt.prova = true; // copia del plugin o di npx: il catalogo si aggiorna solo da app-forge
+const dest = path.resolve(opt.dest || (inForge ? path.join(ROOT, "..", opt.id) : opt.id));
 if (fs.existsSync(dest) && fs.readdirSync(dest).filter(f => f !== ".git").length) { console.error(`${dest} non è vuota.`); process.exit(1); }
 
 const desc = opt.descrizione || `${opt.nome}, con ${opt.mascotte}.`;
@@ -58,6 +60,9 @@ for (const s of ["mascotte-e-icone", "traduzioni", "verifica", "rilascio"]) {
 }
 fs.writeFileSync(path.join(dest, ".claude/settings.json"), JSON.stringify({
   model: "sonnet",
+  // Il plugin app-forge viene proposto a chi apre il repo (anche nelle sessioni cloud).
+  extraKnownMarketplaces: { "app-forge": { source: { source: "github", repo: "Marketto/app-forge" } } },
+  enabledPlugins: { "app-forge@app-forge": true },
   permissions: {
     allow: ["Bash(node --test:*)", "Bash(node tools/:*)", "Bash(npm test:*)", "Bash(git status:*)", "Bash(git diff:*)"],
     deny: ["Read(vendor/**)", "Read(./.env*)", "Read(./config.local.js)"],

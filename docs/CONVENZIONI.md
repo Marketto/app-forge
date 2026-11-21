@@ -45,7 +45,7 @@ Per ogni regola: cosa fare e dove trovare un esempio vero.
 - Commit e push su `main`, autore `Marketto <Marketto@users.noreply.github.com>`. Poi attendi il deploy e controlla che `sw.js` online abbia la nuova versione.
 
 ## 7. Lavoro con gli agenti
-- `CLAUDE.md` corto con **regole d'oro + tabella router** (richiesta → skill → agente → modello/effort).
+- `AGENTS.md` (letto da tutti gli agenti; `CLAUDE.md` lo importa con `@AGENTS.md`) corto con **regole d'oro + tabella router** (richiesta → skill → agente → modello/effort).
 - Agenti economici per lavori ripetitivi (haiku: test, rilascio), costosi solo per architettura e logica difficile (opus).
 - **Risparmio token**: mappa del codice in `docs/` (file → funzioni), `grep -n` e lettura di sole righe utili; mai leggere `vendor/`, lingue diverse da it/en, file generati.
 - **Chi scrive non verifica se stesso** (Lunibù: `evidence-verifier`). Ogni task si chiude con la skill `verifica`.
