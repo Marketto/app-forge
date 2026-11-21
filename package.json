@@ -1,0 +1,17 @@
+{
+  "name": "app-forge",
+  "private": true,
+  "type": "module",
+  "description": "Fabbrica agentica delle app di Marketto e catalogo su GitHub Pages",
+  "scripts": {
+    "catalogo": "node tools/build-catalog.mjs",
+    "schermate": "node tools/screenshots.mjs",
+    "nuova-app": "node tools/nuova-app.mjs",
+    "test": "node --test tests/*.test.mjs && node tools/build-catalog.mjs && node tools/privacy-check.mjs",
+    "serve": "node tools/build-catalog.mjs && python3 -m http.server 8080 -d _site"
+  },
+  "devDependencies": {
+    "playwright": "^1.49.0"
+  },
+  "license": "MIT"
+}

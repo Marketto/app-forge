@@ -1,0 +1,227 @@
+{
+  "autore": "Marketto",
+  "titolo": "Le app di Marketto",
+  "sottotitolo": "App kawaii, gratuite e senza server. I tuoi dati restano sul tuo dispositivo.",
+  "apps": [
+    {
+      "id": "Hari-hari-puzzle",
+      "nome": "Hari Hari Puzzle",
+      "repo": "Marketto/Hari-hari-puzzle",
+      "url": "https://marketto.github.io/Hari-hari-puzzle/",
+      "descrizione": "Puzzle di logica kawaii, tutti offline, in 43 lingue.",
+      "categoria": "Giochi",
+      "mascotte": {
+        "nome": "Hari",
+        "animale": "riccio"
+      },
+      "piattaforme": [
+        "Web",
+        "Android"
+      ],
+      "stack": "PWA, JavaScript senza build",
+      "colore": "#ffb3c8",
+      "stato": "attiva"
+    },
+    {
+      "id": "Kapibo",
+      "nome": "Kapibo",
+      "repo": "Marketto/Kapibo",
+      "url": "https://marketto.github.io/Kapibo/",
+      "descrizione": "I conti di casa: scansiona scontrini, buste paga e bollette.",
+      "categoria": "Casa",
+      "mascotte": {
+        "nome": "Kapi",
+        "animale": "capibara"
+      },
+      "piattaforme": [
+        "Web"
+      ],
+      "stack": "PWA, JavaScript senza build, OCR nel browser",
+      "colore": "#ffe8d6",
+      "stato": "attiva"
+    },
+    {
+      "id": "mochi-spesa",
+      "nome": "Mochi Spesa",
+      "repo": "Marketto/mochi-spesa",
+      "url": "https://marketto.github.io/mochi-spesa/",
+      "descrizione": "Lista della spesa condivisa, dispensa e offerte vicino a casa.",
+      "categoria": "Casa",
+      "mascotte": {
+        "nome": "Mochi",
+        "animale": "coniglio"
+      },
+      "piattaforme": [
+        "Web"
+      ],
+      "stack": "PWA, JavaScript senza build, Cloudflare Worker",
+      "colore": "#ffd9e8",
+      "stato": "attiva"
+    },
+    {
+      "id": "ottoteca",
+      "nome": "Ottoteca",
+      "repo": "Marketto/ottoteca",
+      "url": "https://marketto.github.io/ottoteca/",
+      "descrizione": "I tuoi PDF in ordine: cartelle, ricerca e biglietti, senza copiarli.",
+      "categoria": "Documenti",
+      "mascotte": {
+        "nome": "Otto",
+        "animale": "lontra"
+      },
+      "piattaforme": [
+        "Web"
+      ],
+      "stack": "PWA, JavaScript senza bundler, IndexedDB, pdf.js",
+      "colore": "#fff6ec",
+      "stato": "attiva"
+    },
+    {
+      "id": "pdf-tiny-tools",
+      "nome": "Schiaccia PDF",
+      "repo": "Marketto/pdf-tiny-tools",
+      "url": "https://marketto.github.io/pdf-tiny-tools/",
+      "descrizione": "Alleggerisce PDF, foto e video nel browser. Anche scanner e moduli compilabili.",
+      "categoria": "Documenti",
+      "mascotte": {
+        "nome": "Schiaccia",
+        "animale": "pallina schiacciata"
+      },
+      "piattaforme": [
+        "Web"
+      ],
+      "stack": "PWA, JavaScript senza build, worker",
+      "colore": "#6fd0f2",
+      "stato": "attiva",
+      "screenshot": {
+        "passi": [
+          "Ho letto e accetto",
+          "Accetto",
+          "Salta"
+        ]
+      }
+    },
+    {
+      "id": "turnotto",
+      "nome": "Turnotto",
+      "repo": "Marketto/turnotto",
+      "url": "https://marketto.github.io/turnotto/",
+      "descrizione": "Pianifica i turni del team, con ferie, regole ed export Excel.",
+      "categoria": "Lavoro",
+      "mascotte": {
+        "nome": "Otto",
+        "animale": "gufo"
+      },
+      "piattaforme": [
+        "Web"
+      ],
+      "stack": "PWA, JavaScript senza build",
+      "colore": "#ffb3cc",
+      "stato": "attiva",
+      "screenshot": {
+        "passi": [
+          "Avanti",
+          "Avanti",
+          "Avanti",
+          "Inizia con dati di esempio",
+          "Avanti",
+          "Ho letto e accetto",
+          "Iniziamo"
+        ]
+      }
+    },
+    {
+      "id": "Lunibu",
+      "nome": "Lunibù",
+      "repo": "Marketto/Lunibu",
+      "url": "https://marketto.github.io/Lunibu/",
+      "descrizione": "Per genitori di bimbi 0–12 anni: risposte rapide con fonti scientifiche.",
+      "categoria": "Famiglia",
+      "mascotte": {
+        "nome": "Lunibù",
+        "animale": "luna"
+      },
+      "piattaforme": [
+        "Web"
+      ],
+      "stack": "PWA, React + Vite",
+      "colore": "#23284f",
+      "stato": "attiva",
+      "screenshot": {
+        "generico": false
+      }
+    },
+    {
+      "id": "tako-maker",
+      "nome": "Printopus",
+      "repo": "Marketto/tako-maker",
+      "url": "https://marketto.github.io/tako-maker/",
+      "descrizione": "Prepara oggetti da stampare in 3D con l'aiuto di Claude.",
+      "categoria": "Creatività",
+      "mascotte": {
+        "nome": "Takotta",
+        "animale": "polpo"
+      },
+      "piattaforme": [
+        "Web"
+      ],
+      "stack": "PWA, React + TypeScript + three.js",
+      "colore": "#6a3fd8",
+      "stato": "attiva",
+      "screenshot": {
+        "generico": false
+      }
+    },
+    {
+      "id": "suriclean",
+      "nome": "SuriClean",
+      "repo": "Marketto/suriclean",
+      "url": "https://marketto.github.io/suriclean/",
+      "descrizione": "La suricata spazzina: libera spazio su disco da cache e duplicati.",
+      "categoria": "Strumenti",
+      "mascotte": {
+        "nome": "Suri",
+        "animale": "suricata"
+      },
+      "piattaforme": [
+        "macOS",
+        "Windows",
+        "Linux",
+        "Android"
+      ],
+      "stack": "SwiftUI + app desktop e Android",
+      "colore": "#a8e6cf",
+      "stato": "attiva",
+      "screenshot": {
+        "generico": false
+      },
+      "iconaManuale": true
+    },
+    {
+      "id": "hoppy",
+      "nome": "Hoppy",
+      "repo": "Marketto/hoppy",
+      "url": "https://marketto.github.io/hoppy/",
+      "descrizione": "Invia file tra i tuoi dispositivi con un saltello.",
+      "categoria": "Strumenti",
+      "mascotte": {
+        "nome": "Hoppy",
+        "animale": "coniglio"
+      },
+      "piattaforme": [
+        "Windows",
+        "macOS",
+        "Linux",
+        "Android",
+        "iOS"
+      ],
+      "stack": "Rust + app native",
+      "colore": "#f4a6c6",
+      "stato": "prova",
+      "screenshot": {
+        "generico": false
+      },
+      "iconaManuale": true
+    }
+  ]
+}

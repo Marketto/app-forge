@@ -1,0 +1,23 @@
+name: Aggiorna icone e schermate
+on:
+  schedule: [{ cron: "17 5 * * 1" }]   # ogni lunedì
+  workflow_dispatch:
+    inputs:
+      app: { description: "id dell'app (vuoto = tutte)", required: false }
+permissions: { contents: write }
+jobs:
+  schermate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22 }
+      - run: npm ci || npm install
+      - run: npx playwright install --with-deps chromium
+      - run: node tools/screenshots.mjs ${{ inputs.app }}
+      - name: Commit se cambiate
+        run: |
+          git config user.name "Marketto"
+          git config user.email "Marketto@users.noreply.github.com"
+          git add site/icons site/screenshots
+          git diff --cached --quiet || (git commit -m "Catalogo: icone e schermate aggiornate" && git push)

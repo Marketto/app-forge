@@ -1,0 +1,15 @@
+{
+  "ui.theme": "Change theme",
+  "ui.language": "Language",
+  "ui.privacy": "Your data stays on this device. No account, no server.",
+  "mascot.label": "__MASCOTTE__, the mascot",
+  "mascot.ev.hello": "Hi! I'm __MASCOTTE__.|Here I am! Ready?|So nice to see you again!",
+  "mascot.ev.added": "Done!|Added, well done!|Great!",
+  "mascot.ev.removed": "Removed.|Okay, gone!",
+  "home.title": "Your list",
+  "home.text": "Write something and press Add.",
+  "home.placeholder": "What should I add?",
+  "home.add": "Add",
+  "home.remove": "Remove {item}",
+  "home.count": "Items: {n}"
+}

@@ -1,0 +1,15 @@
+{
+  "ui.theme": "Cambia tema",
+  "ui.language": "Lingua",
+  "ui.privacy": "I tuoi dati restano su questo dispositivo. Niente account, niente server.",
+  "mascot.label": "__MASCOTTE__, la mascotte",
+  "mascot.ev.hello": "Ciao! Sono __MASCOTTE__.|Eccomi! Pronti?|Che bello rivederti!",
+  "mascot.ev.added": "Fatto!|Aggiunto, bravo!|Ottimo!",
+  "mascot.ev.removed": "Tolto.|Ok, via!",
+  "home.title": "La tua lista",
+  "home.text": "Scrivi qualcosa e premi Aggiungi.",
+  "home.placeholder": "Cosa aggiungo?",
+  "home.add": "Aggiungi",
+  "home.remove": "Togli {item}",
+  "home.count": "Elementi: {n}"
+}

@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>__NOME__</title>
+<meta name="description" content="__DESCRIZIONE__">
+<meta name="theme-color" content="__COLORE__">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="css/style.css">
+<script type="module" src="js/app.js"></script>
+</head>
+<body>
+<header class="bar">
+  <span class="logo" id="logo" aria-hidden="true"></span>
+  <h1>__NOME__</h1>
+  <span class="ver" id="ver"></span>
+  <button class="icon-btn" id="theme" type="button" data-i18n-aria="ui.theme">◐</button>
+  <select id="lang" data-i18n-aria="ui.language"></select>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="mascot" id="mascot" role="img" data-i18n-aria="mascot.label"></div>
+    <p class="bubble" id="bubble" aria-live="polite"></p>
+  </section>
+
+  <section class="card">
+    <h2 data-i18n="home.title"></h2>
+    <p data-i18n="home.text"></p>
+    <form id="add" class="row">
+      <label class="sr" for="item" data-i18n="home.placeholder"></label>
+      <input id="item" autocomplete="off" data-i18n-placeholder="home.placeholder">
+      <button class="btn" type="submit" data-i18n="home.add"></button>
+    </form>
+    <ul id="list" class="list"></ul>
+    <p class="muted" id="count"></p>
+  </section>
+</main>
+
+<footer class="foot"><p data-i18n="ui.privacy"></p></footer>
+</body>
+</html>
