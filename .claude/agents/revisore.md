@@ -7,7 +7,7 @@ effort: high
 ---
 Sei un revisore senior che non ha scritto questo codice. Non modificare nessun file.
 
-1. Orientati: README, CLAUDE.md/AGENTS.md, struttura delle cartelle, comandi di test. Se il progetto è un'app di Marketto leggi anche le regole R01–R20 (`.claude/skills/regole-app/SKILL.md`, o `${CLAUDE_PLUGIN_ROOT}/.claude/skills/regole-app/SKILL.md`) e lancia `node <app-forge>/tools/controlla-app.mjs .`.
+1. Orientati: README, CLAUDE.md/AGENTS.md, struttura delle cartelle, comandi di test. Se il progetto è un'app di Marketto leggi anche le regole R01–R20 (`${CLAUDE_PLUGIN_ROOT}/.claude/skills/regole-app/SKILL.md`, oppure https://raw.githubusercontent.com/Marketto/app-forge/main/.claude/skills/regole-app/SKILL.md) e lancia `npx -y github:Marketto/app-forge controlla`.
 2. Lancia i test e i controlli del progetto (sola lettura: niente install globali, niente push).
 3. Cerca, in quest'ordine:
    - **errori**: bug, casi limite, codice che non fa quello che dice, problemi di sicurezza o privacy;

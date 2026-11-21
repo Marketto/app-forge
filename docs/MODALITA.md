@@ -36,7 +36,11 @@ Nella cartella del progetto:
 ```bash
 npx -y github:Marketto/app-forge revisione
 ```
-Apre Claude Code con il modello opus e il plugin caricato al volo, e lancia la skill `revisione`: 2 giri di un revisore indipendente, correzioni sicure applicate e testate, decisioni lasciate a te. Con il plugin già installato basta `claude --model opus "/app-forge:revisione"`.
+Oppure, in qualsiasi sessione di Claude (anche sul web), il prompt di una riga:
+```
+Revisiona questo progetto seguendo https://raw.githubusercontent.com/Marketto/app-forge/main/.claude/skills/revisione/SKILL.md
+```
+Il comando apre Claude Code con il modello opus e il plugin caricato al volo, e lancia la skill `revisione`: 2 giri di un revisore indipendente, correzioni sicure applicate e testate, decisioni lasciate a te. Con il plugin già installato basta `claude --model opus "/app-forge:revisione"`.
 Le regole scritte nel `CLAUDE.md`/`AGENTS.md` dell'app vincono sempre su quelle comuni.
 
 Il catalogo si aggiorna solo dal repo app-forge, perché è l'unico posto con `catalog/apps.json` vero: plugin, `npx` e MCP lavorano su una copia.
