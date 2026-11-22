@@ -54,10 +54,15 @@ Secondo la scelta del punto 1:
 - **Artifact** (privato, telefono e PC): pubblica il file HTML con lo strumento Artifact; dai il link.
 - **File**: invialo (SendUserFile) o indica il percorso.
 - **GitHub Pages**: copia l'HTML in `proposte/` e fai push (pubblico!); link `https://marketto.github.io/<repo>/proposte/<file>.html`. Nel modello `pages.yml` pubblica la cartella `proposte/`.
-Scrivi in una riga: «Scegli, commenta se vuoi, poi premi Genera il prompt e incollamelo». Poi **fermati**.
+Scrivi in una riga: «Per ogni proposta sì o no (con indicazioni se vuoi), poi premi Genera il prompt e incollamelo». Poi **fermati**.
 
 ## 7. Con il prompt di risposta
-1. Realizza solo le proposte «SÌ» (con la variante scelta) e «SÌ, CON MODIFICHE» (seguendo le note). «NO» e «NON DECISA»: non fare. Se «con modifiche» non ha note, chiedi cosa cambiare.
-2. Le «Note generali» valgono per tutte.
-3. Segna l'esito nella spec (`"esito": "si|mod|no"`, `"nota"`) e fai commit insieme al lavoro: resta la storia delle decisioni.
-4. Per ogni proposta: requisito in `docs/REQUISITI.md`, codice, testi (`traduzioni`), passo nel wizard se è una funzione visibile (R13), `verifica`. Un commit per proposta.
+Ogni proposta arriva con uno di questi esiti:
+- **SÌ** (con la variante scelta): realizzala; le «Migliorie», se ci sono, sono indicazioni da applicare.
+- **RIPROVA** (era «no» con indicazioni): non realizzarla; prepara una nuova proposta secondo «Prova invece» e rifai i passi 3–6 solo per queste, in una nuova pagina (`…-v2`).
+- **SCARTA** (era «no» senza indicazioni) e **NON DECISA**: non fare nulla.
+Le «Note generali» valgono per tutte.
+
+1. Segna l'esito nella spec (`"esito": "si|riprova|scarta"`, `"nota"`) e fai commit insieme al lavoro: resta la storia delle decisioni.
+2. Per ogni «SÌ»: requisito in `docs/REQUISITI.md`, codice, testi (`traduzioni`), passo nel wizard se è una funzione visibile (R13), `verifica`. Un commit per proposta.
+3. Se ci sono «RIPROVA», pubblica la nuova pagina insieme al resoconto di ciò che hai realizzato e fermati di nuovo.

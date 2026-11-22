@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// Pagina delle proposte: per ogni proposta prima/dopo, varianti, scelta (sì / sì con modifiche / no) e commento
-// facoltativo; alla fine genera il prompt di risposta da incollare a Claude. Un solo file HTML, senza dipendenze
+// Pagina delle proposte: per ogni proposta prima/dopo, varianti, scelta sì/no e indicazioni facoltative
+// (con «sì»: migliorie; con «no»: cosa riprovare, senza indicazioni la proposta si scarta); alla fine genera il prompt di risposta da incollare a Claude. Un solo file HTML, senza dipendenze
 // esterne: si apre dal PC o si pubblica (Artifact su claude.ai) per consultarla dal telefono.
 //   node tools/proposte.mjs <spec.json> [-o proposte.html] [--app <cartella dell'app>]
 // --app incorpora css/style.css, css/icons.css e il font di icone dell'app, così i «dopo» hanno l'aspetto vero.
@@ -90,7 +90,8 @@ legend { font-weight:700; margin-bottom:6px; }
 .choices label { display:flex; gap:10px; align-items:flex-start; min-height:44px; padding:10px 12px; border:2px solid var(--line); border-radius:14px; cursor:pointer; }
 .choices input { width:22px; height:22px; margin:2px 0 0; accent-color:var(--accent); flex:none; }
 .choices label:has(input:checked) { border-color:var(--accent); background:var(--soft); }
-textarea { width:100%; min-height:84px; margin-top:8px; padding:10px 12px; border-radius:14px; border:2px solid var(--line); background:var(--bg); color:var(--ink); font:inherit; resize:vertical; }
+.hint { display:block; margin-top:12px; font-weight:700; font-size:.95rem; }
+textarea { width:100%; min-height:84px; margin-top:6px; padding:10px 12px; border-radius:14px; border:2px solid var(--line); background:var(--bg); color:var(--ink); font:inherit; resize:vertical; }
 .btn { min-height:48px; padding:0 22px; border-radius:999px; border:2px solid var(--accent); background:var(--accent); color:var(--on); font:inherit; font-weight:700; cursor:pointer; }
 .btn.ghost { background:transparent; color:var(--ink); border-color:var(--line); }
 .btns { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
@@ -115,7 +116,7 @@ textarea { width:100%; min-height:84px; margin-top:8px; padding:10px 12px; borde
 <footer>
   <section class="card" id="finale">
     <h2>Prompt di risposta</h2>
-    <p class="muted">Scegli per ogni proposta, aggiungi note se vuoi, poi genera il prompt e incollalo a Claude.</p>
+    <p class="muted">Per ogni proposta scegli sì o no. Con «sì» puoi aggiungere migliorie; con «no» puoi dire cosa riprovare (senza indicazioni la proposta si scarta). Poi genera il prompt e incollalo a Claude.</p>
     <label for="general"><strong>Note generali</strong> <span class="muted">(facoltative)</span></label>
     <textarea id="general" placeholder="Indicazioni che valgono per tutte le proposte…"></textarea>
     <div class="btns"><button class="btn" id="gen" type="button">Genera il prompt</button></div>
@@ -197,12 +198,21 @@ textarea { width:100%; min-height:84px; margin-top:8px; padding:10px 12px; borde
       return el("label", {}, i, el("span", { text: label }));
     };
     if (variants.length) variants.forEach(v => choices.append(opt("si", "Sì, variante «" + v.titolo + "»", v.id)));
-    else choices.append(opt("si", "Sì, va bene così"));
-    choices.append(opt("mod", "Sì, con le modifiche che scrivo"), opt("no", "No, scarta"));
+    else choices.append(opt("si", "Sì"));
+    choices.append(opt("no", "No"));
     fs.append(choices);
-    const ta = el("textarea", { "aria-label": "Commento sulla proposta " + (n + 1) + " (facoltativo)", placeholder: "Commenti o indicazioni (facoltativi)…" });
+    // Il campo cambia senso con la scelta: migliorie se «sì», nuovo tentativo se «no» (vuoto = scarta).
+    const HINT = {
+      "": ["Indicazioni (facoltative)", "Scegli sì o no, poi aggiungi indicazioni se vuoi…"],
+      si: ["Indicazioni per migliorarla (facoltative)", "Es. «più spazio sopra», «colore più tenue»…"],
+      no: ["Cosa provare invece (facoltativo: se lo lasci vuoto la proposta si scarta)", "Es. «prova con una lista a schede»…"],
+    };
+    const lab = el("label", { for: "t-" + p.id, class: "hint" });
+    const ta = el("textarea", { id: "t-" + p.id });
+    const hint = () => { const [l, ph] = HINT[s.scelta] || HINT[""]; lab.textContent = l; ta.placeholder = ph; };
     ta.value = s.nota; ta.oninput = () => { s.nota = ta.value; save(); };
-    fs.append(ta);
+    choices.addEventListener("change", hint); hint();
+    fs.append(lab, ta);
     card.append(fs);
     $("#list").append(card);
     draw();
@@ -220,13 +230,14 @@ textarea { width:100%; min-height:84px; margin-top:8px; padding:10px 12px; borde
   function prompt() {
     const L = [];
     L.push("Risposte alle proposte «" + S.titolo + "»" + (S.app ? " per " + S.app : "") + (S.id ? " (" + S.id + ")" : "") + ".");
-    L.push("Procedi con la skill «proposte» dal passo 7: realizza solo le proposte approvate, tenendo conto delle note.", "");
-    const lab = { si: "SÌ", mod: "SÌ, CON MODIFICHE", no: "NO" };
+    L.push("Procedi con la skill «proposte» dal passo 7: SÌ = realizza (con le migliorie, se ci sono); RIPROVA = nuova proposta secondo le indicazioni; SCARTA e NON DECISA = non fare.", "");
     S.proposte.forEach((p, n) => {
       const s = st[p.id] || {}; const v = (p.varianti || []).find(x => x.id === s.variante);
-      let r = (n + 1) + ". [" + p.id + "] " + p.titolo + ": " + (s.scelta ? lab[s.scelta] : "NON DECISA (non fare)");
-      if (v) r += " — variante «" + v.titolo + "» (" + v.id + ")";
-      if (s.nota && s.nota.trim()) r += "\\n   Note: " + s.nota.trim().replace(/\\n+/g, " / ");
+      const nota = (s.nota || "").trim().replace(/\\n+/g, " / ");
+      const esito = s.scelta === "si" ? "SÌ" : s.scelta === "no" ? (nota ? "RIPROVA" : "SCARTA") : "NON DECISA";
+      let r = (n + 1) + ". [" + p.id + "] " + p.titolo + ": " + esito;
+      if (v && s.scelta === "si") r += " — variante «" + v.titolo + "» (" + v.id + ")";
+      if (nota && s.scelta) r += "\\n   " + (s.scelta === "si" ? "Migliorie: " : "Prova invece: ") + nota;
       L.push(r);
     });
     if (st._generali && st._generali.trim()) L.push("", "Note generali: " + st._generali.trim());

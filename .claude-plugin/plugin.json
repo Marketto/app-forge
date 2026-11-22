@@ -1,7 +1,7 @@
 {
   "name": "app-forge",
   "displayName": "App Forge",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Agenti e skill per creare app kawaii offline con le regole di Marketto",
   "author": {
     "name": "Marketto",

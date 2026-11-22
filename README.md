@@ -43,7 +43,7 @@ npx -y github:Marketto/app-forge revisione
 Claude fa 2 giri con un revisore indipendente (opus): coerenza, struttura, ottimizzazione, errori e, per le app, regole R01–R20. Applica e testa le correzioni sicure, fa un commit per giro (senza push) e ti lascia le decisioni.
 
 ## Proposte prima delle modifiche
-Per cambi dell'interfaccia o funzioni nuove Claude non tocca subito il codice: fa domande a scelta, analizza, fa revisionare e prepara una **pagina con le proposte** (prima/dopo, varianti, scelta sì/con modifiche/no, commenti facoltativi). La apri dal telefono o dal PC, scegli e premi **Genera il prompt**: lo incolli a Claude e realizza solo ciò che hai scelto.
+Per cambi dell'interfaccia o funzioni nuove Claude non tocca subito il codice: fa domande a scelta, analizza, fa revisionare e prepara una **pagina con le proposte** (prima/dopo, varianti, scelta sì/no: con «sì» indicazioni facoltative per migliorarla, con «no» cosa riprovare; senza indicazioni si scarta). La apri dal telefono o dal PC, scegli e premi **Genera il prompt**: lo incolli a Claude e realizza solo ciò che hai scelto.
 Skill `proposte`; a mano: `npx -y github:Marketto/app-forge proposte spec.json --app .`
 
 ## Attivare il plugin

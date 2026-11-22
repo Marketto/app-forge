@@ -32,7 +32,7 @@ nel modello `template/pwa-statica` (punto di partenza di ogni app nuova) o in un
 - **App native** (SuriClean, Hoppy): il sito su Pages è la pagina di download; molte regole web (R05, R06, R11) si applicano solo al sito.
 - **Dati**: `localStorage` per poco, IndexedDB per tanto (Ottoteca). Chiavi con prefisso `<id>:` per non mescolare le app sullo stesso dominio.
 - **Richiamare una funzione da un'altra app** (R19): stesso dominio `marketto.github.io`, quindi un modulo pubblicato si può importare senza CORS (Kapibo usa il motore di Schiaccia PDF). Solo per moduli autonomi e stabili; altrimenti `porta-funzione`.
-- **Scelte estetiche e funzioni nuove**: prima la pagina di proposte (skill `proposte`: prima/dopo, varianti, commenti, prompt di risposta), poi si implementa solo ciò che è scelto. Le spec restano in `docs/proposte/` come storia delle decisioni.
+- **Scelte estetiche e funzioni nuove**: prima la pagina di proposte (skill `proposte`: prima/dopo, varianti, sì/no con indicazioni, prompt di risposta), poi si implementa solo ciò che è scelto. Le spec restano in `docs/proposte/` come storia delle decisioni.
 
 ## Lavoro con gli agenti
 - `AGENTS.md` (letto da tutti gli agenti; `CLAUDE.md` lo importa con `@AGENTS.md`): breve, con router richiesta → skill → agente → modello/effort.
