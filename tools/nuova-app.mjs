@@ -80,12 +80,13 @@ for (const sub of ["agents", "skills"]) fs.mkdirSync(path.join(dest, ".claude", 
 // Copie locali (servono anche agli agenti diversi da Claude): i rimandi ad app-forge diventano comandi npx e link.
 const local = t => t
   .replace(/node \$\{CLAUDE_PLUGIN_ROOT\}\/tools\/controlla-app\.mjs \.?/g, "npx -y github:Marketto/app-forge controlla")
+  .replace(/node \$\{CLAUDE_PLUGIN_ROOT\}\/tools\/proposte\.mjs/g, "npx -y github:Marketto/app-forge proposte")
   .replace(/^> \*\*Percorsi\*\*.*$/gm, "> Fa parte delle regole comuni di [app-forge](https://github.com/Marketto/app-forge): `catalog/` e `docs/` citati qui sono in quel repo.")
   .replace(/ \(`?\$\{CLAUDE_PLUGIN_ROOT\}`? se usi il plugin\)/g, " di [app-forge](https://github.com/Marketto/app-forge)")
   .replace(/\$\{CLAUDE_PLUGIN_ROOT\}\/?/g, "https://github.com/Marketto/app-forge/blob/main/");
 for (const f of fs.readdirSync(path.join(claudeSrc, "agents")).filter(f => f !== "revisore.md")) // il revisore arriva dal plugin
   fs.writeFileSync(path.join(dest, ".claude/agents", f), local(fs.readFileSync(path.join(claudeSrc, "agents", f), "utf8")));
-for (const s of ["regole-app", "mascotte-e-icone", "traduzioni", "verifica", "rilascio"]) {
+for (const s of ["regole-app", "proposte", "mascotte-e-icone", "traduzioni", "verifica", "rilascio"]) {
   fs.mkdirSync(path.join(dest, ".claude/skills", s), { recursive: true });
   fs.writeFileSync(path.join(dest, ".claude/skills", s, "SKILL.md"), local(fs.readFileSync(path.join(claudeSrc, "skills", s, "SKILL.md"), "utf8")));
 }

@@ -5,6 +5,7 @@
 //   mascotte                                                         animali già usati
 //   regole                                                           regole comuni R01–R20 (skill regole-app)
 //   controlla [cartella]                                             cosa manca a un'app esistente
+//   proposte <spec.json> [-o out.html] [--app .]                     pagina delle proposte da scegliere (prima/dopo)
 //   attiva-plugin [cartella]                                         attiva il plugin in un repo esistente
 //   revisione                                                        revisione in 2 giri con Claude Code (modello opus)
 //   mcp                                                              avvia il server MCP (stdio)
@@ -30,6 +31,7 @@ switch (cmd) {
     if (r.error) { console.error("Serve Claude Code: https://claude.com/claude-code (poi rilancia questo comando)."); process.exit(1); }
     process.exit(r.status ?? 0);
   }
+  case "proposte": node("tools/proposte.mjs", rest); break;
   case "controlla": node("tools/controlla-app.mjs", rest.length ? rest : [process.cwd()]); break;
   case "attiva-plugin": node("tools/attiva-plugin.mjs", rest.length ? rest : [process.cwd()]); break;
   case "app":
@@ -42,7 +44,7 @@ switch (cmd) {
     process.stdout.write(fs.readFileSync(path.join(ROOT, ".claude/skills/regole-app/SKILL.md"), "utf8"));
     break;
   default:
-    console.log(`app-forge — comandi: nuova-app, controlla, revisione, attiva-plugin, app, mascotte, regole, mcp, catalogo, schermate
+    console.log(`app-forge — comandi: nuova-app, controlla, proposte, revisione, attiva-plugin, app, mascotte, regole, mcp, catalogo, schermate
 Esempio: npx github:Marketto/app-forge nuova-app --id volpe-note --nome "Volpe Note" --mascotte Kitsu --animale volpe --colore "#ffd6a5"`);
     process.exit(cmd ? 1 : 0);
 }

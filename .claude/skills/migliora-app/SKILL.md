@@ -29,7 +29,7 @@ Poi fermati: il proprietario sceglie.
 
 ## 3. Un miglioramento alla volta
 1. Se l'app ha `docs/REQUISITI.md`, prima aggiorna il requisito.
-2. Modifica più piccola che risolve; se esiste già nel modello o in un'altra app usa `porta-funzione`.
+2. Se il miglioramento cambia l'interfaccia o aggiunge una funzione: prima la skill `proposte` (pagina prima/dopo da scegliere). Poi la modifica più piccola che risolve; se esiste già nel modello o in un'altra app usa `porta-funzione`.
 3. Testi nuovi → skill `traduzioni`.
 4. Skill `verifica` (o i test dell'app) e riporta il risultato.
 5. Un commit per miglioramento, in italiano.

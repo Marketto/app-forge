@@ -61,7 +61,7 @@ Solo in Claude Code sul computer (terminale, app desktop, editor): nell'app sul 
 /plugin marketplace add Marketto/app-forge
 /plugin install app-forge@app-forge
 ```
-Ottieni, con il prefisso `app-forge:`, le skill `regole-app`, `nuova-app`, `migliora-app`, `porta-funzione`, `revisione`, `mascotte-e-icone`, `traduzioni`, `verifica`, `rilascio`, `catalogo`,
+Ottieni, con il prefisso `app-forge:`, le skill `regole-app`, `nuova-app`, `migliora-app`, `porta-funzione`, `proposte`, `revisione`, `mascotte-e-icone`, `traduzioni`, `verifica`, `rilascio`, `catalogo`,
 gli agenti `architetto`, `revisore`, `ui-kawaii`, `traduttore`, `collaudatore`, `rilascio`, `router` e gli strumenti MCP (modalità 7).
 Esempi: «usa app-forge:nuova-app per un'app che…», «applica app-forge:regole-app a questo repo».
 Aggiornare: `/plugin marketplace update app-forge`.
@@ -94,6 +94,7 @@ npx github:Marketto/app-forge regole     # regole comuni
 npx github:Marketto/app-forge controlla  # cosa manca all'app nella cartella corrente
 npx github:Marketto/app-forge attiva-plugin  # attiva il plugin nel repo corrente
 npx github:Marketto/app-forge revisione  # revisione in 2 giri con Claude Code (opus)
+npx github:Marketto/app-forge proposte spec.json --app .  # pagina delle proposte da scegliere
 ```
 L'app viene creata in `./<id>` (o dove dice `--dest`). Dentro app-forge: `npm run nuova-app -- …` (aggiunge anche al catalogo), `npm run catalogo`, `npm run schermate`.
 

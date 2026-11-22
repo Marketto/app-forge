@@ -21,7 +21,7 @@ jobs:
           [ -f icons/icon-192.png ] || { echo "::error::Mancano le icone: lancia npm run icons e fai commit di icons/"; exit 1; }
           V=$(grep -oP 'APP_VERSION = "\K[^"]+' js/version.js)
           mkdir _site && cp -r index.html manifest.webmanifest sw.js css js fonts locales icons _site/
-          for d in vendor assets; do [ -d $d ] && cp -r $d _site/ || true; done
+          for d in vendor assets proposte; do [ -d $d ] && cp -r $d _site/ || true; done
           sed -i "s/const VERSION = \"dev\"/const VERSION = \"$V\"/" _site/sw.js
           touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@v3

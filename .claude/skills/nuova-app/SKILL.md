@@ -37,7 +37,7 @@ Il modello ha già: icone in font (R03), installazione (R05), offline e aggiorna
 - Privacy e condizioni adattate a quello che fa l'app in `locales/legal/` (R14): dati trattati, servizi esterni, cloud scelto. Togli le parti tra [parentesi].
 
 ## 6. Funzioni
-Una alla volta: logica pura in `js/logic/` con test, interfaccia in moduli piccoli (R19). Se esiste già in un'altra app: richiamala o portala (`porta-funzione`). Funzione visibile = passo nel wizard (`js/tour.js`, R13). Elaborazioni pesanti in un Worker con `js/work.js` (R17). Testi nuovi → skill `traduzioni`.
+Una alla volta. Per ogni schermata o funzione visibile, prima la skill `proposte` (pagina prima/dopo da scegliere). Logica pura in `js/logic/` con test, interfaccia in moduli piccoli (R19). Se esiste già in un'altra app: richiamala o portala (`porta-funzione`). Funzione visibile = passo nel wizard (`js/tour.js`, R13). Elaborazioni pesanti in un Worker con `js/work.js` (R17). Testi nuovi → skill `traduzioni`.
 
 ## 7. Verifica e pubblicazione
 Skill `verifica` (tutte le regole, `npm run check`), poi skill `rilascio`. `pages.yml` non pubblica senza le 42 lingue e i testi legali adattati.

@@ -9,12 +9,14 @@ Creata con [app-forge](https://github.com/Marketto/app-forge).
 Specifiche di quest'app:
 1. Scelte fatte alla creazione (mascotte, musica, cloud, statistiche) in `js/config.js`: cambiale lì.
 2. Prima i requisiti (`docs/REQUISITI.md`), poi il codice. Lavoro in sospeso in `docs/TODO.md`.
+   Modifiche dell'interfaccia e funzioni nuove: prima la pagina di proposte da scegliere (skill `proposte`, archivio in `docs/proposte/`).
 3. Consegna = `npm test` + `npm run check` verdi, commit e push su `main` (skill `rilascio`).
 
 ## Router
 | Se la richiesta parla di… | Skill | Agente | Modello · effort |
 |---|---|---|---|
 | dati, architettura, sicurezza, funzione complessa | — | `architetto` | opus · high |
+| modifica dell'interfaccia o funzione nuova | `proposte` | `architetto` / `ui-kawaii` + `revisore` | opus · high |
 | mascotte, icone, stile, animazioni | `mascotte-e-icone` | `ui-kawaii` | sonnet · medium |
 | testi, lingue | `traduzioni` | `traduttore` | sonnet · low |
 | «funziona?», prima del commit | `verifica` | `collaudatore` | haiku · low |

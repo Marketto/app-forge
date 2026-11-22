@@ -12,6 +12,7 @@ Lingua di lavoro: italiano semplice. Tono conciso. Identificatori del codice in 
 **Fonte unica: `.claude/skills/regole-app/SKILL.md`. Leggila sempre prima di creare, modificare o verificare un'app.** Dettagli ed esempi in `docs/CONVENZIONI.md`.
 In breve:
 - **Chiedi prima di costruire** (domande a scelta): mascotte sì/no e quale (R01), musica sì/no (R16), salvataggio cloud se ha senso (R18).
+- **Modifiche UI e funzioni nuove**: analisi → revisione → pagina di proposte prima/dopo (skill `proposte`) → si realizza solo ciò che è scelto nel prompt di risposta.
 - **Aspetto**: mascotte kawaii anni '90/2000 animata e interattiva con frasi motivazionali (R01–R02), icone in font con simboli standard (R03), icona app su sfondo che esalta la mascotte (R04).
 - **Sempre**: installabile (R05), offline con aggiornamenti automatici (R06), versione e Condividi visibili (R07), 42 lingue (R08), WCAG AA (R09), temi chiaro/scuro/alto contrasto/daltonici (R10), responsive e allineata (R11), semplice (R12), wizard con focus (R13), privacy e condizioni con scarico di responsabilità (R14), statistiche anonime con consenso (R15).
 - **Se serve**: lavoro in background (R17).
@@ -24,6 +25,7 @@ In breve:
 | nuova app, idea, «fammi un'app che…» | `nuova-app` | `architetto` (piano) → poi gli altri | opus · high |
 | migliorare un'app esistente, «cosa manca a…», allinearla alle regole | `migliora-app` | `architetto` solo per cambi grossi | sonnet · medium |
 | portare una funzione da un'app a un'altra | `porta-funzione` | — | sonnet · medium |
+| modifica dell'interfaccia o funzione nuova da progettare | `proposte` (pagina prima/dopo da scegliere) | `architetto` / `ui-kawaii` + `revisore` | opus · high |
 | mascotte, icone, palette, stile kawaii | `mascotte-e-icone` | `ui-kawaii` | sonnet · medium |
 | testi, traduzioni, nuova lingua | `traduzioni` | `traduttore` | sonnet · low |
 | test, «funziona?», controllo prima del push | `verifica` | `collaudatore` | haiku · low |
@@ -46,6 +48,7 @@ tools/nuova-app.mjs      crea una nuova app dal modello in template/pwa-statica
 tools/privacy-check.mjs  blocca dati sensibili
 tools/controlla-app.mjs  controllo veloce di un'app rispetto a R01–R20
 tools/attiva-plugin.mjs  attiva il plugin in un repo esistente
+tools/proposte.mjs       pagina HTML delle proposte (prima/dopo, scelta, commenti, prompt di risposta)
 tools/cli.mjs            riga di comando (npx github:Marketto/app-forge …)
 tools/mcp-server.mjs     server MCP (strumenti per qualsiasi client)
 template/pwa-statica/    modello di app che rispetta R01–R20 (temi, wizard, legale, statistiche, font di icone, audit UI)

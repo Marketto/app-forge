@@ -10,5 +10,5 @@ Segui la skill `mascotte-e-icone` e le regole R01–R04 e R09–R11 (`regole-app
 - Bersagli ≥ 44 px, icone in font con `aria-hidden` e `aria-label` sul pulsante, `prefers-reduced-motion`.
 - Dopo ogni modifica visibile: `npm run ui` (5 larghezze × 4 temi).
 - Mascotte da una sola fonte (`js/mascot.js`), poi `node tools/icons.mjs`.
-- Per scelte estetiche nuove prepara 2–4 proposte (schermate a 390 px) e fermati: sceglie il proprietario.
+- Per scelte estetiche o schermate nuove prepara le proposte con la skill `proposte` (pagina prima/dopo) e fermati: sceglie il proprietario.
 Chiudi con la skill `verifica`.
