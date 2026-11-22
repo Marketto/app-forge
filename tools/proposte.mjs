@@ -47,7 +47,7 @@ export function creaPagina(spec, { appCss = "" } = {}) {
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Proposte · ${esc(spec.titolo)}</title>
 <style>
 :root { --bg:#fff7fb; --card:#fff; --ink:#3a2e4a; --muted:#6a5d7a; --line:#efd9e4; --accent:#c2416b; --on:#fff; --soft:#fde7ef;
@@ -243,8 +243,17 @@ textarea { width:100%; min-height:84px; margin-top:8px; padding:10px 12px; borde
     try { await navigator.clipboard.writeText(out.value); toast("Prompt copiato"); }
     catch { out.focus(); out.select(); try { document.execCommand("copy"); toast("Prompt copiato"); } catch { toast("Seleziona il testo e copialo"); } }
   };
-  $("#share").onclick = async () => { try { if (navigator.share) await navigator.share({ title: S.titolo, text: $("#out").value }); else $("#copy").click(); } catch {} };
-  $("#reset").onclick = () => { if (confirm("Cancellare tutte le scelte?")) { st = {}; save(); location.reload(); } };
+  // Dove la condivisione di sistema non c'è o è bloccata (pagine pubblicate su claude.ai) si copia il testo.
+  $("#share").onclick = async () => {
+    try { if (!navigator.share) throw 0; await navigator.share({ title: S.titolo, text: $("#out").value }); }
+    catch (e) { if (e?.name !== "AbortError") $("#copy").click(); }
+  };
+  // Conferma dentro la pagina (confirm() è bloccato in alcune viste): secondo tocco entro 4 s.
+  let armed = 0;
+  $("#reset").onclick = () => {
+    if (Date.now() - armed > 4000) { armed = Date.now(); $("#reset").textContent = "Tocca di nuovo per cancellare tutto"; setTimeout(() => { $("#reset").textContent = "Ricomincia"; }, 4000); return; }
+    st = {}; save(); location.reload();
+  };
 })();
 </script>
 </body>
