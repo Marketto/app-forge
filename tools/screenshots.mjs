@@ -8,6 +8,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
+import sharp from "sharp";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const { apps } = JSON.parse(fs.readFileSync(path.join(ROOT, "catalog/apps.json"), "utf8"));
@@ -57,9 +58,10 @@ async function icon(browser, app) {
   const best = pngs[0] || icons.find(i => /svg/.test(i.type || i.src));
   if (!best) { await ctx.close(); return "nessuna icona"; }
   const src = new URL(best.src, href).href;
-  await pg.setContent(`<body style="margin:0;background:transparent"><img id="i" src="${src}" style="width:256px;height:256px;display:block"></body>`);
-  await pg.waitForFunction(() => document.getElementById("i").complete);
-  await pg.locator("#i").screenshot({ path: path.join(ROOT, "site/icons", `${app.id}.png`), omitBackground: true });
+  // Scarica il file e lo ridimensiona (contain, sfondo trasparente): niente fotografie della pagina, che ritagliavano.
+  const buf = await (await pg.request.get(src)).body();
+  await sharp(buf, { density: 300 }).resize(256, 256, { fit: "contain", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+    .png().toFile(path.join(ROOT, "site/icons", `${app.id}.png`));
   await ctx.close();
   return "icona ok";
 }
