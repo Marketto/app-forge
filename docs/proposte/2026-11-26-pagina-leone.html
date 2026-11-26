@@ -45,6 +45,7 @@ legend { font-weight:700; margin-bottom:6px; }
 .choices label { display:flex; gap:10px; align-items:flex-start; min-height:44px; padding:10px 12px; border:2px solid var(--line); border-radius:14px; cursor:pointer; }
 .choices input { width:22px; height:22px; margin:2px 0 0; accent-color:var(--accent); flex:none; }
 .choices label:has(input:checked) { border-color:var(--accent); background:var(--soft); }
+.vlab { margin:10px 0 0; font-weight:700; font-size:.9rem; }
 .hint { display:block; margin-top:12px; font-weight:700; font-size:.95rem; }
 textarea { width:100%; min-height:84px; margin-top:6px; padding:10px 12px; border-radius:14px; border:2px solid var(--line); background:var(--bg); color:var(--ink); font:inherit; resize:vertical; }
 .btn { min-height:48px; padding:0 22px; border-radius:999px; border:2px solid var(--accent); background:var(--accent); color:var(--on); font:inherit; font-weight:700; cursor:pointer; }
@@ -129,8 +130,10 @@ textarea { width:100%; min-height:84px; margin-top:6px; padding:10px 12px; borde
     const variants = p.varianti || [];
     let view = matchMedia("(min-width: 801px)").matches && p.prima ? "side" : "dopo", dev = p.dispositivo || "phone";
     const views = el("div", { class: "views" });
+    // Variante mostrata: si sfoglia con i pulsanti (senza scegliere); scegliendola diventa quella mostrata.
+    let shown = s.variante || variants[0]?.id;
     const draw = () => {
-      const v = variants.find(x => x.id === s.variante) || variants[0];
+      const v = variants.find(x => x.id === shown) || variants[0];
       const after = v ? v.dopo : p.dopo;
       views.className = "views" + (view === "side" ? " side" : "");
       views.replaceChildren();
@@ -142,6 +145,11 @@ textarea { width:100%; min-height:84px; margin-top:6px; padding:10px 12px; borde
     if (p.prima) for (const [id, label] of [["prima", "Prima"], ["dopo", "Dopo"], ["side", "Affiancate"]]) tabs.append(mk(id, label, tabs, () => view, x => { view = x; }));
     const devs = el("div", { class: "dev", role: "group", "aria-label": "Dispositivo" });
     for (const [id, label] of [["phone", "Telefono"], ["pc", "Computer"]]) devs.append(mk(id, label, devs, () => dev, x => { dev = x; }));
+    if (variants.length > 1) {
+      const vt = el("div", { class: "seg", role: "group", "aria-label": "Varianti" });
+      variants.forEach((v, k) => vt.append(mk(v.id, String.fromCharCode(65 + k) + " · " + v.titolo, vt, () => shown, x => { shown = x; })));
+      card.append(el("p", { class: "vlab", text: variants.length + " varianti: toccale per vederle" }), vt);
+    }
     card.append(el("div", {}, tabs, devs), views);
     // Scelta
     const name = "c-" + p.id, fs = el("fieldset", {}, el("legend", { text: "La tua scelta" }));
@@ -149,7 +157,11 @@ textarea { width:100%; min-height:84px; margin-top:6px; padding:10px 12px; borde
     const opt = (val, label, extra) => {
       const i = el("input", { type: "radio", name, value: val });
       i.checked = s.scelta === val && (!extra || s.variante === extra);
-      i.onchange = () => { s.scelta = val; s.variante = extra || ""; save(); draw(); };
+      i.onchange = () => {
+        s.scelta = val; s.variante = extra || ""; save();
+        if (extra) { shown = extra; card.querySelectorAll('[aria-label="Varianti"] button').forEach((b, k) => b.setAttribute("aria-pressed", String(variants[k].id === extra))); }
+        draw();
+      };
       return el("label", {}, i, el("span", { text: label }));
     };
     if (variants.length) variants.forEach(v => choices.append(opt("si", "Sì, variante «" + v.titolo + "»", v.id)));

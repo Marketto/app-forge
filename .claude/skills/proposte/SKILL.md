@@ -18,6 +18,7 @@ Usa AskUserQuestion (o una lista numerata se non c'è):
 
 ## 2. Analisi
 - Leggi `docs/REQUISITI.md`, le regole R01–R20 (skill `regole-app`) e solo i file toccati (`grep -n`).
+- Con le varianti la pagina mostra pulsanti A/B/C per sfogliarle prima di scegliere.
 - Fotografa lo stato attuale («prima»): HTML statico che riproduce la schermata con le classi vere dell'app, oppure una schermata ridotta (JPEG ≤ 150 KB come `data:` URL; `npm run ui -- --shots /tmp/s` nelle app dal modello).
 
 ## 3. Bozza delle proposte
