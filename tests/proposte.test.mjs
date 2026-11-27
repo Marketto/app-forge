@@ -17,3 +17,17 @@ test("pagina: dati incorporati senza poter chiudere lo script", () => {
   assert.match(html, /Genera il prompt/);
   assert.match(html, /name="viewport"/);
 });
+
+import { execFileSync } from "node:child_process";
+import fs from "node:fs";
+test("catalogo: leone, versione, Condividi e modalità d'uso", () => {
+  execFileSync("node", ["tools/build-catalog.mjs"]);
+  const html = fs.readFileSync("_site/index.html", "utf8");
+  const v = JSON.parse(fs.readFileSync(".claude-plugin/plugin.json", "utf8")).version;
+  assert.match(html, new RegExp(`v${v.replace(/\./g, "\\.")}`));
+  assert.match(html, /aria-label="Condividi"/);
+  assert.match(html, /class="m-body"/);
+  assert.match(html, /<ul class="modes">/);
+  assert.doesNotMatch(html, /<ol/);
+  assert.match(fs.readFileSync("_site/favicon.svg", "utf8"), /<svg/);
+});

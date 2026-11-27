@@ -49,7 +49,9 @@
       "altezza": 380
      }
     }
-   ]
+   ],
+   "esito": "si",
+   "nota": "Forgino (A)"
   },
   {
    "id": "P2",
@@ -91,7 +93,9 @@
       "altezza": 640
      }
     }
-   ]
+   ],
+   "esito": "si",
+   "nota": "Striscia richiudibile (A)"
   },
   {
    "id": "P3",
@@ -112,7 +116,9 @@
    "dopo": {
     "html": "<div class=\"box\"><div style=\"display:flex;gap:10px;align-items:center\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 160 160\" width=\"44\" height=\"44\" role=\"img\"><ellipse cx=\"80\" cy=\"150\" rx=\"38\" ry=\"5\" fill=\"#5a3a2e\" opacity=\".12\"/><ellipse cx=\"80\" cy=\"112\" rx=\"27\" ry=\"22\" fill=\"#ffd27f\" stroke=\"#5a3a2e\" stroke-width=\"2.6\"/>\n<ellipse cx=\"80\" cy=\"116\" rx=\"15\" ry=\"13\" fill=\"#fff6e6\"/>\n<ellipse cx=\"66\" cy=\"132\" rx=\"9\" ry=\"6\" fill=\"#ffd27f\" stroke=\"#5a3a2e\" stroke-width=\"2.4\"/><ellipse cx=\"94\" cy=\"132\" rx=\"9\" ry=\"6\" fill=\"#ffd27f\" stroke=\"#5a3a2e\" stroke-width=\"2.4\"/>\n<path d=\"M105 120q20 4 14-14\" stroke=\"#5a3a2e\" stroke-width=\"2.4\" fill=\"none\" stroke-linecap=\"round\"/><circle cx=\"119\" cy=\"104\" r=\"5\" fill=\"#e08a3a\" stroke=\"#5a3a2e\" stroke-width=\"2\"/><ellipse cx=\"120.0\" cy=\"62.0\" rx=\"15\" ry=\"12.3\" transform=\"rotate(90 120.0 62.0)\" fill=\"#f29a3e\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/><ellipse cx=\"116.0\" cy=\"79.4\" rx=\"15\" ry=\"12.3\" transform=\"rotate(116 116.0 79.4)\" fill=\"#f7b45c\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/><ellipse cx=\"104.9\" cy=\"93.3\" rx=\"15\" ry=\"12.3\" transform=\"rotate(141 104.9 93.3)\" fill=\"#f29a3e\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/><ellipse cx=\"88.9\" cy=\"101.0\" rx=\"15\" ry=\"12.3\" transform=\"rotate(167 88.9 101.0)\" fill=\"#f7b45c\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/><ellipse cx=\"71.1\" cy=\"101.0\" rx=\"15\" ry=\"12.3\" transform=\"rotate(193 71.1 101.0)\" fill=\"#f29a3e\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/><ellipse cx=\"55.1\" cy=\"93.3\" rx=\"15\" ry=\"12.3\" transform=\"rotate(219 55.1 93.3)\" fill=\"#f7b45c\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/><ellipse cx=\"44.0\" cy=\"79.4\" rx=\"15\" ry=\"12.3\" transform=\"rotate(244 44.0 79.4)\" fill=\"#f29a3e\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/><ellipse cx=\"40.0\" cy=\"62.0\" rx=\"15\" ry=\"12.3\" transform=\"rotate(270 40.0 62.0)\" fill=\"#f7b45c\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/><ellipse cx=\"44.0\" cy=\"44.6\" rx=\"15\" ry=\"12.3\" transform=\"rotate(296 44.0 44.6)\" fill=\"#f29a3e\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/><ellipse cx=\"55.1\" cy=\"30.7\" rx=\"15\" ry=\"12.3\" transform=\"rotate(321 55.1 30.7)\" fill=\"#f7b45c\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/><ellipse cx=\"71.1\" cy=\"23.0\" rx=\"15\" ry=\"12.3\" transform=\"rotate(347 71.1 23.0)\" fill=\"#f29a3e\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/><ellipse cx=\"88.9\" cy=\"23.0\" rx=\"15\" ry=\"12.3\" transform=\"rotate(373 88.9 23.0)\" fill=\"#f7b45c\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/><ellipse cx=\"104.9\" cy=\"30.7\" rx=\"15\" ry=\"12.3\" transform=\"rotate(399 104.9 30.7)\" fill=\"#f29a3e\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/><ellipse cx=\"116.0\" cy=\"44.6\" rx=\"15\" ry=\"12.3\" transform=\"rotate(424 116.0 44.6)\" fill=\"#f7b45c\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/><circle cx=\"80\" cy=\"62\" r=\"34\" fill=\"#ffd27f\" stroke=\"#5a3a2e\" stroke-width=\"2.6\"/>\n<circle cx=\"52\" cy=\"36\" r=\"9\" fill=\"#ffd27f\" stroke=\"#5a3a2e\" stroke-width=\"2.4\"/><circle cx=\"52\" cy=\"36\" r=\"4.5\" fill=\"#ff9fb3\"/>\n<circle cx=\"108\" cy=\"36\" r=\"9\" fill=\"#ffd27f\" stroke=\"#5a3a2e\" stroke-width=\"2.4\"/><circle cx=\"108\" cy=\"36\" r=\"4.5\" fill=\"#ff9fb3\"/>\n<ellipse cx=\"80\" cy=\"74\" rx=\"15\" ry=\"11\" fill=\"#fff6e6\"/>\n<g class=\"m-eyes\"><ellipse cx=\"67\" cy=\"60\" rx=\"7\" ry=\"8.5\" fill=\"#5a3a2e\"/><ellipse cx=\"93\" cy=\"60\" rx=\"7\" ry=\"8.5\" fill=\"#5a3a2e\"/>\n<g fill=\"#fff\"><circle cx=\"69.5\" cy=\"56.5\" r=\"2.8\"/><circle cx=\"95.5\" cy=\"56.5\" r=\"2.8\"/><circle cx=\"65\" cy=\"63.5\" r=\"1.3\"/><circle cx=\"91\" cy=\"63.5\" r=\"1.3\"/></g></g>\n<ellipse cx=\"58\" cy=\"71\" rx=\"6.5\" ry=\"4\" fill=\"#ff9fb3\" opacity=\".85\"/><ellipse cx=\"102\" cy=\"71\" rx=\"6.5\" ry=\"4\" fill=\"#ff9fb3\" opacity=\".85\"/>\n<path d=\"M76 69h8l-4 4z\" fill=\"#5a3a2e\" stroke=\"#5a3a2e\" stroke-width=\"1.5\" stroke-linejoin=\"round\"/>\n<path d=\"M80 73v3M80 76q-4 4-7 1M80 76q4 4 7 1\" stroke=\"#5a3a2e\" stroke-width=\"2.2\" fill=\"none\" stroke-linecap=\"round\"/><g transform=\"translate(40 108) rotate(-30)\"><rect x=\"-2.5\" y=\"-2\" width=\"5\" height=\"24\" rx=\"2.5\" fill=\"#b9814f\" stroke=\"#5a3a2e\" stroke-width=\"2\"/><rect x=\"-11\" y=\"-10\" width=\"22\" height=\"11\" rx=\"3.5\" fill=\"#c9c3d6\" stroke=\"#5a3a2e\" stroke-width=\"2.2\"/></g></svg><b>Crea la tua con app-forge</b></div><div class=\"step\"><i>1</i><div><b>Crea una nuova app</b><br>Incolla in Claude Code (anche sul web o dal telefono):<code>Creami un'app che … seguendo https://raw.githubusercontent.com/Marketto/app-forge/main/.claude/skills/nuova-app/SKILL.md</code><span class=\"cp\">Copia</span></div></div>\n<div class=\"step\"><i>2</i><div><b>Migliora un'app esistente</b><br>Nel repo dell'app:<code>Migliora quest'app seguendo https://raw.githubusercontent.com/Marketto/app-forge/main/.claude/skills/migliora-app/SKILL.md</code><span class=\"cp\">Copia</span></div></div>\n<div class=\"step\"><i>3</i><div><b>Revisiona un progetto</b><code>Revisiona questo progetto seguendo https://raw.githubusercontent.com/Marketto/app-forge/main/.claude/skills/revisione/SKILL.md</code><span class=\"cp\">Copia</span></div></div>\n<p class=\"sub\" style=\"margin:10px 0 0\">Sul computer puoi anche attivare il plugin: istruzioni nel README su GitHub.</p></div><p class=\"foot\">10 app · v0.5.1 · aggiornato il 2026-11-26 · GitHub</p>",
     "altezza": 640
-   }
+   },
+   "esito": "si",
+   "nota": "Migliorie: niente elenco numerato, elenco puntato che chiarisce che sono modalità diverse"
   }
  ]
 }

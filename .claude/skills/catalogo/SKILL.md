@@ -17,3 +17,5 @@ Facoltativi: `iconaManuale: true` (icona messa a mano in `site/icons/`, es. app 
    Guarda la schermata: se c'è ancora un dialogo, aggiungi i `passi` e ripeti.
 3. `npm test`, poi commit e push: `pages.yml` pubblica il catalogo.
 Le schermate si aggiornano anche da sole ogni lunedì (`schermate.yml`).
+
+La pagina ha la mascotte di app-forge, **Forgino il leone** (fonte unica `site/mascot.mjs`: pagina e favicon), la versione presa da `.claude-plugin/plugin.json`, Condividi e la striscia «Cos'è app-forge» con le modalità d'uso (array `MODI` in `tools/build-catalog.mjs`). Cambi visibili: prima la skill `proposte`.
